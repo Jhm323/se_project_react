@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../vendor/fonts.css";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -7,6 +8,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function App() {
   const [weatherData, setWeatherData] = useState({ type: "cold" });
+  const [activeModal, setActiveModal] = useState("");
 
   return (
     <div className="page">
@@ -15,14 +17,18 @@ function App() {
         <Main weatherData={weatherData} />
         <Footer />
       </div>
-      <ModalWithForm title="New Garment" buttonText="Add garment">
+      <ModalWithForm
+        title="New Garment"
+        buttonText="Add garment"
+        activeModal={activeModal}
+      >
         <label htmlFor="name" className="modal__label">
           Name{" "}
           <input
             type="text"
             className="modal__input"
             id="name"
-            placeholder="name"
+            placeholder="Name"
           />
         </label>
         <label htmlFor="imageUrl" className="modal__label">
