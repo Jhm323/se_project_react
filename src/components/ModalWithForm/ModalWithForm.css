@@ -35,6 +35,7 @@
 .modal__title {
   margin: 0;
   font-size: 16px;
+  padding: 28px 0 0 28px;
 }
 
 .modal__close {
@@ -56,7 +57,7 @@
 }
 
 .modal__label {
-  padding-top: 24px;
+  padding: 24px 28px 0 28px;
 }
 
 .modal__input {
@@ -66,7 +67,7 @@
   border-bottom: 1px solid #000;
   outline: none;
   background: transparent;
-  padding: 5px 0;
+  padding: 8px 0 4px;
 }
 
 .modal__input:focus {
@@ -74,12 +75,11 @@
 }
 
 .modal__legend {
-  padding-top: 24px;
-  padding-bottom: 12px;
+  padding: 24px 0 12px 28px;
 }
 
 .modal__label.modal__label_type_radio {
-  padding: 0px;
+  padding: 0 0 0 28px;
   margin-bottom: 8px;
 }
 
@@ -97,10 +97,19 @@
 .modal__submit {
   width: 124px;
   height: 36px;
-  margin-top: 28px;
-}
-
-.modal__submit:disabled {
+  margin: 26px 0 36px 28px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
   background-color: #000;
   opacity: 30%;
+  border-radius: 10%;
+  border: 0;
 }
+
+/* .modal__submit:disabled {
+  background-color: #000;
+  opacity: 30%;
+} */
