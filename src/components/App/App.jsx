@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "../../vendor/fonts.css";
 import "./App.css";
 import { coordinates, APIkey } from "../../utils/constants";
+// import CurrentTemperatureUnitContext from "../contexts/CurrentTempatureContext";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -18,6 +19,12 @@ function App() {
   });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
+
+  // const handleToggleSwitchChange = () => {
+  //   currentTemperatureUnit === "F"
+  //     ? setCurrentTemperatureUnit("C")
+  //     : setCurrentTemperatureUnit("F");
+  // };
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -43,6 +50,8 @@ function App() {
 
   return (
     <div className="page">
+      {/* <CurrentTemperatureUnitContext.Provider
+      value={{currentTemperatureUnit, handleToggleSwitchChange}}> */}
       <div className="page__content">
         <Header handleAddClick={handleAddClick} weatherData={weatherData} />
         <Main weatherData={weatherData} handleCardClick={handleCardClick} />
@@ -114,6 +123,7 @@ function App() {
         card={selectedCard}
         onClose={closeActiveModal}
       />
+      {/* </CurrentTemperatureUnitContext.Provider> */}
     </div>
   );
 }
