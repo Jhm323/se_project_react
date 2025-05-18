@@ -42,7 +42,11 @@ function App() {
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    setClothingItems([{ name, link: imageUrl, weather }, ...clothingItems]);
+    const newId = Math.max(...clothingItems.map((item) => item._id)) + 1;
+    setClothingItems((prevItems) => [
+      { name, link: imageUrl, weather },
+      ...prevItems,
+    ]);
     closeActiveModal();
   };
 
@@ -73,7 +77,7 @@ function App() {
         <AddItemModal
           isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
-          handleAddItemModalSubmit={handleAddItemModalSubmit}
+          onAddItemModalSubmit={handleAddItemModalSubmit}
         />
 
         <ItemModal
