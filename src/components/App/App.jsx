@@ -12,7 +12,7 @@ import Profile from "../Profile/Profile";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { defaultClothingItems } from "../../utils/constants";
-import { getItems } from "../../utils/api";
+import { getItems, addItem, deleteItem } from "../../utils/api";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -44,13 +44,32 @@ function App() {
     setActiveModal("");
   };
 
+  // const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+  //   const newId = Math.max(...clothingItems.map((item) => item._id)) + 1;
+  //   setClothingItems((prevItems) => [
+  //     { name, link: imageUrl, weather },
+  //     ...prevItems,
+  //   ]);
+  //   closeActiveModal();
+  // };
+
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const newId = Math.max(...clothingItems.map((item) => item._id)) + 1;
-    setClothingItems((prevItems) => [
-      { name, link: imageUrl, weather },
-      ...prevItems,
-    ]);
-    closeActiveModal();
+    addItem(name, imageUrl, weather)
+      .then((newItem) => {
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  const handleDeleteCard = (id) => {
+    deleteItem(id)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== id)
+        );
+      })
+      .catch(console.error);
   };
 
   useEffect(() => {
@@ -65,9 +84,7 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
-        console.log(data);
-        // set clothing items
-        setClothingItems([getItems, ...clothingItems]);
+        setClothingItems(data);
       })
       .catch(console.error);
   }, []);
@@ -109,6 +126,7 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           onClose={closeActiveModal}
+          onDeleteCard={handleDeleteCard}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
