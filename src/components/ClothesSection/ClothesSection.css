@@ -1,0 +1,14 @@
+.clothes-section {
+}
+
+.clothes-section__title {
+}
+
+.clothes-section__button {
+}
+
+.clothes-section__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}

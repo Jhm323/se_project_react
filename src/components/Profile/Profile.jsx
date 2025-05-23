@@ -9,7 +9,10 @@ function Profile({ onCardClick, clothingItems }) {
         <SideBar />
       </section>
       <section className="profile__clothes-section">
-        <ClothesSection onCardClick={onCardClick} />
+        <ClothesSection
+          onCardClick={onCardClick}
+          clothingItems={clothingItems}
+        />
       </section>
     </div>
   );

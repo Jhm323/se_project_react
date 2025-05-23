@@ -44,15 +44,6 @@ function App() {
     setActiveModal("");
   };
 
-  // const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-  //   const newId = Math.max(...clothingItems.map((item) => item._id)) + 1;
-  //   setClothingItems((prevItems) => [
-  //     { name, link: imageUrl, weather },
-  //     ...prevItems,
-  //   ]);
-  //   closeActiveModal();
-  // };
-
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItem(name, imageUrl, weather)
       .then((newItem) => {
@@ -110,7 +101,12 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<Profile onCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  onCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                />
+              }
             />
           </Routes>
 
