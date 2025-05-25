@@ -1,4 +1,6 @@
 .profile {
   display: flex;
-  gap: 100px;
+  gap: 116px;
+  padding: 0px;
+  margin: 0px auto;
 }
