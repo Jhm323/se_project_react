@@ -1,11 +1,11 @@
 import avatar from "../../assets/avatar.svg";
 import "./SideBar.css";
 
-function SideBar() {
+function SideBar({ userName }) {
   return (
     <div className="sidebar">
       <img className="sidebar__avatar" src={avatar} alt="Default Avatar" />
-      <p className="sidebar__username">User Name</p>
+      <p className="sidebar__username">{userName}</p>
     </div>
   );
 }

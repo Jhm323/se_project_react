@@ -13,8 +13,11 @@ import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { defaultClothingItems } from "../../utils/constants";
 import { getItems, addItem, deleteItem } from "../../utils/api";
+import SideBar from "../SideBar/SideBar";
 
 function App() {
+  const userName = "Terrence Tegegne";
+
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -86,7 +89,12 @@ function App() {
     >
       <div className="page">
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header
+            userName={userName}
+            handleAddClick={handleAddClick}
+            weatherData={weatherData}
+          />
+
           <Routes>
             <Route
               path="/"
@@ -105,11 +113,11 @@ function App() {
                 <Profile
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  userName={userName}
                 />
               }
             />
           </Routes>
-
           <Footer />
         </div>
         <AddItemModal

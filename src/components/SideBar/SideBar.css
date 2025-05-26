@@ -10,7 +10,6 @@
   margin: 0px;
 }
 .sidebar__username {
-  margin: 0px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
