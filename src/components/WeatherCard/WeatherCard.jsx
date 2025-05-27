@@ -6,23 +6,7 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 function WeatherCard({ weatherData }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
-  // Add a mapping for API conditions to your weatherOptions conditions
-  const getMatchingCondition = (apiCondition) => {
-    const conditionMap = {
-      clouds: "cloudy",
-      clear: "clear",
-      rain: "rain",
-      snow: "snow",
-      thunderstorm: "storm",
-      fog: "fog",
-      mist: "fog",
-    };
-    return (
-      conditionMap[apiCondition.toLowerCase()] || apiCondition.toLowerCase()
-    );
-  };
-
-  const mappedCondition = getMatchingCondition(weatherData.condition);
+  const mappedCondition = weatherData.condition;
 
   const filteredOptions = weatherOptions.filter((option) => {
     return (

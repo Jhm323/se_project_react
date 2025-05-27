@@ -1,14 +1,27 @@
 import "./ModalWithForm.css";
+import { useEffect } from "react";
 
 function ModalWithForm({
   children,
   buttonText,
   title,
-  activeModal,
   onClose,
   isOpen,
   onSubmit,
 }) {
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscapeKey);
+      return () => document.removeEventListener("keydown", handleEscapeKey);
+    }
+  }, [isOpen, onClose]);
+
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content">

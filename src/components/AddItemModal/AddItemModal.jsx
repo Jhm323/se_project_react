@@ -31,7 +31,6 @@ export default function AddItemModal({
     setName("");
     setImageUrl("");
     setWeather("");
-    console.log(name, imageUrl, weather);
   };
 
   return (

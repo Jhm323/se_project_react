@@ -1,5 +1,4 @@
 import "./ItemModal.css";
-// import { onDeleteCard } from "../../components/App/App.jsx";
 
 function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
   return (
