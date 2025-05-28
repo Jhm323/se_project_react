@@ -28,9 +28,9 @@ function WeatherCard({ weatherData }) {
       </p>
       <img
         src={weatherOption?.url}
-        alt={`card showing ${
-          weatherData.isDay ? "day" : "night"
-        }time ${mappedCondition} weather`}
+        alt={`card showing ${weatherData.isDay ? "day" : "night"}time ${
+          weatherData.condition
+        } weather`}
         className="weather-card__image"
       />
     </section>
