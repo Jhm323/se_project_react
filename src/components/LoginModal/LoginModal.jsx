@@ -1,113 +1,76 @@
-// import "./AddItemModal.css";
-// import ModalWithForm from "../ModalWithForm/ModalWithForm";
-// import { useState } from "react";
+import "./LoginModal.css";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useState } from "react";
+import { signin } from "../../utils/auth";
 
-// export default function AddItemModal({
-//   onClose,
-//   isOpen,
-//   onAddItemModalSubmit,
-// }) {
-//   const [name, setName] = useState("");
-//   const [imageUrl, setImageUrl] = useState("");
-//   const [weather, setWeather] = useState("");
+export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-//   const handleNameChange = (e) => {
-//     setName(e.target.value);
-//   };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-//   const handleImageUrlChange = (e) => {
-//     setImageUrl(e.target.value);
-//   };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
-//   const handleWeatherChange = (e) => {
-//     setWeather(e.target.value);
-//   };
+  //   Handle Form Submission
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // update clothingItems array
-//     onAddItemModalSubmit({ name, imageUrl, weather });
-//     // empty imputs
-//     setName("");
-//     setImageUrl("");
-//     setWeather("");
-//   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrorMessage(""); // Clear any prior errors
 
-//   return (
-//     <ModalWithForm
-//       title="New Garment"
-//       buttonText="Add garment"
-//       isOpen={isOpen}
-//       onClose={onClose}
-//       onSubmit={handleSubmit}
-//     >
-//       <label htmlFor="name" className="modal__label">
-//         Name{" "}
-//         <input
-//           type="text"
-//           className="modal__input"
-//           id="name"
-//           placeholder="Name"
-//           required
-//           minLength="1"
-//           maxLength="30"
-//           onChange={handleNameChange}
-//           value={name}
-//         />
-//         <span className="modal__error" id="place-name-error" />
-//       </label>
-//       <label htmlFor="imageUrl" className="modal__label">
-//         Image{" "}
-//         <input
-//           type="url"
-//           name="link"
-//           className="modal__input"
-//           id="imageUrl"
-//           placeholder="Image URL"
-//           required
-//           onChange={handleImageUrlChange}
-//           value={imageUrl}
-//         />
-//       </label>
-//       <fieldset className="modal__radio-buttons">
-//         <legend className="modal__legend">Select the weather type:</legend>
-//         <label htmlFor="hot" className="modal__label modal__label_type_radio">
-//           <input
-//             name="radio-button"
-//             id="hot"
-//             type="radio"
-//             className="modal__radio-input"
-//             value="hot"
-//             onChange={handleWeatherChange}
-//             checked={weather === "hot"}
-//           />{" "}
-//           Hot
-//         </label>
-//         <label htmlFor="warm" className="modal__label modal__label_type_radio">
-//           <input
-//             name="radio-button"
-//             id="warm"
-//             type="radio"
-//             className="modal__radio-input"
-//             value="warm"
-//             onChange={handleWeatherChange}
-//             checked={weather === "warm"}
-//           />{" "}
-//           Warm
-//         </label>
-//         <label htmlFor="cold" className="modal__label modal__label_type_radio">
-//           <input
-//             name="radio-button"
-//             id="cold"
-//             type="radio"
-//             className="modal__radio-input"
-//             value="cold"
-//             onChange={handleWeatherChange}
-//             checked={weather === "cold"}
-//           />{" "}
-//           Cold
-//         </label>
-//       </fieldset>
-//     </ModalWithForm>
-//   );
-// }
+    signin(email, password)
+      .then((data) => {
+        localStorage.setItem("jwt", data.token); // Save token
+        onLoginSuccess(data.token); // Inform App of successful login
+        setEmail("");
+        setPassword("");
+      })
+      .catch((err) => {
+        console.error("Login failed:", err);
+        setErrorMessage("Invalid email or password.");
+      });
+  };
+
+  return (
+    <ModalWithForm
+      title="Log in"
+      buttonText="Log in"
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+    >
+      <label htmlFor="email" className="modal__label">
+        Email{" "}
+        <input
+          type="email"
+          className="modal__input"
+          id="email"
+          name="email"
+          placeholder="Enter Your Email"
+          required
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <span className="modal__error" id="place-name-error" />
+      </label>
+      <label htmlFor="password" className="modal__label">
+        Password{" "}
+        <input
+          type="password"
+          className="modal__input"
+          id="password"
+          name="password"
+          placeholder="Enter Your Password"
+          required
+          value={password}
+          onChange={handlePasswordChange}
+        />
+      </label>
+      {errorMessage && <p className="modal__error">{errorMessage}</p>}
+    </ModalWithForm>
+  );
+}
