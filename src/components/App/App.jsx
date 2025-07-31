@@ -42,7 +42,6 @@ function App() {
   const [isRegisterOpen, setRegisterOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
 
   // Toggle F/C temperature units
 
@@ -100,7 +99,7 @@ function App() {
   const fetchUserAndData = (token) => {
     checkToken(token)
       .then((data) => {
-        setUserName(data.name);
+        setCurrentUser(data);
         setIsLoggedIn(true);
       })
       .catch((err) => {
@@ -113,7 +112,9 @@ function App() {
       .catch(console.error);
   };
 
-  const handleAddItemModalSubmit = ({ name, imageUrl, weather, token }) => {
+  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+    const token = localStorage.getItem("jwt");
+
     addItem(name, imageUrl, weather, token)
       .then((newItem) => {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
@@ -123,6 +124,8 @@ function App() {
   };
 
   const handleDeleteCard = (id) => {
+    const token = localStorage.getItem("jwt");
+
     deleteItem(id, token)
       .then(() => {
         setClothingItems((prevItems) =>
@@ -167,7 +170,7 @@ function App() {
         <div className="page">
           <div className="page__content">
             <Header
-              userName={userName}
+              userName={currentUser?.name}
               handleAddClick={handleAddClick}
               weatherData={weatherData}
               isLoggedIn={isLoggedIn}
@@ -194,7 +197,7 @@ function App() {
                     <Profile
                       onCardClick={handleCardClick}
                       clothingItems={clothingItems}
-                      userName={userName}
+                      userName={currentUser?.name}
                       handleAddClick={handleAddClick}
                       isLoggedIn={isLoggedIn}
                     />
