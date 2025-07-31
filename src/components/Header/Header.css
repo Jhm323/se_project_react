@@ -52,3 +52,17 @@
   text-decoration: none;
   color: black;
 }
+
+.header__avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #888;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
