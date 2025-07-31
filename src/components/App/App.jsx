@@ -18,6 +18,7 @@ import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const navigate = useNavigate();
@@ -41,21 +42,17 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
 
+  // Toggle F/C temperature units
+
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
-
-  // Toggle F/C temperature units
-  // const handleToggleSwitchChange = () => {
-  //   setCurrentTemperatureUnit((prev) => (prev === "F" ? "C" : "F"));
-  // };
 
   // Modal control
   const openModal = (type) => setActiveModal(type);
   const closeActiveModal = () => setActiveModal("");
 
   const handleCardClick = (card) => {
-    // setActiveModal("preview");
     setSelectedCard(card);
     openModal("preview");
   };
@@ -65,10 +62,23 @@ function App() {
   const handleRegister = ({ name, avatar, email, password }) => {
     signup(name, avatar, email, password)
       .then(() => {
+        // close registration modal
         setRegisterOpen(false);
-        setLoginOpen(true); // Optionally auto open login after register
+        // Immediately sign in the user
+        return signin(email, password);
       })
-      .catch(console.error);
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          setLoginOpen(false);
+          // fetch user info & items
+          fetchUserAndData(res.token);
+        }
+      })
+      .catch((err) => {
+        console.error("Registration or login error:", err);
+      });
   };
 
   const handleLogin = ({ email, password }) => {
@@ -78,7 +88,7 @@ function App() {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
           setLoginOpen(false);
-          // Optional: Fetch user profile or name here
+          //  Fetch user profile or name here
           fetchUserAndData(res.token);
         }
       })
@@ -101,8 +111,8 @@ function App() {
       .catch(console.error);
   };
 
-  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    addItem(name, imageUrl, weather)
+  const handleAddItemModalSubmit = ({ name, imageUrl, weather, token }) => {
+    addItem(name, imageUrl, weather, token)
       .then((newItem) => {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
         closeActiveModal();
@@ -111,7 +121,7 @@ function App() {
   };
 
   const handleDeleteCard = (id) => {
-    deleteItem(id)
+    deleteItem(id, token)
       .then(() => {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item._id !== id)
@@ -177,13 +187,15 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
-                  onCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                  userName={userName}
-                  handleAddClick={handleAddClick}
-                  isLoggedIn={isLoggedIn}
-                />
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    onCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                    userName={userName}
+                    handleAddClick={handleAddClick}
+                    isLoggedIn={isLoggedIn}
+                  />
+                </ProtectedRoute>
               }
             />
           </Routes>

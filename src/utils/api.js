@@ -1,16 +1,21 @@
 const baseUrl = "http://localhost:3001";
 
+// Public endpoint — no token needed
+
 function getItems() {
   return fetch(`${baseUrl}/items`).then((res) => {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
 }
 
-function addItem(name, imageUrl, weather) {
+// Protected — token required
+
+function addItem(name, imageUrl, weather, token) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name,
@@ -22,11 +27,14 @@ function addItem(name, imageUrl, weather) {
   });
 }
 
-function deleteItem(id) {
+// Protected — token required
+
+function deleteItem(id, token) {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
