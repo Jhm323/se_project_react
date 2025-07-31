@@ -7,6 +7,7 @@ import { coordinates, APIkey } from "../../utils/constants";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import { defaultClothingItems } from "../../utils/constants";
 import { getItems, addItem, deleteItem } from "../../utils/api";
+import { signin } from "./utils/auth";
 
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import Header from "../Header/Header";
@@ -30,6 +31,8 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -46,6 +49,32 @@ function App() {
 
   const closeActiveModal = () => {
     setActiveModal("");
+  };
+
+  const handleRegister = ({ name, avatar, email, password }) => {
+    signup(name, avatar, email, password)
+      .then((res) => {
+        console.log("User registered:", res);
+        // Optionally anto-login or close modal
+        setRegisterOpen(false);
+      })
+      .catch((err) => {
+        console.error("Register error:", err);
+      });
+  };
+
+  const handleLogin = ({ email, password }) => {
+    signin(email, password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          setLoginOpen(false);
+        }
+      })
+      .catch((err) => {
+        console.error("Login error:", err);
+      });
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
@@ -134,6 +163,17 @@ function App() {
           card={selectedCard}
           onClose={closeActiveModal}
           onDeleteCard={handleDeleteCard}
+        />
+
+        <RegisterModal
+          isOpen={isRegisterOpen}
+          onClose={() => setRegisterOpen(false)}
+          onRegister={handleRegister}
+        />
+        <LoginModal
+          isOpen={isLoginOpen}
+          onClose={() => setLoginOpen(false)}
+          onLogin={handleLogin}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
