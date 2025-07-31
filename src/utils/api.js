@@ -1,5 +1,21 @@
 const baseUrl = "http://localhost:3001";
 
+const updateUserProfile = (name, avatar) => {
+  return fetch("/users/me", {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to update profile");
+    }
+    return res.json();
+  });
+};
+
 // Public endpoint — no token needed
 
 function getItems() {
@@ -41,4 +57,4 @@ function deleteItem(id, token) {
   });
 }
 
-export { getItems, addItem, deleteItem };
+export { getItems, addItem, deleteItem, updateUserProfile };
