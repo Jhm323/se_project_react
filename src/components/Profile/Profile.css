@@ -4,3 +4,18 @@
   padding: 0px;
   margin: 0px auto;
 }
+
+.profile__button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.profile__button:hover {
+  background-color: #005fa3;
+}

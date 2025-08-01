@@ -58,6 +58,21 @@ function App() {
     openModal("preview");
   };
 
+  const handleCardLike = ({ _id, likes }) => {
+    const token = localStorage.getItem("jwt");
+    const isLiked = likes.includes(currentUser._id);
+
+    const likeAction = !isLiked ? api.addCardLike : api.removeCardLike;
+
+    likeAction(_id, token)
+      .then((updatedCard) => {
+        setClothingItems((prevItems) =>
+          prevItems.map((item) => (item._id === _id ? updatedCard : item))
+        );
+      })
+      .catch((err) => console.error("Error updating like:", err));
+  };
+
   const handleAddClick = () => openModal("add-garment");
 
   const handleRegister = ({ name, avatar, email, password }) => {
@@ -94,6 +109,17 @@ function App() {
         }
       })
       .catch(console.error);
+  };
+
+  const handleLogout = () => {
+    // Remove token
+    localStorage.removeItem("jwt");
+    // Clear user
+    setCurrentUser(null);
+    // Update login state
+    setIsLoggedIn(false);
+    // Wherever the user is directed...
+    navigate("/signin");
   };
 
   const fetchUserAndData = (token) => {
@@ -184,9 +210,11 @@ function App() {
                 element={
                   <Main
                     weatherData={weatherData}
-                    onCardClick={handleCardClick}
                     currentTemperatureUnit={currentTemperatureUnit}
                     clothingItems={clothingItems}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    currentUser={currentUser}
                   />
                 }
               />
@@ -200,6 +228,7 @@ function App() {
                       userName={currentUser?.name}
                       handleAddClick={handleAddClick}
                       isLoggedIn={isLoggedIn}
+                      handleLogOut={handleLogout}
                     />
                   </ProtectedRoute>
                 }
