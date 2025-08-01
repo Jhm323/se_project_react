@@ -12,10 +12,9 @@ function Profile({
   userName,
   handleAddClick,
   handleLogOut,
+  handleUpdateUser,
 }) {
   const [isEditProfileOpen, setEditProfileOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function handleEditProfileClick() {
     setEditProfileOpen(true);
@@ -25,17 +24,6 @@ function Profile({
     setEditProfileOpen(false);
   }
 
-  function handleUpdateUser({ name, avatar }) {
-    updateUserProfile(name, avatar)
-      .then((updatedUser) => {
-        setCurrentUser(updatedUser);
-        closeAllModals();
-      })
-      .catch((err) => {
-        console.error("Error updating user:", err);
-      });
-  }
-
   return (
     <div className="profile">
       <section className="profile__sidebar">
@@ -43,7 +31,7 @@ function Profile({
         <button className="profile__button" onClick={handleEditProfileClick}>
           Change Profile Data
         </button>
-        <button className="profile__button" onClick={handleLogout}>
+        <button className="profile__logout-button" onClick={handleLogOut}>
           Log Out
         </button>
       </section>

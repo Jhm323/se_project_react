@@ -75,6 +75,16 @@ function App() {
 
   const handleAddClick = () => openModal("add-garment");
 
+  function handleUpdateUser({ name, avatar }) {
+    updateUserProfile(name, avatar)
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+      })
+      .catch((err) => {
+        console.error("Error updating user:", err);
+      });
+  }
+
   const handleRegister = ({ name, avatar, email, password }) => {
     signup(name, avatar, email, password)
       .then(() => {
@@ -229,6 +239,7 @@ function App() {
                       handleAddClick={handleAddClick}
                       isLoggedIn={isLoggedIn}
                       handleLogOut={handleLogout}
+                      handleUpdateUser={handleUpdateUser}
                     />
                   </ProtectedRoute>
                 }

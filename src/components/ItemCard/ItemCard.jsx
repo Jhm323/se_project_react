@@ -6,15 +6,16 @@ function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
   // Safely check if the current user has liked this item
   const isLiked =
     Array.isArray(item.likes) && currentUser
-      ? item.likes.includes(currentUser._id)
+      ? item.likes.some((id) => id === currentUser._id)
       : false;
 
+  // Dynamic class name for the like button
   const itemLikeButtonClassName = `item-card__like-button ${
     isLiked ? "item-card__like-button_active" : ""
   }`;
 
   const handleLike = () => {
-    onCardClick({ id: item._id, isLiked });
+    onCardLike({ id: item._id, isLiked });
   };
 
   return (
@@ -26,6 +27,8 @@ function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
         src={item.imageUrl}
         alt={item.name}
       />
+
+      {/* Like button only visible if logged in */}
       {isLoggedIn && (
         <button
           className={itemLikeButtonClassName}
