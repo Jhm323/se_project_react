@@ -121,7 +121,7 @@ function App() {
       .catch(console.error);
   };
 
-  const handleLogout = () => {
+  const handleLogOut = () => {
     // Remove token
     localStorage.removeItem("jwt");
     // Clear user
@@ -129,7 +129,7 @@ function App() {
     // Update login state
     setIsLoggedIn(false);
     // Wherever the user is directed...
-    navigate("/signin");
+    navigate("/");
   };
 
   const fetchUserAndData = (token) => {
@@ -238,7 +238,7 @@ function App() {
                       userName={currentUser?.name}
                       handleAddClick={handleAddClick}
                       isLoggedIn={isLoggedIn}
-                      handleLogOut={handleLogout}
+                      handleLogOut={handleLogOut}
                       handleUpdateUser={handleUpdateUser}
                     />
                   </ProtectedRoute>

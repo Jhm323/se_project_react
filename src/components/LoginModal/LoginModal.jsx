@@ -20,12 +20,15 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrorMessage(""); // Clear any prior errors
+    // Clear any prior errors
+    setErrorMessage("");
 
     signin(email, password)
       .then((data) => {
-        localStorage.setItem("jwt", data.token); // Save token
-        onLoginSuccess(data.token); // Inform App of successful login
+        // Save token
+        localStorage.setItem("jwt", data.token);
+        // Inform App of successful login
+        onLoginSubmit(data.token);
         setEmail("");
         setPassword("");
       })

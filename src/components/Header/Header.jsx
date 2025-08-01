@@ -61,7 +61,7 @@ function Header({
           <Link to="/profile" className="header__link">
             <div className="header__user-container">
               <p className="header__username">{currentUser.name}</p>
-              {renderAvatar}
+              {renderAvatar()}
               {/* <img src={avatar} alt="User Avatar" className="header__avatar" /> */}
             </div>
           </Link>
