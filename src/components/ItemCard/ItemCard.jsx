@@ -3,8 +3,11 @@ import "./ItemCard.css";
 function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
   const isLoggedIn = !!currentUser;
 
-  // Safe check
-  const isLiked = item.likes.includes(currentUser?._id);
+  // Safely check if the current user has liked this item
+  const isLiked =
+    Array.isArray(item.likes) && currentUser
+      ? item.likes.includes(currentUser._id)
+      : false;
 
   const itemLikeButtonClassName = `item-card__like-button ${
     isLiked ? "item-card__like-button_active" : ""

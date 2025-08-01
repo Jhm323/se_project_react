@@ -57,7 +57,7 @@ function deleteItem(id, token) {
   });
 }
 
-export const addCardLike = (id, token) => {
+const addCardLike = (id, token) => {
   return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "PUT",
     headers: {
@@ -66,7 +66,7 @@ export const addCardLike = (id, token) => {
   }).then(handleResponse);
 };
 
-export const removeCardLike = (id, token) => {
+const removeCardLike = (id, token) => {
   return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "DELETE",
     headers: {
