@@ -271,7 +271,7 @@ function App() {
           <LoginModal
             isOpen={isLoginOpen}
             onClose={() => setLoginOpen(false)}
-            onLogin={handleLogin}
+            onLoginSubmit={handleLogin}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>
