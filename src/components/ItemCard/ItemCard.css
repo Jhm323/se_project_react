@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   font-family: "Cabinet Grotesk";
+  cursor: pointer;
 }
 
 .card__name {
@@ -26,9 +27,11 @@
 }
 
 .item-card__like-button {
-  background: none;
+  background-image: url(../../assets/heart_icon.png);
   border: none;
-  font-size: 1.4rem;
   cursor: pointer;
   transition: transform 0.2s;
+  background-repeat: no-repeat;
+  height: 18px;
+  width: 15px;
 }
