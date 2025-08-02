@@ -3,15 +3,11 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import { currentUserContext } from "../../contexts/CurrentUserContext";
 
-function Main({
-  weatherData,
-  onCardClick,
-  clothingItems,
-  onCardLike,
-  currentUser,
-}) {
+function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+  const { user: currentUser } = useContext(currentUserContext);
 
   return (
     <main>
@@ -23,20 +19,16 @@ function Main({
         </p>
         <ul className="cards__list">
           {clothingItems
-            .filter((item) => {
-              return item.weather === weatherData.type;
-            })
-            .map((item) => {
-              return (
-                <ItemCard
-                  key={item._id}
-                  item={item}
-                  onCardClick={onCardClick}
-                  onCardLike={onCardLike}
-                  currentUser={currentUser}
-                />
-              );
-            })}
+            .filter((item) => item.weather === weatherData.type)
+            .map((item) => (
+              <ItemCard
+                key={item._id}
+                item={item}
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                currentUser={currentUser} // still passed to child
+              />
+            ))}
         </ul>
       </section>
     </main>

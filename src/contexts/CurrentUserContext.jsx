@@ -4,7 +4,7 @@ import { getUserProfile } from "../utils/api";
 export const currentUserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(null); // null until fetched
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,14 +16,10 @@ export function UserProvider({ children }) {
 
     getUserProfile(token)
       .then((data) => {
-        setUser({
-          name: data.name || "User",
-          avatar: data.avatar || "",
-          _id: data._id,
-        });
+        setUser(data);
       })
       .catch((err) => {
-        console.error("Failed to fetch user profile:", err);
+        console.error("Error fetching user profile:", err);
       })
       .finally(() => {
         setLoading(false);
