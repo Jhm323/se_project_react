@@ -15,6 +15,7 @@ import {
   deleteItem,
   updateUserProfile,
 } from "../../utils/api";
+import * as api from "../../utils/api";
 import { signup, signin, checkToken } from "../../utils/auth";
 import {
   currentUserContext,
@@ -72,10 +73,14 @@ function App() {
   const handleCardLike = (item) => {
     const token = localStorage.getItem("jwt");
 
-    // Default likes to empty array if missing or invalid
+    if (!item || !item._id) {
+      console.warn("Invalid item passed to handleCardLike:", item);
+      return;
+    }
+
     const likes = Array.isArray(item.likes) ? item.likes : [];
     const isLiked = likes.includes(currentUser?._id);
-    const likeAction = !isLiked ? api.addCardLike : api.removeCardLike;
+    const likeAction = isLiked ? api.removeCardLike : api.addCardLike;
 
     likeAction(item._id, token)
       .then((updatedCard) => {
@@ -206,6 +211,8 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
+        console.log("Fetched items:", data);
+
         setClothingItems(data);
       })
       .catch(console.error);
@@ -273,6 +280,7 @@ function App() {
             card={selectedCard}
             onClose={closeActiveModal}
             onDeleteCard={handleDeleteCard}
+            // onCardLike={handleCardLike}
           />
 
           <RegisterModal

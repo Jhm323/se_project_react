@@ -15,6 +15,7 @@ function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
   }`;
 
   const handleLike = () => {
+    console.log("Liking item ID:", item._id);
     onCardLike(item);
   };
 
@@ -32,7 +33,7 @@ function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
       {isLoggedIn && (
         <button
           className={itemLikeButtonClassName}
-          onClick={handleLike}
+          onClick={() => handleLike(item)}
           type="button"
           aria-label={isLiked ? "Unlike item" : "Like item"}
         />

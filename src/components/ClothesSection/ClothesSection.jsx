@@ -6,6 +6,8 @@ import "./ClothesSection.css";
 function ClothesSection({ onCardClick, handleAddClick, clothingItems }) {
   const currentUser = useContext(currentUserContext);
 
+  console.log("User items:", userItems);
+
   // Filter items to only show those owned by the current user
   const userItems = clothingItems.filter(
     (item) => item.owner === currentUser?._id
@@ -26,7 +28,13 @@ function ClothesSection({ onCardClick, handleAddClick, clothingItems }) {
       <ul className="clothes-section__items">
         {userItems.map((item) => {
           return (
-            <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
+            <ItemCard
+              key={item._id}
+              item={item}
+              onCardClick={onCardClick}
+              onCardLike={handleCardLike} // pass this from parent if possible
+              currentUser={currentUser}
+            />
           );
         })}
       </ul>

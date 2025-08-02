@@ -70,6 +70,8 @@ function deleteItem(id, token) {
 }
 
 const addCardLike = (id, token) => {
+  console.log("Liking item with ID:", id);
+
   return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "PUT",
     headers: {
