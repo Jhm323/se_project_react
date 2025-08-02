@@ -243,7 +243,7 @@ function App() {
                     currentTemperatureUnit={currentTemperatureUnit}
                     clothingItems={clothingItems}
                     onCardClick={handleCardClick}
-                    onCardLike={handleCardLike}
+                    handleCardLike={handleCardLike}
                   />
                 }
               />

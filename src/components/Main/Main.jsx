@@ -5,7 +5,7 @@ import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import { currentUserContext } from "../../contexts/CurrentUserContext";
 
-function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
+function Main({ weatherData, onCardClick, clothingItems, handleCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const { user: currentUser } = useContext(currentUserContext);
 
@@ -25,7 +25,7 @@ function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
                 key={item._id}
                 item={item}
                 onCardClick={onCardClick}
-                onCardLike={onCardLike}
+                handleCardLike={handleCardLike}
                 currentUser={currentUser} // still passed to child
               />
             ))}

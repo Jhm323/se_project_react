@@ -24,3 +24,11 @@
   border: 1px solid #0000004d;
   border-radius: 10px;
 }
+
+.item-card__like-button {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
