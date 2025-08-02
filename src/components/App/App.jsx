@@ -58,16 +58,18 @@ function App() {
     openModal("preview");
   };
 
-  const handleCardLike = ({ _id, likes }) => {
+  const handleCardLike = (item) => {
     const token = localStorage.getItem("jwt");
-    const isLiked = likes.includes(currentUser._id);
 
+    // Default likes to empty array if missing or invalid
+    const likes = Array.isArray(item.likes) ? item.likes : [];
+    const isLiked = likes.includes(currentUser?._id);
     const likeAction = !isLiked ? api.addCardLike : api.removeCardLike;
 
-    likeAction(_id, token)
+    likeAction(item._id, token)
       .then((updatedCard) => {
         setClothingItems((prevItems) =>
-          prevItems.map((item) => (item._id === _id ? updatedCard : item))
+          prevItems.map((i) => (i._id === item._id ? updatedCard : i))
         );
       })
       .catch((err) => console.error("Error updating like:", err));

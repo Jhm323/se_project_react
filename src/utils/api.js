@@ -16,6 +16,17 @@ const updateUserProfile = (name, avatar) => {
   });
 };
 
+function getUserProfile(token) {
+  return fetch(`${baseUrl}/users/me`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  });
+}
+
 // Public endpoint — no token needed
 
 function getItems() {
@@ -82,4 +93,5 @@ export {
   updateUserProfile,
   addCardLike,
   removeCardLike,
+  getUserProfile,
 };
