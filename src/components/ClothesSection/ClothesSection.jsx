@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { currentUserContext } from "../../contexts/CurrentUserContext";
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 
 function ClothesSection({ onCardClick, handleAddClick, clothingItems }) {
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useContext(currentUserContext);
 
   // Filter items to only show those owned by the current user
   const userItems = clothingItems.filter(

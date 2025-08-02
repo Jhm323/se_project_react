@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import getUserProfile from "../../utils/api";
+import { getUserProfile } from "../../utils/api";
 import defaultAvatar from "../../assets/avatar.svg";
 import "./SideBar.css";
 
-function SideBar({ userName }) {
-  const [avatarUrl, setAvatarUrl] = useState(null);
+function SideBar() {
+  const [userData, setUserData] = useState({ name: "", avatar: "" });
+
+  // const [avatarUrl, setAvatarUrl] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -12,12 +14,13 @@ function SideBar({ userName }) {
 
     getUserProfile(token)
       .then((user) => {
-        if (user.avatar) {
-          setAvatarUrl(user.avatar);
-        }
+        setUserData({
+          name: user.name || "User",
+          avatar: user.avatar || "",
+        });
       })
       .catch((err) => {
-        console.error("Error fetching user profile:", err);
+        console.error("Failed to fetch user profile:", err);
       });
   }, []);
 
@@ -25,10 +28,10 @@ function SideBar({ userName }) {
     <div className="sidebar">
       <img
         className="sidebar__avatar"
-        src={avatarUrl || defaultAvatar}
+        src={userData.avatar || defaultAvatar}
         alt="User's Avatar"
       />
-      <p className="sidebar__username">{userName}</p>
+      <p className="sidebar__username">{userData.name}</p>
     </div>
   );
 }
