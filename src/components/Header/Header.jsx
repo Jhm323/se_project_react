@@ -12,7 +12,7 @@ function Header({
   setLoginOpen,
   setRegisterOpen,
 }) {
-  const currentUser = useContext(currentUserContext);
+  const { user: currentUser } = useContext(currentUserContext);
 
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
