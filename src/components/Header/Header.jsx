@@ -42,46 +42,48 @@ function Header({
   return (
     <header className="header">
       <Link to="/">
-        <img className="header__logo" alt="header ogo" src={logo} />
+        <img className="header__logo" alt="header logo" src={logo} />
       </Link>
       <p className="header__date-and-location">
         {currentDate}, {weatherData.city}
       </p>
-      <ToggleSwitch />
-      {isLoggedIn && currentUser ? (
-        <>
-          <button
-            onClick={handleAddClick}
-            type="button"
-            className="header__add-clothes-btn"
-          >
-            +Add clothes
-          </button>
+      <div className="header__group-right">
+        <ToggleSwitch />
+        {isLoggedIn && currentUser ? (
+          <>
+            <button
+              onClick={handleAddClick}
+              type="button"
+              className="header__add-clothes-btn"
+            >
+              +Add clothes
+            </button>
 
-          <Link to="/profile" className="header__link">
-            <div className="header__user-container">
-              <p className="header__username">{currentUser.name}</p>
-              {renderAvatar()}
-              {/* <img src={avatar} alt="User Avatar" className="header__avatar" /> */}
-            </div>
-          </Link>
-        </>
-      ) : (
-        <nav className="header__auth-buttons">
-          <button
-            onClick={() => setLoginOpen(true)}
-            className="header__login-btn"
-          >
-            Log In
-          </button>
-          <button
-            onClick={() => setRegisterOpen(true)}
-            className="header__register-btn"
-          >
-            Register
-          </button>
-        </nav>
-      )}
+            <Link to="/profile" className="header__link">
+              <div className="header__user-container">
+                <p className="header__username">{currentUser.name}</p>
+                {renderAvatar()}
+                {/* <img src={avatar} alt="User Avatar" className="header__avatar" /> */}
+              </div>
+            </Link>
+          </>
+        ) : (
+          <nav className="header__auth-buttons">
+            <button
+              onClick={() => setLoginOpen(true)}
+              className="header__login-btn"
+            >
+              Log In
+            </button>
+            <button
+              onClick={() => setRegisterOpen(true)}
+              className="header__register-btn"
+            >
+              Register
+            </button>
+          </nav>
+        )}
+      </div>
     </header>
   );
 }

@@ -1,5 +1,7 @@
 .header {
   display: flex;
+  justify-content: space-between;
+
   align-items: center;
   padding: 32px 0px 28px;
   font-family: "Cabinet Grotesk";
@@ -65,4 +67,18 @@
   justify-content: center;
   align-items: center;
   user-select: none;
+}
+.header__group-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__login-btn,
+.header__register-btn {
+  border: none;
+  background: none;
+  outline: none;
+  box-shadow: none;
 }
