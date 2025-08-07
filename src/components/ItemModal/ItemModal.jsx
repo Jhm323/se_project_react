@@ -5,11 +5,14 @@ import { currentUserContext } from "../../contexts/CurrentUserContext";
 function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
   const currentUser = useContext(currentUserContext);
 
+  // Step 2: Add this guard clause here to prevent rendering if card is null or undefined
+  if (!card) return null;
+
   // Check ownership
-  const isOwn = card.owner === currentUser?._id;
+  const isOwn = card.owner?._id === currentUser?._id;
 
   return (
-    <div className={`modal ${activeModal === "preview" && "modal_opened"}`}>
+    <div className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_image">
         <button
           onClick={onClose}

@@ -48,7 +48,7 @@ function App() {
   });
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setSelectedCard] = useState({});
+  const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
   const [isLoginOpen, setLoginOpen] = useState(false);
@@ -63,7 +63,10 @@ function App() {
 
   // Modal control
   const openModal = (type) => setActiveModal(type);
-  const closeActiveModal = () => setActiveModal("");
+  const closeActiveModal = () => {
+    setActiveModal("");
+    setSelectedCard(null);
+  };
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -84,6 +87,7 @@ function App() {
 
     likeAction(item._id, token)
       .then((updatedCard) => {
+        console.log("Updated card:", updatedCard);
         setClothingItems((prevItems) =>
           prevItems.map((i) => (i._id === item._id ? updatedCard : i))
         );
@@ -243,7 +247,7 @@ function App() {
                     currentTemperatureUnit={currentTemperatureUnit}
                     clothingItems={clothingItems}
                     onCardClick={handleCardClick}
-                    handleCardLike={handleCardLike}
+                    onCardLike={handleCardLike}
                   />
                 }
               />
@@ -280,7 +284,6 @@ function App() {
             card={selectedCard}
             onClose={closeActiveModal}
             onDeleteCard={handleDeleteCard}
-            // onCardLike={handleCardLike}
           />
 
           <RegisterModal

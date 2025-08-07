@@ -9,31 +9,27 @@ function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
       ? item.likes.some((id) => id === currentUser._id)
       : false;
 
-  // Dynamic class name for the like button
+  // Like button classes, dynamic
   const itemLikeButtonClassName = `item-card__like-button ${
     isLiked ? "item-card__like-button_active" : ""
   }`;
 
-  const handleLike = () => {
+  const handleLike = (e) => {
+    e.stopPropagation();
     console.log("Liking item ID:", item._id);
     onCardLike(item);
   };
 
   return (
-    <li className="card">
+    <li className="card" onClick={() => onCardClick(item)}>
       <h2 className="card__name">{item.name}</h2>
-      <img
-        onClick={() => onCardClick(item)}
-        className="card__image"
-        src={item.imageUrl}
-        alt={item.name}
-      />
+      <img className="card__image" src={item.imageUrl} alt={item.name} />
 
       {/* Like button only visible if logged in */}
       {isLoggedIn && (
         <button
           className={itemLikeButtonClassName}
-          onClick={() => handleLike(item)}
+          onClick={handleLike}
           type="button"
           aria-label={isLiked ? "Unlike item" : "Like item"}
         />

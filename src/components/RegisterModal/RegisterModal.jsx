@@ -42,7 +42,7 @@ function RegisterModal({ isOpen, onClose, onRegister }) {
     >
       {" "}
       <label htmlFor="name" className="modal__label">
-        {" "}
+        Name
         <input
           type="text"
           className="modal__input"
@@ -60,7 +60,7 @@ function RegisterModal({ isOpen, onClose, onRegister }) {
         {" "}
         <input
           type="url"
-          name="link"
+          name="avatar"
           className="modal__input"
           id="avatar"
           placeholder="Enter avatar image URL"
@@ -68,7 +68,7 @@ function RegisterModal({ isOpen, onClose, onRegister }) {
           value={avatar}
           onChange={handleSetAvatar}
         />
-        <span className="modal__error" id="place-avatar-error" />{" "}
+        <span className="modal__error" id="avatar-error" />{" "}
       </label>{" "}
       <label htmlFor="email" className="modal__label">
         Email{" "}
@@ -81,7 +81,7 @@ function RegisterModal({ isOpen, onClose, onRegister }) {
           value={email}
           onChange={handleSetEmail}
         />
-        <span className="modal__error" id="place-email-error" />{" "}
+        <span className="modal__error" id="email-error" />{" "}
       </label>{" "}
       <label htmlFor="password" className="modal__label">
         Password{" "}
@@ -94,7 +94,7 @@ function RegisterModal({ isOpen, onClose, onRegister }) {
           value={password}
           onChange={handleSetPassword}
         />
-        <span className="modal__error" id="place-password-error" />{" "}
+        <span className="modal__error" id="password-error" />{" "}
       </label>{" "}
     </ModalWithForm>
   );
