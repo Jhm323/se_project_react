@@ -8,6 +8,7 @@ import "./Profile.css";
 
 function Profile({
   onCardClick,
+  onCardLike,
   clothingItems,
   userName,
   handleAddClick,
@@ -39,6 +40,7 @@ function Profile({
       <section className="profile__clothes-section">
         <ClothesSection
           onCardClick={onCardClick}
+          onCardLike={onCardLike}
           clothingItems={clothingItems}
           handleAddClick={handleAddClick}
         />

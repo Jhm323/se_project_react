@@ -257,6 +257,7 @@ function App() {
                   <ProtectedRoute isLoggedIn={isLoggedIn}>
                     <Profile
                       onCardClick={handleCardClick}
+                      onCardLike={handleCardLike}
                       clothingItems={clothingItems}
                       userName={currentUser?.name}
                       handleAddClick={handleAddClick}

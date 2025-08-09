@@ -3,7 +3,12 @@ import { currentUserContext } from "../../contexts/CurrentUserContext";
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 
-function ClothesSection({ onCardClick, handleAddClick, clothingItems }) {
+function ClothesSection({
+  onCardClick,
+  onCardLike,
+  handleAddClick,
+  clothingItems,
+}) {
   const currentUser = useContext(currentUserContext);
 
   // Filter items to only show those owned by the current user
@@ -30,6 +35,7 @@ function ClothesSection({ onCardClick, handleAddClick, clothingItems }) {
               key={item._id}
               item={item}
               onCardClick={onCardClick}
+              onCardLike={onCardLike}
               currentUser={currentUser}
             />
           );
