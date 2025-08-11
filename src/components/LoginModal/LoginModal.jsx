@@ -7,6 +7,7 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -22,6 +23,7 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
     e.preventDefault();
     // Clear any prior errors
     setErrorMessage("");
+    setIsLoading(true);
 
     signin(email, password)
       .then((data) => {
@@ -31,20 +33,33 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
         onLoginSubmit(data.token);
         setEmail("");
         setPassword("");
+        onClose();
       })
       .catch((err) => {
         console.error("Login failed:", err);
-        setErrorMessage("Invalid email or password.");
+        if (err.message?.includes("NetworkError")) {
+          setErrorMessage("Network issue. Please check your connection.");
+        } else if (err.status === 401) {
+          setErrorMessage("Invalid email or password.");
+        } else {
+          setErrorMessage(
+            err.message || "Something went wrong. Please try again later."
+          );
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
     <ModalWithForm
       title="Log in"
-      buttonText="Log in"
+      buttonText={isLoading ? "Logging in..." : "Log in"}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isDisabled={isLoading} // optional: disable form when loading
     >
       <label htmlFor="email" className="modal__label">
         Email{" "}
@@ -57,6 +72,7 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
           required
           value={email}
           onChange={handleEmailChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="place-name-error" />
       </label>
@@ -71,6 +87,7 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
           required
           value={password}
           onChange={handlePasswordChange}
+          disabled={isLoading}
         />
       </label>
       {errorMessage && <p className="modal__error">{errorMessage}</p>}

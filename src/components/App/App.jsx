@@ -36,8 +36,19 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 function App() {
   const navigate = useNavigate();
 
-  const { user: currentUser, setUser: setCurrentUser } =
-    useContext(currentUserContext);
+  // const { user: currentUser, setUser: setCurrentUser } =
+  //   useContext(currentUserContext);
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  // Update isLoggedIn when currentUser changes
+  useEffect(() => {
+    if (currentUser?.user?._id) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [currentUser]);
 
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -129,18 +140,12 @@ function App() {
       });
   };
 
-  const handleLogin = ({ email, password }) => {
-    signin(email, password)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
-          setIsLoggedIn(true);
-          setLoginOpen(false);
-          //  Fetch user profile or name here
-          fetchUserAndData(res.token);
-        }
-      })
-      .catch(console.error);
+  const handleLogin = (token) => {
+    setIsLoggedIn(true);
+    setLoginOpen(false);
+    //  Fetch user profile or name here
+    fetchUserAndData(res.token);
+    navigate("profile");
   };
 
   const handleLogOut = () => {
@@ -212,14 +217,28 @@ function App() {
   }, []);
 
   // on mount: get items
-  useEffect(() => {
-    getItems()
-      .then((data) => {
-        console.log("Fetched items:", data);
 
-        setClothingItems(data);
+  useEffect(() => {
+    //  API Items First
+    api
+      .getItems()
+      .then((apiItems) => {
+        console.log("Items from API:", apiItems);
+
+        if (apiItems && apiItems.length > 0) {
+          // Use API items if available
+          setClothingItems(apiItems);
+        } else {
+          // Fallback to default items if API returns empty
+          console.log("No API items, using default");
+          setClothingItems(defaultClothingItems);
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.log("API error, using default items:", err);
+        // Fallback to default items if API fails
+        setClothingItems(defaultClothingItems);
+      });
   }, []);
 
   return (

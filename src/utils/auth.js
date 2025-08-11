@@ -5,7 +5,7 @@ const handleResponse = (res) => {
   if (res.ok) return res.json();
   return res.json().then((data) => {
     const message = data?.message || `Error: ${res.status}`;
-    return Promise.reject(message);
+    return Promise.reject({ status: res.status, message });
   });
 };
 

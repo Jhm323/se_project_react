@@ -1,24 +1,32 @@
 import "./ItemCard.css";
 
-function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
-  const isLoggedIn = !!currentUser;
+const ItemCard = ({
+  item,
+  onCardClick,
+  onCardLike,
+  currentUser,
+  isLoggedIn,
+}) => {
+  const itemLikes = item.likes || [];
 
-  // Safely check if the current user has liked this item
-  const isLiked =
-    Array.isArray(item.likes) && currentUser
-      ? item.likes.some((id) => id === currentUser._id)
-      : false;
+  // Check if item was liked by current user
+  const isLiked = currentUser && itemLikes.some((id) => id === currentUser._id);
+
+  // Only show like button for logged-in users
+  const shouldShowLIkeButton = isLoggedIn;
 
   // Like button classes, dynamic
   const itemLikeButtonClassName = `item-card__like-button ${
     isLiked ? "item-card__like-button_active" : ""
   }`;
 
-  const handleLike = (e) => {
+  const handleLike = () => {
     e.stopPropagation();
-    console.log("Liking item ID:", item._id);
-    onCardLike(item);
+    onCardLike({ id: item._id, isLiked });
   };
+
+  console.log("item:", item);
+  console.log("item.likes:", item.likes);
 
   return (
     <li className="card" onClick={() => onCardClick(item)}>
@@ -26,16 +34,15 @@ function ItemCard({ item, onCardClick, onCardLike, currentUser }) {
       <img className="card__image" src={item.imageUrl} alt={item.name} />
 
       {/* Like button only visible if logged in */}
-      {isLoggedIn && (
+      {shouldShowLIkeButton && (
         <button
           className={itemLikeButtonClassName}
           onClick={handleLike}
           type="button"
-          aria-label={isLiked ? "Unlike item" : "Like item"}
         />
       )}
     </li>
   );
-}
+};
 
 export default ItemCard;
