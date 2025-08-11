@@ -29,7 +29,7 @@ export function getItems(token) {
   return fetch(`${BASE_URL}/items`, {
     method: "GET",
     headers: {
-      // ...getAuthHeaders(token),
+      ...getAuthHeaders(token),
     },
   }).then(handleResponse);
 }

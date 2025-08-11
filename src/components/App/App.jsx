@@ -141,7 +141,7 @@ function App() {
     setIsLoggedIn(true);
     setLoginOpen(false);
     //  Fetch user profile or name here
-    fetchUserAndData(res.token);
+    fetchUserAndData(token);
     navigate("profile");
   };
 
@@ -208,31 +208,6 @@ function App() {
     }
   }, []);
 
-  // on mount: get items
-
-  // useEffect(() => {
-  //   //  API Items First
-  //   api
-  //     .getItems()
-  //     .then((apiItems) => {
-  //       console.log("Items from API:", apiItems);
-
-  //       if (apiItems && apiItems.length > 0) {
-  //         // Use API items if available
-  //         setClothingItems(apiItems);
-  //       } else {
-  //         // Fallback to default items if API returns empty
-  //         console.log("No API items, using default");
-  //         setClothingItems(defaultClothingItems);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log("API error, using default items:", err);
-  //       // Fallback to default items if API fails
-  //       setClothingItems(defaultClothingItems);
-  //     });
-  // }, []);
-
   return (
     <UserProvider>
       <CurrentTemperatureUnitContext.Provider
@@ -259,6 +234,7 @@ function App() {
                     clothingItems={clothingItems}
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
+                    currentUser={currentUser}
                   />
                 }
               />
