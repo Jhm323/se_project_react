@@ -13,20 +13,17 @@ const ItemCard = ({
   const isLiked = currentUser && itemLikes.some((id) => id === currentUser._id);
 
   // Only show like button for logged-in users
-  const shouldShowLIkeButton = isLoggedIn;
+  const shouldShowLikeButton = isLoggedIn;
 
   // Like button classes, dynamic
   const itemLikeButtonClassName = `item-card__like-button ${
     isLiked ? "item-card__like-button_active" : ""
   }`;
 
-  const handleLike = () => {
+  const handleLike = (e) => {
     e.stopPropagation();
     onCardLike({ id: item._id, isLiked });
   };
-
-  console.log("item:", item);
-  console.log("item.likes:", item.likes);
 
   return (
     <li className="card" onClick={() => onCardClick(item)}>
@@ -34,7 +31,7 @@ const ItemCard = ({
       <img className="card__image" src={item.imageUrl} alt={item.name} />
 
       {/* Like button only visible if logged in */}
-      {shouldShowLIkeButton && (
+      {shouldShowLikeButton && (
         <button
           className={itemLikeButtonClassName}
           onClick={handleLike}

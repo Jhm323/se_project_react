@@ -36,14 +36,11 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 function App() {
   const navigate = useNavigate();
 
-  // const { user: currentUser, setUser: setCurrentUser } =
-  //   useContext(currentUserContext);
-
   const [currentUser, setCurrentUser] = useState(null);
 
   // Update isLoggedIn when currentUser changes
   useEffect(() => {
-    if (currentUser?.user?._id) {
+    if (currentUser?._id) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
@@ -160,17 +157,12 @@ function App() {
   };
 
   const fetchUserAndData = (token) => {
-    checkToken(token)
-      .then((data) => {
-        setCurrentUser(data);
-        setIsLoggedIn(true);
-      })
-      .catch((err) => {
-        console.error("Token check failed", err);
-        setIsLoggedIn(false);
-      });
+    checkToken(token).then((data) => {
+      setCurrentUser(data);
+      setIsLoggedIn(true);
+    });
 
-    getItems()
+    getItems(token)
       .then((data) => setClothingItems(data))
       .catch(console.error);
   };
@@ -218,28 +210,28 @@ function App() {
 
   // on mount: get items
 
-  useEffect(() => {
-    //  API Items First
-    api
-      .getItems()
-      .then((apiItems) => {
-        console.log("Items from API:", apiItems);
+  // useEffect(() => {
+  //   //  API Items First
+  //   api
+  //     .getItems()
+  //     .then((apiItems) => {
+  //       console.log("Items from API:", apiItems);
 
-        if (apiItems && apiItems.length > 0) {
-          // Use API items if available
-          setClothingItems(apiItems);
-        } else {
-          // Fallback to default items if API returns empty
-          console.log("No API items, using default");
-          setClothingItems(defaultClothingItems);
-        }
-      })
-      .catch((err) => {
-        console.log("API error, using default items:", err);
-        // Fallback to default items if API fails
-        setClothingItems(defaultClothingItems);
-      });
-  }, []);
+  //       if (apiItems && apiItems.length > 0) {
+  //         // Use API items if available
+  //         setClothingItems(apiItems);
+  //       } else {
+  //         // Fallback to default items if API returns empty
+  //         console.log("No API items, using default");
+  //         setClothingItems(defaultClothingItems);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log("API error, using default items:", err);
+  //       // Fallback to default items if API fails
+  //       setClothingItems(defaultClothingItems);
+  //     });
+  // }, []);
 
   return (
     <UserProvider>

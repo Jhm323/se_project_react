@@ -18,6 +18,7 @@ function getAuthHeaders(token) {
 
 export function getUserProfile(token) {
   return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
     headers: {
       ...getAuthHeaders(token),
     },
@@ -26,8 +27,9 @@ export function getUserProfile(token) {
 
 export function getItems(token) {
   return fetch(`${BASE_URL}/items`, {
+    method: "GET",
     headers: {
-      ...getAuthHeaders(token),
+      // ...getAuthHeaders(token),
     },
   }).then(handleResponse);
 }
