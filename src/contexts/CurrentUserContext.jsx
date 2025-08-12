@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { getUserProfile } from "../utils/api";
 
-export const currentUserContext = createContext();
+export const CurrentUserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -27,8 +27,8 @@ export function UserProvider({ children }) {
   }, []);
 
   return (
-    <currentUserContext.Provider value={{ user, setUser, loading }}>
+    <CurrentUserContext.Provider value={{ user, setUser, loading }}>
       {children}
-    </currentUserContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }

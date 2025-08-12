@@ -1,9 +1,9 @@
 import "./ItemModal.css";
 import { useContext } from "react";
-import { currentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
-  const currentUser = useContext(currentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   // Step 2: Add this guard clause here to prevent rendering if card is null or undefined
   if (!card) return null;

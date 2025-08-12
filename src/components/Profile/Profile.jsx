@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../SideBar/SideBar";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { updateUserProfile } from "../../utils/api";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import "./Profile.css";
 
@@ -15,6 +16,8 @@ function Profile({
   handleLogOut,
   handleUpdateUser,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+
   const [isEditProfileOpen, setEditProfileOpen] = useState(false);
 
   function handleEditProfileClick() {
@@ -23,6 +26,22 @@ function Profile({
 
   function closeAllModals() {
     setEditProfileOpen(false);
+  }
+
+  /**
+   * Filters clothing items that belong to the current user.
+   *
+   * @param {Array} clothingItems - List of all clothing items.
+   * @param {string} userId - The ID of the current user.
+   * @returns {Array} - Filtered clothing items belonging to the user.
+   */
+  function filterUserClothing(clothingItems, userId) {
+    if (!Array.isArray(clothingItems) || !userId) {
+      console.warn("Invalid input to filterUserClothing");
+      return [];
+    }
+
+    return clothingItems.filter((item) => item.owner === userId);
   }
 
   return (
@@ -43,6 +62,7 @@ function Profile({
           onCardLike={onCardLike}
           clothingItems={clothingItems}
           handleAddClick={handleAddClick}
+          filterUserClothing={filterUserClothing}
         />
       </section>
 

@@ -18,7 +18,7 @@ import {
 import * as api from "../../utils/api";
 import { signup, signin, checkToken } from "../../utils/auth";
 import {
-  currentUserContext,
+  CurrentUserContext,
   UserProvider,
 } from "../../contexts/CurrentUserContext";
 
@@ -163,7 +163,9 @@ function App() {
     });
 
     getItems(token)
-      .then((data) => setClothingItems(data))
+      .then((data) => {
+        setClothingItems(data);
+      })
       .catch(console.error);
   };
 
