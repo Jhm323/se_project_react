@@ -8,6 +8,8 @@
 .sidebar__avatar {
   padding: 0px 16px 0px 0px;
   margin: 0px;
+  width: 55px;
+  height: 55px;
 }
 .sidebar__username {
   display: flex;
