@@ -108,15 +108,6 @@ function App() {
 
   const handleAddClick = () => openModal("add-garment");
 
-  // const handleUpdateUser = ({ name, avatar }) => {
-  //   const token = localStorage.getItem("jwt");
-  //   return updateUserProfile({ name, avatar }, token)
-  //     .then((updatedUser) => {
-  //       setCurrentUser(updatedUser);
-  //     })
-  //     .catch((err) => console.log("Error updating user:", err));
-  // };
-
   const handleUpdateUser = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
     return updateUserProfile({ name, avatar }, token)
