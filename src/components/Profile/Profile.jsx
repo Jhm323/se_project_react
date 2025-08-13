@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../SideBar/SideBar";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
-import { updateUserProfile } from "../../utils/api";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import "./Profile.css";
@@ -13,12 +12,10 @@ function Profile({
   clothingItems,
   handleAddClick,
   handleLogOut,
-  handleUpdateUser,
+  onUpdateUser,
   isLoggedIn,
 }) {
   const currentUser = useContext(CurrentUserContext);
-
-  console.log("Profile - currentUser:", currentUser);
 
   // Handle loading or no user case
   if (!currentUser) {
@@ -27,7 +24,6 @@ function Profile({
 
   // Now it's safe to access currentUser._id
   const userId = currentUser._id;
-
   const [isEditProfileOpen, setEditProfileOpen] = useState(false);
 
   function handleEditProfileClick() {
@@ -48,8 +44,6 @@ function Profile({
   }
 
   const userItems = filterUserClothing(clothingItems, currentUser._id);
-
-  console.log("Profile - onCardLike function:", onCardLike);
 
   return (
     <div className="profile">
@@ -78,7 +72,7 @@ function Profile({
       <EditProfileModal
         isOpen={isEditProfileOpen}
         onClose={closeAllModals}
-        onUpdateUser={handleUpdateUser}
+        onUpdateUser={onUpdateUser}
       />
     </div>
   );

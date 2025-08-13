@@ -1,35 +1,19 @@
-import { useEffect, useState } from "react";
-import { getUserProfile } from "../../utils/api";
+import { useContext } from "react";
 import defaultAvatar from "../../assets/avatar.svg";
 import "./SideBar.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function SideBar() {
-  const [userData, setUserData] = useState({ name: "", avatar: "" });
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (!token) return;
-
-    getUserProfile(token)
-      .then((user) => {
-        setUserData({
-          name: user.name || "User",
-          avatar: user.avatar || "",
-        });
-      })
-      .catch((err) => {
-        console.error("Failed to fetch user profile:", err);
-      });
-  }, []);
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <div className="sidebar">
       <img
         className="sidebar__avatar"
-        src={userData.avatar || defaultAvatar}
+        src={currentUser.avatar || defaultAvatar}
         alt="User's Avatar"
       />
-      <p className="sidebar__username">{userData.name}</p>
+      <p className="sidebar__username">{currentUser.name || "User"}</p>
     </div>
   );
 }

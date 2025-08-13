@@ -108,15 +108,27 @@ function App() {
 
   const handleAddClick = () => openModal("add-garment");
 
-  function handleUpdateUser({ name, avatar }) {
-    updateUserProfile(name, avatar)
+  // const handleUpdateUser = ({ name, avatar }) => {
+  //   const token = localStorage.getItem("jwt");
+  //   return updateUserProfile({ name, avatar }, token)
+  //     .then((updatedUser) => {
+  //       setCurrentUser(updatedUser);
+  //     })
+  //     .catch((err) => console.log("Error updating user:", err));
+  // };
+
+  const handleUpdateUser = ({ name, avatar }) => {
+    const token = localStorage.getItem("jwt");
+    return updateUserProfile({ name, avatar }, token)
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
+        return updatedUser; // Return this so the child component can access it
       })
       .catch((err) => {
-        console.error("Error updating user:", err);
+        console.log("Error updating user:", err);
+        throw err; // Re-throw so the child component can catch it
       });
-  }
+  };
 
   const handleRegister = ({ name, avatar, email, password }) => {
     signup(name, avatar, email, password)
@@ -256,8 +268,8 @@ function App() {
                       handleAddClick={handleAddClick}
                       isLoggedIn={isLoggedIn}
                       handleLogOut={handleLogOut}
-                      handleUpdateUser={handleUpdateUser}
                       currentUser={currentUser}
+                      onUpdateUser={handleUpdateUser}
                     />
                   </ProtectedRoute>
                 }

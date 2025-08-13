@@ -7,6 +7,7 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (currentUser) {
@@ -17,7 +18,19 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onUpdateUser({ name, avatar });
+
+    if (!name || !avatar) {
+      setError("Please provide both a name and an avatar.");
+      return;
+    }
+    onUpdateUser({ name, avatar })
+      .then((updatedUser) => {
+        onClose();
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to update profile. Please try again.");
+      });
   }
 
   return (
@@ -25,6 +38,7 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
       <div className="modal__content">
         <button className="modal__close" onClick={onClose} />
         <h2 className="modal__title">Edit Profile</h2>
+        {error && <p className="modal__error">{error}</p>}
         <form onSubmit={handleSubmit} className="modal__form">
           <label className="modal__label">
             Name:
