@@ -11,7 +11,6 @@ function Profile({
   onCardClick,
   onCardLike,
   clothingItems,
-  userName,
   handleAddClick,
   handleLogOut,
   handleUpdateUser,
@@ -41,7 +40,7 @@ function Profile({
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar userName={userName} />
+        <SideBar userName={currentUser.name} />
         <button className="profile__button" onClick={handleEditProfileClick}>
           Change Profile Data
         </button>
@@ -54,9 +53,11 @@ function Profile({
         <ClothesSection
           onCardClick={onCardClick}
           onCardLike={onCardLike}
-          clothingItems={clothingItems}
+          filterUserClothing={filterUserClothing}
           handleAddClick={handleAddClick}
           isLoggedIn={isLoggedIn}
+          clothingItems={clothingItems}
+          currentUser={currentUser}
         />
       </section>
 

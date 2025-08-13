@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 
@@ -9,14 +7,13 @@ function ClothesSection({
   handleAddClick,
   clothingItems,
   isLoggedIn,
+  currentUser,
+  filterUserClothing,
 }) {
-  const currentUser = useContext(CurrentUserContext);
-
   // Filter items to only show those owned by the current user
 
-  const userItems = clothingItems.filter(
-    (item) => item.owner === currentUser?._id
-  );
+  const userItems = filterUserClothing(clothingItems, currentUser._id);
+
   return (
     <div className="clothes-section">
       <div className="clothes-section__content">
@@ -37,7 +34,7 @@ function ClothesSection({
               item={item}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
-              currentUser={currentUser?.user}
+              currentUser={currentUser._id}
               isLoggedIn={isLoggedIn}
             />
           );

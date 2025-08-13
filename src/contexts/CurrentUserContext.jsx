@@ -16,7 +16,6 @@ export function UserProvider({ children }) {
 
     getUserProfile(token)
       .then((data) => {
-        console.log("User profile fetched successfully:", data); // Add this
         setUser(data);
       })
       .catch((err) => {
@@ -27,9 +26,6 @@ export function UserProvider({ children }) {
         setLoading(false);
       });
   }, []);
-
-  // Add this console log to track user changes
-  console.log("CurrentUserContext user value:", user);
 
   return (
     <CurrentUserContext.Provider value={user}>
