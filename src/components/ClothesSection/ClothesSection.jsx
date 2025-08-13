@@ -14,6 +14,8 @@ function ClothesSection({
 
   const userItems = filterUserClothing(clothingItems, currentUser._id);
 
+  console.log("ClothesSection - onCardLike function:", onCardLike);
+
   return (
     <div className="clothes-section">
       <div className="clothes-section__content">

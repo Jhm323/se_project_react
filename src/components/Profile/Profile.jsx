@@ -18,6 +18,16 @@ function Profile({
 }) {
   const currentUser = useContext(CurrentUserContext);
 
+  console.log("Profile - currentUser:", currentUser);
+
+  // Handle loading or no user case
+  if (!currentUser) {
+    return <div>Loading...</div>;
+  }
+
+  // Now it's safe to access currentUser._id
+  const userId = currentUser._id;
+
   const [isEditProfileOpen, setEditProfileOpen] = useState(false);
 
   function handleEditProfileClick() {
@@ -36,6 +46,10 @@ function Profile({
 
     return clothingItems.filter((item) => item.owner === userId);
   }
+
+  const userItems = filterUserClothing(clothingItems, currentUser._id);
+
+  console.log("Profile - onCardLike function:", onCardLike);
 
   return (
     <div className="profile">
@@ -56,7 +70,7 @@ function Profile({
           filterUserClothing={filterUserClothing}
           handleAddClick={handleAddClick}
           isLoggedIn={isLoggedIn}
-          clothingItems={clothingItems}
+          clothingItems={userItems}
           currentUser={currentUser}
         />
       </section>

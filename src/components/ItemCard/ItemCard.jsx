@@ -20,6 +20,10 @@ const ItemCard = ({
 
   const handleLike = (e) => {
     e.stopPropagation();
+
+    console.log("Before click - isLiked:", isLiked);
+    console.log("Button className:", itemLikeButtonClassName);
+
     onCardLike({ id: item._id, isLiked });
   };
 

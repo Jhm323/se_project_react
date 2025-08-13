@@ -257,6 +257,7 @@ function App() {
                       isLoggedIn={isLoggedIn}
                       handleLogOut={handleLogOut}
                       handleUpdateUser={handleUpdateUser}
+                      currentUser={currentUser}
                     />
                   </ProtectedRoute>
                 }
