@@ -9,8 +9,11 @@ function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
   if (!card) return null;
 
   // Check ownership
-  const isOwn = card.owner?._id === currentUser?._id;
+  const isOwn = card.owner === currentUser._id;
 
+  console.log("card.owner:", card.owner);
+  console.log("currentUser:", currentUser);
+  console.log("isOwn:", isOwn);
   return (
     <div className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_image">
