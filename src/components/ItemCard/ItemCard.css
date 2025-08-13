@@ -27,7 +27,7 @@
   border-radius: 10px;
 }
 
-/* .item-card__like-button {
+.item-card__like-button {
   background-image: url(../../assets/heart_icon.png);
   background-repeat: no-repeat;
   background-position: center;
@@ -42,23 +42,4 @@
 
 .item-card__like-button_active {
   background-image: url(../../assets/heart_liked.png);
-} */
-
-.item-card__like-button {
-  background-color: gray; /* temporary */
-  /* background-image: url(../../assets/heart_icon.png); */
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  right: 95px;
-  top: 13px;
-  width: 30px;
-  height: 30px;
-}
-
-.item-card__like-button_active {
-  background-color: red; /* temporary */
-  /* background-image: url(../../assets/heart_liked.png); */
 }
