@@ -1,0 +1,8 @@
+.modal__close-cancle-confirm {
+  background-image: url(../../assets/preview_close.svg);
+  height: 16px;
+  width: 16px;
+  top: 26px;
+  right: 26px;
+  cursor: pointer;
+}
