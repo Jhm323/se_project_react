@@ -8,15 +8,15 @@ function ClothesSection({
   onCardLike,
   handleAddClick,
   clothingItems,
+  isLoggedIn,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
   // Filter items to only show those owned by the current user
 
   const userItems = clothingItems.filter(
-    (item) => item.owner === currentUser?.user?._id
+    (item) => item.owner === currentUser?._id
   );
-
   return (
     <div className="clothes-section">
       <div className="clothes-section__content">
@@ -37,7 +37,8 @@ function ClothesSection({
               item={item}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
-              currentUser={currentUser}
+              currentUser={currentUser?.user}
+              isLoggedIn={isLoggedIn}
             />
           );
         })}

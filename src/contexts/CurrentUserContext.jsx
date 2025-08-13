@@ -16,18 +16,23 @@ export function UserProvider({ children }) {
 
     getUserProfile(token)
       .then((data) => {
+        console.log("User profile fetched successfully:", data); // Add this
         setUser(data);
       })
       .catch((err) => {
         console.error("Error fetching user profile:", err);
+        setUser(null); // Make sure to set user to null on error
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
 
+  // Add this console log to track user changes
+  console.log("CurrentUserContext user value:", user);
+
   return (
-    <CurrentUserContext.Provider value={{ user, setUser, loading }}>
+    <CurrentUserContext.Provider value={user}>
       {children}
     </CurrentUserContext.Provider>
   );

@@ -7,10 +7,8 @@ const ItemCard = ({
   currentUser,
   isLoggedIn,
 }) => {
-  const itemLikes = item.likes || [];
-
   // Check if item was liked by current user
-  const isLiked = currentUser && itemLikes.some((id) => id === currentUser._id);
+  const isLiked = item.likes.some((id) => id === currentUser?._id);
 
   // Only show like button for logged-in users
   const shouldShowLikeButton = isLoggedIn;

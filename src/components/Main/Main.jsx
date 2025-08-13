@@ -10,6 +10,7 @@ function Main({
   clothingItems,
   onCardLike,
   currentUser,
+  isLoggedIn,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
@@ -30,7 +31,8 @@ function Main({
                 item={item}
                 onCardClick={onCardClick}
                 onCardLike={onCardLike}
-                currentUser={currentUser} // still passed to child
+                currentUser={currentUser}
+                isLoggedIn={isLoggedIn}
               />
             ))}
         </ul>

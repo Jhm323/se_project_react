@@ -81,26 +81,29 @@ function App() {
     openModal("preview");
   };
 
-  const handleCardLike = (item) => {
+  const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
-
-    if (!item || !item._id) {
-      console.warn("Invalid item passed to handleCardLike:", item);
-      return;
-    }
-
-    const likes = Array.isArray(item.likes) ? item.likes : [];
-    const isLiked = likes.includes(currentUser?._id);
-    const likeAction = isLiked ? api.removeCardLike : api.addCardLike;
-
-    likeAction(item._id, token)
-      .then((updatedCard) => {
-        console.log("Updated card:", updatedCard);
-        setClothingItems((prevItems) =>
-          prevItems.map((i) => (i._id === item._id ? updatedCard : i))
-        );
-      })
-      .catch((err) => console.error("Error updating like:", err));
+    !isLiked
+      ? api
+          .addCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard.data : item))
+            );
+          })
+          .catch((err) => {
+            console.log("Error adding like:", err);
+          })
+      : api
+          .removeCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard.data : item))
+            );
+          })
+          .catch((err) => {
+            console.log("Error removing like:", err);
+          });
   };
 
   const handleAddClick = () => openModal("add-garment");
@@ -237,6 +240,7 @@ function App() {
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
                     currentUser={currentUser}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               />

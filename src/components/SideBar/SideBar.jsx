@@ -6,8 +6,6 @@ import "./SideBar.css";
 function SideBar() {
   const [userData, setUserData] = useState({ name: "", avatar: "" });
 
-  // const [avatarUrl, setAvatarUrl] = useState(null);
-
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (!token) return;

@@ -15,6 +15,7 @@ function Profile({
   handleAddClick,
   handleLogOut,
   handleUpdateUser,
+  isLoggedIn,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -28,21 +29,14 @@ function Profile({
     setEditProfileOpen(false);
   }
 
-  // /**
-  //  * Filters clothing items that belong to the current user.
-  //  *
-  //  * @param {Array} clothingItems - List of all clothing items.
-  //  * @param {string} userId - The ID of the current user.
-  //  * @returns {Array} - Filtered clothing items belonging to the user.
-  //  */
-  // function filterUserClothing(clothingItems, userId) {
-  //   if (!Array.isArray(clothingItems) || !userId) {
-  //     console.warn("Invalid input to filterUserClothing");
-  //     return [];
-  //   }
+  function filterUserClothing(clothingItems, userId) {
+    if (!Array.isArray(clothingItems) || !userId) {
+      console.warn("Invalid input to filterUserClothing");
+      return [];
+    }
 
-  //   return clothingItems.filter((item) => item.owner === userId);
-  // }
+    return clothingItems.filter((item) => item.owner === userId);
+  }
 
   return (
     <div className="profile">
@@ -62,6 +56,7 @@ function Profile({
           onCardLike={onCardLike}
           clothingItems={clothingItems}
           handleAddClick={handleAddClick}
+          isLoggedIn={isLoggedIn}
         />
       </section>
 
