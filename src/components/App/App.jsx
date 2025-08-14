@@ -167,12 +167,6 @@ function App() {
       setCurrentUser(data);
       setIsLoggedIn(true);
     });
-
-    getItems(token)
-      .then((data) => {
-        setClothingItems(data);
-      })
-      .catch(console.error);
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
@@ -230,6 +224,15 @@ function App() {
       })
       .catch(console.error);
   };
+
+  // Add this useEffect in your App component, separate from the JWT check
+  useEffect(() => {
+    getItems() // No token needed for getting items
+      .then((data) => {
+        setClothingItems(data);
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <UserProvider>

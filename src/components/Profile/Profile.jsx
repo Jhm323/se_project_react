@@ -61,10 +61,9 @@ function Profile({
         <ClothesSection
           onCardClick={onCardClick}
           onCardLike={onCardLike}
-          filterUserClothing={filterUserClothing}
           handleAddClick={handleAddClick}
           isLoggedIn={isLoggedIn}
-          clothingItems={userItems}
+          clothingItems={userItems} // Already filtered
           currentUser={currentUser}
         />
       </section>

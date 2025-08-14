@@ -3,6 +3,7 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import { defaultClothingItems } from "../../utils/constants"; // Import default items
 
 function Main({
   weatherData,
@@ -14,6 +15,13 @@ function Main({
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
+  const itemsToShow =
+    clothingItems.length > 0 ? clothingItems : defaultClothingItems;
+
+  const filteredItems = itemsToShow.filter(
+    (item) => item.weather === weatherData.type
+  );
+
   return (
     <main>
       <WeatherCard weatherData={weatherData} />
@@ -23,18 +31,16 @@ function Main({
           {currentTemperatureUnit}/ You may want to wear:
         </p>
         <ul className="cards__list">
-          {clothingItems
-            .filter((item) => item.weather === weatherData.type)
-            .map((item) => (
-              <ItemCard
-                key={item._id}
-                item={item}
-                onCardClick={onCardClick}
-                onCardLike={onCardLike}
-                currentUser={currentUser}
-                isLoggedIn={isLoggedIn}
-              />
-            ))}
+          {filteredItems.map((item) => (
+            <ItemCard
+              key={item._id}
+              item={item}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              currentUser={currentUser}
+              isLoggedIn={isLoggedIn}
+            />
+          ))}
         </ul>
       </section>
     </main>

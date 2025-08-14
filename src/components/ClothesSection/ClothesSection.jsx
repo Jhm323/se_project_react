@@ -10,10 +10,6 @@ function ClothesSection({
   currentUser,
   filterUserClothing,
 }) {
-  // Filter items to only show those owned by the current user
-
-  const userItems = filterUserClothing(clothingItems, currentUser._id);
-
   return (
     <div className="clothes-section">
       <div className="clothes-section__content">
@@ -27,7 +23,7 @@ function ClothesSection({
         </button>
       </div>
       <ul className="clothes-section__items">
-        {userItems.map((item) => {
+        {clothingItems.map((item) => {
           return (
             <ItemCard
               key={item._id}

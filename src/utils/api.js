@@ -25,11 +25,13 @@ export function getUserProfile(token) {
   }).then(handleResponse);
 }
 
-export function getItems(token) {
+export function getItems() {
   return fetch(`${BASE_URL}/items`, {
     method: "GET",
     headers: {
-      ...getAuthHeaders(token),
+      "Content-Type": "application/json",
+
+      // ...getAuthHeaders(token),
     },
   }).then(handleResponse);
 }
