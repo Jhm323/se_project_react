@@ -1,8 +1,16 @@
 import "./ItemModal.css";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
+function ItemModal({
+  activeModal,
+  setActiveModal,
+  card,
+  onClose,
+  onDeleteCard,
+  onConfirmDelete,
+}) {
   const currentUser = useContext(CurrentUserContext);
 
   // Step 2: Add this guard clause here to prevent rendering if card is null or undefined
@@ -11,9 +19,10 @@ function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
   // Check ownership
   const isOwn = card.owner === currentUser._id;
 
-  console.log("card.owner:", card.owner);
-  console.log("currentUser:", currentUser);
-  console.log("isOwn:", isOwn);
+  const handleDeleteClick = () => {
+    setActiveModal("confirm-delete");
+  };
+
   return (
     <div className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_image">
@@ -29,10 +38,7 @@ function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
 
           {isOwn && (
             <button
-              onClick={() => {
-                onDeleteCard(card._id);
-                onClose();
-              }}
+              onClick={handleDeleteClick}
               className="modal__delete-item"
               type="button"
             >
@@ -41,6 +47,16 @@ function ItemModal({ activeModal, onClose, card, onDeleteCard }) {
           )}
         </div>
       </div>
+
+      {activeModal === "confirm-delete" && (
+        <ConfirmDeleteModal
+          activeModal={activeModal}
+          card={card}
+          onClose={onClose}
+          onConfirmDelete={onConfirmDelete}
+          onDeleteCard={onDeleteCard}
+        />
+      )}
     </div>
   );
 }

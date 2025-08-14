@@ -216,6 +216,21 @@ function App() {
     }
   }, []);
 
+  const handleConfirmDelete = () => {
+    const token = localStorage.getItem("jwt");
+
+    deleteItem(selectedCard._id, token)
+      .then(() => {
+        // Remove from local state
+        setClothingItems((items) =>
+          items.filter((item) => item._id !== selectedCard._id)
+        );
+        // Close modal
+        setActiveModal("");
+      })
+      .catch(console.error);
+  };
+
   return (
     <UserProvider>
       <CurrentTemperatureUnitContext.Provider
@@ -279,9 +294,11 @@ function App() {
 
           <ItemModal
             activeModal={activeModal}
+            setActiveModal={setActiveModal}
             card={selectedCard}
             onClose={closeActiveModal}
             onDeleteCard={handleDeleteCard}
+            onConfirmDelete={handleConfirmDelete}
           />
 
           <RegisterModal
