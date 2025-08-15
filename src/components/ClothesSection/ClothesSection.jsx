@@ -30,7 +30,7 @@ function ClothesSection({
               item={item}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
-              currentUser={currentUser._id}
+              currentUser={currentUser}
               isLoggedIn={isLoggedIn}
             />
           );

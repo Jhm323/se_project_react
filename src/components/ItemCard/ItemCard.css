@@ -7,6 +7,7 @@
   font-family: "Cabinet Grotesk";
   cursor: pointer;
   position: relative;
+  overflow: visible;
 }
 
 .card__name {
@@ -31,15 +32,28 @@
   background-image: url(../../assets/heart_icon.png);
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #fff;
   border: none;
   cursor: pointer;
+  width: 16px;
+  height: 18px;
+  padding: 10px;
   position: absolute;
-  right: 95px;
-  top: 13px;
-  width: 30px;
-  height: 30px;
+  right: 75px;
+  top: 17px;
 }
 
 .item-card__like-button_active {
   background-image: url(../../assets/heart_liked.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 16px;
+  height: 18px;
+  padding: 10px;
+  position: absolute;
+  right: 75px;
+  top: 17px;
 }
