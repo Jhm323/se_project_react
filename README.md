@@ -99,7 +99,7 @@ While running locally:
 
 ## Related Repositories
 
-- Backend Repo (Sprint 13): [se_project_express](https://github.com/YOUR_USERNAME/se_project_express)
+- Backend Repo (Sprint 13): [se_project_express](https://github.com/jhm323/se_project_express)
 
 ## License
 

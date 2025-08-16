@@ -36,7 +36,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 function App() {
   const navigate = useNavigate();
 
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
 
   // Update isLoggedIn when currentUser changes
   useEffect(() => {
