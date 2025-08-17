@@ -34,19 +34,29 @@ import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+
+  const {
+    currentUser,
+    isLoggedIn,
+    loading,
+    handleLogin,
+    handleLogout,
+    setCurrentUser,
+  } = useContext(CurrentUserContext);
 
   // const [currentUser, setCurrentUser] = useState(null);
 
-  // Update isLoggedIn when currentUser changes
-  useEffect(() => {
-    if (currentUser?._id) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [currentUser]);
+  // // Update isLoggedIn when currentUser changes
+  // useEffect(() => {
+  //   if (currentUser?._id) {
+  //     setIsLoggedIn(true);
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, [currentUser]);
 
+  // Local state
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -58,13 +68,19 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Context-powered handlers
+  const onLogin = (userData) => {
+    handleLogin(userData); // Use the context function
+  };
+  const onLogOut = () => {
+    handleLogout(); // Use the context function
+  };
+  const onUpdateUser = (updatedUser) => setCurrentUser(updatedUser);
 
   // Toggle F/C temperature units
-
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
@@ -81,6 +97,7 @@ function App() {
     openModal("preview");
   };
 
+  // Likes
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
     !isLiked
@@ -106,8 +123,49 @@ function App() {
           });
   };
 
+  // Add item
   const handleAddClick = () => openModal("add-garment");
 
+  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+    const token = localStorage.getItem("jwt");
+
+    addItem({ name, imageUrl, weather }, token)
+      .then((newItem) => {
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  // Delete item
+  const handleDeleteCard = (id) => {
+    const token = localStorage.getItem("jwt");
+
+    deleteItem(id, token)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== id)
+        );
+      })
+      .catch(console.error);
+  };
+
+  const handleConfirmDelete = () => {
+    const token = localStorage.getItem("jwt");
+
+    deleteItem(selectedCard._id, token)
+      .then(() => {
+        // Remove from local state
+        setClothingItems((items) =>
+          items.filter((item) => item._id !== selectedCard._id)
+        );
+        // Close modal
+        setActiveModal("");
+      })
+      .catch(console.error);
+  };
+
+  // Update user
   const handleUpdateUser = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
     return updateUserProfile({ name, avatar }, token)
@@ -121,6 +179,7 @@ function App() {
       });
   };
 
+  // Register → auto-login
   const handleRegister = ({ name, avatar, email, password }) => {
     signup(name, avatar, email, password)
       .then(() => {
@@ -143,55 +202,15 @@ function App() {
       });
   };
 
-  const handleLogin = (token) => {
-    setIsLoggedIn(true);
-    setLoginOpen(false);
-    //  Fetch user profile or name here
-    fetchUserAndData(token);
-    navigate("profile");
-  };
-
-  const handleLogOut = () => {
-    // Remove token
-    localStorage.removeItem("jwt");
-    // Clear user
-    setCurrentUser(null);
-    // Update login state
-    setIsLoggedIn(false);
-    // Wherever the user is directed...
-    navigate("/");
-  };
-
+  // Fetch user & clothing items
   const fetchUserAndData = (token) => {
     checkToken(token).then((data) => {
       setCurrentUser(data);
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
     });
   };
 
-  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const token = localStorage.getItem("jwt");
-
-    addItem({ name, imageUrl, weather }, token)
-      .then((newItem) => {
-        setClothingItems((prevItems) => [newItem, ...prevItems]);
-        closeActiveModal();
-      })
-      .catch(console.error);
-  };
-
-  const handleDeleteCard = (id) => {
-    const token = localStorage.getItem("jwt");
-
-    deleteItem(id, token)
-      .then(() => {
-        setClothingItems((prevItems) =>
-          prevItems.filter((item) => item._id !== id)
-        );
-      })
-      .catch(console.error);
-  };
-
+  // Effects
   // On mount: check weather
   useEffect(() => {
     getWeather(coordinates, APIkey)
@@ -210,22 +229,6 @@ function App() {
     }
   }, []);
 
-  const handleConfirmDelete = () => {
-    const token = localStorage.getItem("jwt");
-
-    deleteItem(selectedCard._id, token)
-      .then(() => {
-        // Remove from local state
-        setClothingItems((items) =>
-          items.filter((item) => item._id !== selectedCard._id)
-        );
-        // Close modal
-        setActiveModal("");
-      })
-      .catch(console.error);
-  };
-
-  // Add this useEffect in your App component, separate from the JWT check
   useEffect(() => {
     getItems() // No token needed for getting items
       .then((data) => {
@@ -233,6 +236,11 @@ function App() {
       })
       .catch(console.error);
   }, []);
+
+  // Show loading screen if context is still fetching
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
 
   return (
     <UserProvider>
@@ -276,7 +284,7 @@ function App() {
                       userName={currentUser?.name}
                       handleAddClick={handleAddClick}
                       isLoggedIn={isLoggedIn}
-                      handleLogOut={handleLogOut}
+                      onLogOut={onLogOut}
                       currentUser={currentUser}
                       onUpdateUser={handleUpdateUser}
                     />
@@ -288,7 +296,6 @@ function App() {
           </div>
 
           {/* Modals */}
-
           <AddItemModal
             isOpen={activeModal === "add-garment"}
             onClose={closeActiveModal}
@@ -312,7 +319,7 @@ function App() {
           <LoginModal
             isOpen={isLoginOpen}
             onClose={() => setLoginOpen(false)}
-            onLoginSubmit={handleLogin}
+            onLoginSubmit={onLogin}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>
