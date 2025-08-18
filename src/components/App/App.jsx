@@ -1,7 +1,7 @@
 import "../../vendor/fonts.css";
 import "./App.css";
 
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   coordinates,
@@ -17,11 +17,7 @@ import {
 } from "../../utils/api";
 import * as api from "../../utils/api";
 import { signup, signin, checkToken } from "../../utils/auth";
-import {
-  CurrentUserContext,
-  UserProvider,
-} from "../../contexts/CurrentUserContext";
-
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -36,15 +32,9 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 function App() {
   // const navigate = useNavigate();
 
-  const {
-    currentUser,
-    isLoggedIn,
-    loading,
-    handleLogin,
-    handleLogout,
-    setCurrentUser,
-  } = useContext(CurrentUserContext);
-
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
   // Local state
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -60,13 +50,32 @@ function App() {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
 
-  // Context-powered handlers
-  const onLogin = (userData) => {
-    handleLogin(userData); // Use the context function
+  // Login handlers
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    setCurrentUser(null);
+    setIsLoggedIn(false);
   };
+
+  const onLogin = (token) => {
+    checkToken(token)
+      .then((userData) => {
+        setCurrentUser(userData);
+        setIsLoggedIn(true);
+        setLoginOpen(false);
+      })
+      .catch((err) => {
+        console.error("Token validation error:", err);
+        localStorage.removeItem("jwt");
+      });
+  };
+
   const onLogOut = () => {
-    handleLogout(); // Use the context function
+    handleLogout();
   };
+
+  // Context-powered handlers
   const onUpdateUser = (updatedUser) => setCurrentUser(updatedUser);
 
   // Toggle F/C temperature units
@@ -193,10 +202,19 @@ function App() {
 
   // Fetch user & clothing items
   const fetchUserAndData = (token) => {
-    checkToken(token).then((data) => {
-      setCurrentUser(data);
-      // setIsLoggedIn(true);
-    });
+    setLoading(true);
+    checkToken(token)
+      .then((data) => {
+        setCurrentUser(data);
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        console.error("Token validation failed:", err);
+        localStorage.removeItem("jwt");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   // Effects
@@ -211,10 +229,13 @@ function App() {
   }, []);
 
   // On mount: check JWT
+
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
       fetchUserAndData(token);
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -232,7 +253,7 @@ function App() {
   }
 
   return (
-    <UserProvider>
+    <CurrentUserContext.Provider value={currentUser}>
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
@@ -312,7 +333,7 @@ function App() {
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>
-    </UserProvider>
+    </CurrentUserContext.Provider>
   );
 }
 

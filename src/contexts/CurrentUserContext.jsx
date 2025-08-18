@@ -4,9 +4,8 @@ import { getUserProfile } from "../utils/api";
 export const CurrentUserContext = createContext();
 
 export function UserProvider({ children }) {
-  const { currentUser, setCurrentUser } = useState(null);
-  const { isLoggedIn, setIsLoggedIn } = useState(false);
-  // const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Function to check token and get user

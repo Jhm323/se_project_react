@@ -11,7 +11,7 @@ function Profile({
   onCardLike,
   clothingItems,
   handleAddClick,
-  handleLogOut,
+  onLogOut,
   onUpdateUser,
   isLoggedIn,
 }) {
@@ -52,7 +52,7 @@ function Profile({
         <button className="profile__button" onClick={handleEditProfileClick}>
           Change Profile Data
         </button>
-        <button className="profile__logout-button" onClick={handleLogOut}>
+        <button className="profile__logout-button" onClick={onLogOut}>
           Log Out
         </button>
       </section>
