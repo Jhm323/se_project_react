@@ -54,7 +54,7 @@ function RegisterModal({ isOpen, onClose, onRegister }) {
           value={name}
           onChange={handleSetName}
         />
-        <span className="modal__error" id="place-name-error" />{" "}
+        <span className="modal__error" id="register-name-error" />{" "}
       </label>{" "}
       <label htmlFor="avatar" className="modal__label">
         {" "}

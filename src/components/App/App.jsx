@@ -45,17 +45,6 @@ function App() {
     setCurrentUser,
   } = useContext(CurrentUserContext);
 
-  // const [currentUser, setCurrentUser] = useState(null);
-
-  // // Update isLoggedIn when currentUser changes
-  // useEffect(() => {
-  //   if (currentUser?._id) {
-  //     setIsLoggedIn(true);
-  //   } else {
-  //     setIsLoggedIn(false);
-  //   }
-  // }, [currentUser]);
-
   // Local state
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -105,7 +94,7 @@ function App() {
           .addCardLike(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard.data : item))
+              cards.map((item) => (item._id === id ? updatedCard : item))
             );
           })
           .catch((err) => {
@@ -115,7 +104,7 @@ function App() {
           .removeCardLike(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard.data : item))
+              cards.map((item) => (item._id === id ? updatedCard : item))
             );
           })
           .catch((err) => {

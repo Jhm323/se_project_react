@@ -13,7 +13,7 @@
   margin: 0 auto;
 }
 
-.confirm-delete-modal modal__close {
+.confirm-delete-modal .modal__close {
   background-image: url(../../assets/preview_close.svg);
   height: 24px;
   width: 61px;
