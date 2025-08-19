@@ -26,7 +26,7 @@ This project represents a key milestone in the software engineering journey: con
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/se_project_react
+   git clone https://github.com/jhm323/se_project_react
    cd se_project_react
    ```
 
