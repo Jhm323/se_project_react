@@ -30,7 +30,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,6 +64,7 @@ function App() {
         setCurrentUser(userData);
         setIsLoggedIn(true);
         setLoginOpen(false);
+        navigate("/");
       })
       .catch((err) => {
         console.error("Token validation error:", err);
@@ -76,7 +77,7 @@ function App() {
   };
 
   // Context-powered handlers
-  const onUpdateUser = (updatedUser) => setCurrentUser(updatedUser);
+  // const onUpdateUser = (updatedUser) => setCurrentUser(updatedUser);
 
   // Toggle F/C temperature units
   const handleToggleSwitchChange = () => {
