@@ -74,7 +74,7 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
           onChange={handleEmailChange}
           disabled={isLoading}
         />
-        <span className="modal__error" id="email-place-name-error" />
+        <span className="modal__error" id="email-name-error" />
       </label>
       <label htmlFor="password" className="modal__label">
         Password{" "}

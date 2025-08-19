@@ -1,13 +1,15 @@
 const BASE_URL = "http://localhost:3001";
 
-function handleResponse(res) {
-  if (!res.ok) {
-    return res.json().then((err) => {
-      throw new Error(err.message || "Something went wrong");
+const handleResponse = (res) => {
+  if (res.ok) {
+    return res.json().then((data) => {
+      // Check if the response has a 'data' property (like for like operations)
+      // If so, return the nested data, otherwise return the data directly
+      return data.data !== undefined ? data.data : data;
     });
   }
-  return res.json();
-}
+  return Promise.reject(`Error: ${res.status}`);
+};
 
 function getAuthHeaders(token) {
   return {
@@ -30,11 +32,26 @@ export function getItems() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-
-      // ...getAuthHeaders(token),
     },
   }).then(handleResponse);
 }
+
+// export function getItems() {
+//   return fetch(`${BASE_URL}/items`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   })
+//     .then((res) => {
+//       console.log("Raw response status:", res.status);
+//       return res.json();
+//     })
+//     .then((rawData) => {
+//       console.log("Raw server data for getItems:", rawData);
+//       return rawData;
+//     });
+// }
 
 export function addCardLike(id, token) {
   return fetch(`${BASE_URL}/items/${id}/likes`, {

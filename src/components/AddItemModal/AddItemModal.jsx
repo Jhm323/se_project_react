@@ -54,7 +54,7 @@ export default function AddItemModal({
           onChange={handleNameChange}
           value={name}
         />
-        <span className="modal__error" id="garmet-name-error" />
+        <span className="modal__error" id="item-name-error" />
       </label>
       <label htmlFor="imageUrl" className="modal__label">
         Image{" "}
