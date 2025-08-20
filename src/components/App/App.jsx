@@ -52,10 +52,24 @@ function App() {
 
   // Login handlers
 
+  const handleSwitchToRegister = () => {
+    setLoginOpen(false);
+    setRegisterOpen(true);
+  };
+
+  const handleSwitchToLogin = () => {
+    setRegisterOpen(false);
+    setLoginOpen(true);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setCurrentUser(null);
     setIsLoggedIn(false);
+  };
+
+  const onLogOut = () => {
+    handleLogout();
   };
 
   const onLogin = (token) => {
@@ -71,13 +85,6 @@ function App() {
         localStorage.removeItem("jwt");
       });
   };
-
-  const onLogOut = () => {
-    handleLogout();
-  };
-
-  // Context-powered handlers
-  // const onUpdateUser = (updatedUser) => setCurrentUser(updatedUser);
 
   // Toggle F/C temperature units
   const handleToggleSwitchChange = () => {
@@ -326,11 +333,14 @@ function App() {
             isOpen={isRegisterOpen}
             onClose={() => setRegisterOpen(false)}
             onRegister={handleRegister}
+            onSwitch={handleSwitchToLogin}
           />
+
           <LoginModal
             isOpen={isLoginOpen}
             onClose={() => setLoginOpen(false)}
             onLoginSubmit={onLogin}
+            onSwitch={handleSwitchToRegister}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>

@@ -3,7 +3,12 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 import { signin } from "../../utils/auth";
 
-export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
+export default function LoginModal({
+  onClose,
+  isOpen,
+  onLoginSubmit,
+  onSwitch,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -91,6 +96,15 @@ export default function LoginModal({ onClose, isOpen, onLoginSubmit }) {
         />
       </label>
       {errorMessage && <p className="modal__error">{errorMessage}</p>}
+
+      <button
+        type="button"
+        className="modal__signup-button"
+        onClick={onSwitch}
+        disabled={isLoading}
+      >
+        or Sign Up
+      </button>
     </ModalWithForm>
   );
 }
