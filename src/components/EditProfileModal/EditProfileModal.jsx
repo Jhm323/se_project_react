@@ -61,7 +61,7 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
             />
           </label>
           <button type="submit" className="modal__save-button">
-            Save
+            Save changes
           </button>
         </form>
       </div>

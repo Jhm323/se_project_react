@@ -1,9 +1,8 @@
-/* Style for unchecked radio buttons
-.modal__label_type_radio {
-  opacity: 0.5;
+.modal__signup-button {
+  display: flex;
+  width: 80px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  opacity: 50%;
 }
-
-/* Style for checked radio button */
-/* .modal__label_type_radio:has(.modal__radio-input:checked) {
-  opacity: 1;
-} */

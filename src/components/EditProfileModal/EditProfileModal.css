@@ -1,0 +1,18 @@
+.modal__save-button {
+  height: 36px;
+  width: 128px;
+  background-color: black;
+  font-family: Cabinet Grotesk;
+  color: white;
+  font-size: 16px;
+  line-height: 20px;
+  border-radius: 10%;
+  margin-top: 32px;
+}
+
+.modal__input {
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  line-height: 20px;
+  font-style: bold;
+}
