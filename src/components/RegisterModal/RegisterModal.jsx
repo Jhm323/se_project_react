@@ -2,7 +2,7 @@ import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 
-function RegisterModal({ isOpen, onClose, onRegister }) {
+function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
@@ -96,6 +96,9 @@ function RegisterModal({ isOpen, onClose, onRegister }) {
         />
         <span className="modal__error" id="password-error" />{" "}
       </label>{" "}
+      <button type="button" className="modal__login-button" onClick={onSwitch}>
+        or Login
+      </button>
     </ModalWithForm>
   );
 }
