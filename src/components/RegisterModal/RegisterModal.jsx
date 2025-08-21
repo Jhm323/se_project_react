@@ -1,37 +1,57 @@
 import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 
-function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
+function RegisterModal({
+  isOpen,
+  onClose,
+  onRegister,
+  onSwitch,
+  handleSubmit,
+}) {
   const { values, handleChange, setValues } = useForm({
     name: "",
     avatar: "",
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Reset form when modal opens
+  useEffect(() => {
+    if (isOpen) setValues({ name: "", avatar: "", email: "", password: "" });
+  }, [isOpen, setValues]);
+
+  const onSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // update register info
-    onRegister(values).finally(() => {
-      setIsLoading(false);
-      setValues({ name: "", avatar: "", email: "", password: "" });
-    });
+    const makeRequest = () => onRegister(values);
+    handleSubmit(makeRequest, onClose);
   };
 
   if (!isOpen) return null;
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+
+  //   // update register info
+  //   onRegister(values).finally(() => {
+  //     setIsLoading(false);
+  //     setValues({ name: "", avatar: "", email: "", password: "" });
+  //   });
+  // };
+
+  // if (!isOpen) return null;
+
   return (
     <ModalWithForm
       title="Sign Up"
-      buttonText={isLoading ? "Registering..." : "Register"}
+      buttonText="Register"
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
     >
       {" "}
       <label htmlFor="name" className="modal__label">
@@ -47,12 +67,11 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
           required
           value={values.name}
           onChange={handleChange}
-          disabled={isLoading}
         />
         <span className="modal__error" id="register-name-error" />{" "}
       </label>{" "}
       <label htmlFor="avatar" className="modal__label">
-        {" "}
+        Avatar URL
         <input
           type="url"
           className="modal__input"
@@ -62,7 +81,6 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
           required
           value={values.avatar}
           onChange={handleChange}
-          disabled={isLoading}
         />
         <span className="modal__error" id="avatar-error" />{" "}
       </label>{" "}
@@ -72,11 +90,11 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
           type="email"
           className="modal__input"
           id="email"
+          name="email"
           placeholder="Enter your email"
           required
           value={values.email}
           onChange={handleChange}
-          disabled={isLoading}
         />
         <span className="modal__error" id="email-error" />{" "}
       </label>{" "}
@@ -86,11 +104,11 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
           type="password"
           className="modal__input"
           id="password"
+          name="password"
           placeholder="Enter your password"
           required
           value={values.password}
           onChange={handleChange}
-          disabled={isLoading}
         />
         <span className="modal__error" id="password-error" />{" "}
       </label>{" "}

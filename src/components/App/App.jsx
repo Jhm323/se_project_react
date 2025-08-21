@@ -405,7 +405,7 @@ function App() {
             isOpen={activeModal === "add-garment"}
             onClose={closeActiveModal}
             onAddItemModalSubmit={handleAddItemModalSubmit}
-            isLoading={isLoading}
+            handleSubmit={handleSubmit}
           />
 
           <ItemModal
@@ -423,7 +423,7 @@ function App() {
             onClose={() => setRegisterOpen(false)}
             onRegister={handleRegister}
             onSwitch={handleSwitchToLogin}
-            isLoading={isLoading}
+            handleSubmit={handleSubmit}
           />
 
           <LoginModal
@@ -431,7 +431,7 @@ function App() {
             onClose={() => setLoginOpen(false)}
             onLoginSubmit={onLogin}
             onSwitch={handleSwitchToRegister}
-            isLoading={isLoading}
+            handleSubmit={handleSubmit}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>

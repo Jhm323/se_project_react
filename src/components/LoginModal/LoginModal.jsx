@@ -1,6 +1,6 @@
 import "./LoginModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signin } from "../../utils/auth";
 import { useForm } from "../../hooks/useForm";
 
@@ -9,57 +9,87 @@ export default function LoginModal({
   isOpen,
   onLoginSubmit,
   onSwitch,
+  handleSubmit,
 }) {
   const { values, handleChange, setValues } = useForm({
     email: "",
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  // Reset form when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setValues({ email: "", password: "" });
+      setErrorMessage("");
+    }
+  }, [isOpen, setValues]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    const makeRequest = () =>
+      signin(values.email, values.password).then((data) => {
+        localStorage.setItem("jwt", data.token);
+        onLoginSubmit(data.token);
+      });
+
+    handleSubmit(makeRequest, onClose).catch((err) => {
+      if (err.message?.includes("NetworkError")) {
+        setErrorMessage("Network issue. Please check your connection.");
+      } else if (err.status === 401) {
+        setErrorMessage("Invalid email or password.");
+      } else {
+        setErrorMessage(
+          err.message || "Something went wrong. Please try again later."
+        );
+      }
+    });
+  };
 
   //   Handle Form Submission
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Clear any prior errors
+  //   setErrorMessage("");
+  //   setIsLoading(true);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Clear any prior errors
-    setErrorMessage("");
-    setIsLoading(true);
+  //   signin(values.email, values.password)
+  //     .then((data) => {
+  //       // Save token
+  //       localStorage.setItem("jwt", data.token);
+  //       // Inform App of successful login
+  //       onLoginSubmit(data.token);
+  //       setValues({ email: "", password: "" });
+  //       onClose();
+  //     })
+  //     .catch((err) => {
+  //       console.error("Login failed:", err);
 
-    signin(values.email, values.password)
-      .then((data) => {
-        // Save token
-        localStorage.setItem("jwt", data.token);
-        // Inform App of successful login
-        onLoginSubmit(data.token);
-        setValues({ email: "", password: "" });
-        onClose();
-      })
-      .catch((err) => {
-        console.error("Login failed:", err);
-
-        if (err.message?.includes("NetworkError")) {
-          setErrorMessage("Network issue. Please check your connection.");
-        } else if (err.status === 401) {
-          setErrorMessage("Invalid email or password.");
-        } else {
-          setErrorMessage(
-            err.message || "Something went wrong. Please try again later."
-          );
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  //       if (err.message?.includes("NetworkError")) {
+  //         setErrorMessage("Network issue. Please check your connection.");
+  //       } else if (err.status === 401) {
+  //         setErrorMessage("Invalid email or password.");
+  //       } else {
+  //         setErrorMessage(
+  //           err.message || "Something went wrong. Please try again later."
+  //         );
+  //       }
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
 
   return (
     <ModalWithForm
       title="Log in"
-      buttonText={isLoading ? "Logging in..." : "Log in"}
+      buttonText="Log in"
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}
-      disabled={isLoading}
+      onSubmit={onSubmit}
     >
       <label htmlFor="email" className="modal__label">
         Email{" "}
@@ -72,7 +102,6 @@ export default function LoginModal({
           required
           value={values.email}
           onChange={handleChange}
-          disabled={isLoading}
         />
         <span className="modal__error" id="email-name-error" />
       </label>
@@ -87,18 +116,12 @@ export default function LoginModal({
           required
           value={values.password}
           onChange={handleChange}
-          disabled={isLoading}
         />
       </label>
 
       {errorMessage && <p className="modal__error">{errorMessage}</p>}
 
-      <button
-        type="button"
-        className="modal__signup-button"
-        onClick={onSwitch}
-        disabled={isLoading}
-      >
+      <button type="button" className="modal__signup-button" onClick={onSwitch}>
         or Sign Up
       </button>
     </ModalWithForm>
