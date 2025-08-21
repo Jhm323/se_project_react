@@ -9,11 +9,11 @@ function ItemModal({
   card,
   onClose,
   onDeleteCard,
-  onConfirmDelete,
+  handleSubmit,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
-  // Step 2: Add this guard clause here to prevent rendering if card is null or undefined
+  // Guard clause here to prevent rendering if card is null or undefined
   if (!card) return null;
 
   // Check ownership
@@ -21,6 +21,11 @@ function ItemModal({
 
   const handleDeleteClick = () => {
     setActiveModal("confirm-delete");
+  };
+
+  const onConfirmDelete = () => {
+    const makeRequest = () => onDeleteCard(card._id);
+    handleSubmit(makeRequest, onClose);
   };
 
   return (
@@ -31,6 +36,7 @@ function ItemModal({
           className="modal__close modal__close-preview"
           type="button"
         ></button>
+
         <img src={card.imageUrl} alt={card.name} className="modal__image" />
         <div className="modal__footer">
           <h2 className="modal__caption">{card.name}</h2>
@@ -54,7 +60,6 @@ function ItemModal({
           card={card}
           onClose={onClose}
           onConfirmDelete={onConfirmDelete}
-          onDeleteCard={onDeleteCard}
         />
       )}
     </div>

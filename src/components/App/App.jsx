@@ -414,8 +414,7 @@ function App() {
             card={selectedCard}
             onClose={closeActiveModal}
             onDeleteCard={handleDeleteCard}
-            onConfirmDelete={handleConfirmDelete}
-            isLoading={isLoading}
+            handleSubmit={handleSubmit}
           />
 
           <RegisterModal
