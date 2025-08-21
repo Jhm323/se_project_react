@@ -131,7 +131,7 @@ function App() {
           });
   };
 
-  // Universal submit handler
+  // // Universal submit handler
   const handleSubmit = (request, closeModal = null) => {
     setIsLoading(true);
     request()
@@ -145,26 +145,13 @@ function App() {
   // Add item
   const handleAddClick = () => openModal("add-garment");
 
-  // const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-  //   const token = localStorage.getItem("jwt");
-  //   setIsLoading(true);
-  //   addItem({ name, imageUrl, weather }, token)
-  //     .then((newItem) => {
-  //       setClothingItems((prevItems) => [newItem, ...prevItems]);
-  //       closeActiveModal();
-  //     })
-  //     .catch(console.error)
-  //     .finally(() => setIsLoading(false));
-  // };
-
+  // Add item (return the promise instead of handling modal closing here)
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     const token = localStorage.getItem("jwt");
-    const makeRequest = () =>
-      addItem({ name, imageUrl, weather }, token).then((newItem) => {
-        setClothingItems((prevItems) => [newItem, ...prevItems]);
-      });
-
-    handleSubmit(makeRequest, closeActiveModal);
+    return addItem({ name, imageUrl, weather }, token).then((newItem) => {
+      setClothingItems((prevItems) => [newItem, ...prevItems]);
+      return newItem; // return so AddItemModal's makeRequest gets a promise
+    });
   };
 
   // Delete item

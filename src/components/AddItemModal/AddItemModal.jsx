@@ -22,16 +22,11 @@ export default function AddItemModal({
     }
   }, [isOpen, setValues]);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // update clothingItems array
-  //   onAddItemModalSubmit(values);
-  // };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
     const makeRequest = () => onAddItemModalSubmit(values);
+
     handleSubmit(makeRequest, onClose);
   };
 
@@ -98,32 +93,3 @@ export default function AddItemModal({
     </ModalWithForm>
   );
 }
-
-//         <label htmlFor="warm" className="modal__label modal__label_type_radio">
-//           <input
-//             name="weather"
-//             id="warm"
-//             type="radio"
-//             className="modal__radio-input"
-//             value="warm"
-//             onChange={handleChange}
-//             checked={values.weather === "warm"}
-//           />{" "}
-//           Warm
-//         </label>
-//         <label htmlFor="cold" className="modal__label modal__label_type_radio">
-//           <input
-//             name="weather"
-//             id="cold"
-//             type="radio"
-//             className="modal__radio-input"
-//             value="cold"
-//             onChange={handleChange}
-//             checked={values.weather === "cold"}
-//           />{" "}
-//           Cold
-//         </label>
-//       </fieldset>
-//     </ModalWithForm>
-//   );
-// }
