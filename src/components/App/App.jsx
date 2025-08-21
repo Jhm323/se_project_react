@@ -35,6 +35,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
   // Local state
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -134,13 +136,14 @@ function App() {
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     const token = localStorage.getItem("jwt");
-
+    setIsLoading(true);
     addItem({ name, imageUrl, weather }, token)
       .then((newItem) => {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   };
 
   // Delete item
@@ -158,7 +161,7 @@ function App() {
 
   const handleConfirmDelete = () => {
     const token = localStorage.getItem("jwt");
-
+    setIsLoading(true);
     deleteItem(selectedCard._id, token)
       .then(() => {
         // Remove from local state
@@ -168,12 +171,14 @@ function App() {
         // Close modal
         setActiveModal("");
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   };
 
   // Update user
   const handleUpdateUser = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
+    setIsLoading(true);
     return updateUserProfile({ name, avatar }, token)
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
@@ -182,11 +187,13 @@ function App() {
       .catch((err) => {
         console.log("Error updating user:", err);
         throw err; // Re-throw so the child component can catch it
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   // Register → auto-login
   const handleRegister = ({ name, avatar, email, password }) => {
+    setIsLoading(true);
     signup(name, avatar, email, password)
       .then(() => {
         // close registration modal
@@ -205,7 +212,8 @@ function App() {
       })
       .catch((err) => {
         console.error("Registration or login error:", err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   // Fetch user & clothing items
@@ -226,6 +234,25 @@ function App() {
   };
 
   // Effects
+  // Escape Listener for Active Modals
+  useEffect(() => {
+    if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
+
+    const handleEscClose = (e) => {
+      // define the function inside useEffect not to lose the reference on rerendering
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      // don't forget to add a clean up function for removing the listener
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]); // watch activeModal here
+
   // On mount: check weather
   useEffect(() => {
     getWeather(coordinates, APIkey)
@@ -318,6 +345,7 @@ function App() {
             isOpen={activeModal === "add-garment"}
             onClose={closeActiveModal}
             onAddItemModalSubmit={handleAddItemModalSubmit}
+            isLoading={isLoading}
           />
 
           <ItemModal
@@ -327,6 +355,7 @@ function App() {
             onClose={closeActiveModal}
             onDeleteCard={handleDeleteCard}
             onConfirmDelete={handleConfirmDelete}
+            isLoading={isLoading}
           />
 
           <RegisterModal
@@ -334,6 +363,7 @@ function App() {
             onClose={() => setRegisterOpen(false)}
             onRegister={handleRegister}
             onSwitch={handleSwitchToLogin}
+            isLoading={isLoading}
           />
 
           <LoginModal
@@ -341,6 +371,7 @@ function App() {
             onClose={() => setLoginOpen(false)}
             onLoginSubmit={onLogin}
             onSwitch={handleSwitchToRegister}
+            isLoading={isLoading}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>
