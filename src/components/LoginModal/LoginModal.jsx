@@ -2,6 +2,7 @@ import "./LoginModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 import { signin } from "../../utils/auth";
+import { useForm } from "../../hooks/useForm";
 
 export default function LoginModal({
   onClose,
@@ -9,18 +10,12 @@ export default function LoginModal({
   onLoginSubmit,
   onSwitch,
 }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange, setValues } = useForm({
+    email: "",
+    password: "",
+  });
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   //   Handle Form Submission
 
@@ -30,14 +25,13 @@ export default function LoginModal({
     setErrorMessage("");
     setIsLoading(true);
 
-    signin(email, password)
+    signin(values.email, values.password)
       .then((data) => {
         // Save token
         localStorage.setItem("jwt", data.token);
         // Inform App of successful login
         onLoginSubmit(data.token);
-        setEmail("");
-        setPassword("");
+        setValues({ email: "", password: "" });
         onClose();
       })
       .catch((err) => {
@@ -65,7 +59,7 @@ export default function LoginModal({
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      isDisabled={isLoading} // optional: disable form when loading
+      disabled={isLoading}
     >
       <label htmlFor="email" className="modal__label">
         Email{" "}
@@ -76,8 +70,8 @@ export default function LoginModal({
           name="email"
           placeholder="Enter Your Email"
           required
-          value={email}
-          onChange={handleEmailChange}
+          value={values.email}
+          onChange={handleChange}
           disabled={isLoading}
         />
         <span className="modal__error" id="email-name-error" />
@@ -91,11 +85,12 @@ export default function LoginModal({
           name="password"
           placeholder="Enter Your Password"
           required
-          value={password}
-          onChange={handlePasswordChange}
+          value={values.password}
+          onChange={handleChange}
           disabled={isLoading}
         />
       </label>
+
       {errorMessage && <p className="modal__error">{errorMessage}</p>}
 
       <button

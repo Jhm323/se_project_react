@@ -36,8 +36,7 @@ function ModalWithForm({
         />
         <form onSubmit={onSubmit} className="modal__form">
           {children}
-          <button className="modal__submit" type="submit">
-            {buttonText}
+          <button className="modal__submit" type="submit" disabled={isLoading}>
             {isLoading ? loadingText : buttonText}
           </button>
         </form>

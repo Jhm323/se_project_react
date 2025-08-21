@@ -48,6 +48,7 @@ export default function AddItemModal({
           maxLength="30"
           onChange={handleChange}
           value={values.name}
+          disabled={isLoading}
         />
         <span className="modal__error" id="item-name-error" />
       </label>
@@ -62,6 +63,7 @@ export default function AddItemModal({
           required
           onChange={handleChange}
           value={values.imageUrl}
+          disabled={isLoading}
         />
       </label>
       <fieldset className="modal__radio-buttons">

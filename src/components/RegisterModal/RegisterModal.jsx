@@ -1,36 +1,25 @@
 import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
+import { useForm } from "../../hooks/useForm";
 
 function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    avatar: "",
+    email: "",
+    password: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleSetName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSetAvatar = (e) => {
-    setAvatar(e.target.value);
-  };
-
-  const handleSetEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleSetPassword = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     // update register info
-    onRegister({ name, avatar, email, password }).finally(() => {
+    onRegister(values).finally(() => {
       setIsLoading(false);
+      setValues({ name: "", avatar: "", email: "", password: "" });
     });
   };
 
@@ -51,12 +40,14 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
           type="text"
           className="modal__input"
           id="name"
+          name="name"
           placeholder="Enter Your Name"
           minLength="1"
           maxLength="30"
           required
-          value={name}
-          onChange={handleSetName}
+          value={values.name}
+          onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="register-name-error" />{" "}
       </label>{" "}
@@ -64,13 +55,14 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
         {" "}
         <input
           type="url"
-          name="avatar"
           className="modal__input"
           id="avatar"
+          name="avatar"
           placeholder="Enter avatar image URL"
           required
-          value={avatar}
-          onChange={handleSetAvatar}
+          value={values.avatar}
+          onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="avatar-error" />{" "}
       </label>{" "}
@@ -82,8 +74,9 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
           id="email"
           placeholder="Enter your email"
           required
-          value={email}
-          onChange={handleSetEmail}
+          value={values.email}
+          onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="email-error" />{" "}
       </label>{" "}
@@ -95,8 +88,9 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
           id="password"
           placeholder="Enter your password"
           required
-          value={password}
-          onChange={handleSetPassword}
+          value={values.password}
+          onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="password-error" />{" "}
       </label>{" "}
