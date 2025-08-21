@@ -7,6 +7,7 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSetName = (e) => {
     setName(e.target.value);
@@ -26,8 +27,11 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // update register info
-    onRegister({ name, avatar, email, password });
+    onRegister({ name, avatar, email, password }).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   if (!isOpen) return null;
@@ -35,7 +39,7 @@ function RegisterModal({ isOpen, onClose, onRegister, onSwitch }) {
   return (
     <ModalWithForm
       title="Sign Up"
-      buttonText="Register"
+      buttonText={isLoading ? "Registering..." : "Register"}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}

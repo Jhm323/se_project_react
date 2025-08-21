@@ -42,6 +42,7 @@ export default function LoginModal({
       })
       .catch((err) => {
         console.error("Login failed:", err);
+
         if (err.message?.includes("NetworkError")) {
           setErrorMessage("Network issue. Please check your connection.");
         } else if (err.status === 401) {

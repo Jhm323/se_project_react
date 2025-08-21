@@ -6,6 +6,7 @@ export default function AddItemModal({
   onClose,
   isOpen,
   onAddItemModalSubmit,
+  isLoading,
 }) {
   // const { values, handleChange, setValues } = useForm({});
 
@@ -52,7 +53,7 @@ export default function AddItemModal({
   return (
     <ModalWithForm
       title="New Garment"
-      buttonText="Add garment"
+      buttonText={isLoading ? "Saving..." : "Add garment"}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
