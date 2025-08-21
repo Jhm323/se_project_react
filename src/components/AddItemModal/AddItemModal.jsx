@@ -1,6 +1,6 @@
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 
 export default function AddItemModal({
@@ -15,6 +15,7 @@ export default function AddItemModal({
     weather: "",
   });
 
+  // Reset form fields only when the modal opens
   useEffect(() => {
     if (isOpen) {
       setValues({ name: "", imageUrl: "", weather: "" });

@@ -131,19 +131,40 @@ function App() {
           });
   };
 
-  // Add item
-  const handleAddClick = () => openModal("add-garment");
-
-  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const token = localStorage.getItem("jwt");
+  // Universal submit handler
+  const handleSubmit = (request, closeModal = null) => {
     setIsLoading(true);
-    addItem({ name, imageUrl, weather }, token)
-      .then((newItem) => {
-        setClothingItems((prevItems) => [newItem, ...prevItems]);
-        closeActiveModal();
+    request()
+      .then(() => {
+        if (closeModal) closeModal();
       })
       .catch(console.error)
       .finally(() => setIsLoading(false));
+  };
+
+  // Add item
+  const handleAddClick = () => openModal("add-garment");
+
+  // const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+  //   const token = localStorage.getItem("jwt");
+  //   setIsLoading(true);
+  //   addItem({ name, imageUrl, weather }, token)
+  //     .then((newItem) => {
+  //       setClothingItems((prevItems) => [newItem, ...prevItems]);
+  //       closeActiveModal();
+  //     })
+  //     .catch(console.error)
+  //     .finally(() => setIsLoading(false));
+  // };
+
+  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+    const token = localStorage.getItem("jwt");
+    const makeRequest = () =>
+      addItem({ name, imageUrl, weather }, token).then((newItem) => {
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
+      });
+
+    handleSubmit(makeRequest, closeActiveModal);
   };
 
   // Delete item
@@ -159,61 +180,100 @@ function App() {
       .catch(console.error);
   };
 
+  // const handleConfirmDelete = () => {
+  //   const token = localStorage.getItem("jwt");
+  //   setIsLoading(true);
+  //   deleteItem(selectedCard._id, token)
+  //     .then(() => {
+  //       // Remove from local state
+  //       setClothingItems((items) =>
+  //         items.filter((item) => item._id !== selectedCard._id)
+  //       );
+  //       // Close modal
+  //       setActiveModal("");
+  //     })
+  //     .catch(console.error)
+  //     .finally(() => setIsLoading(false));
+  // };
+
   const handleConfirmDelete = () => {
     const token = localStorage.getItem("jwt");
-    setIsLoading(true);
-    deleteItem(selectedCard._id, token)
-      .then(() => {
-        // Remove from local state
+    const makeRequest = () =>
+      deleteItem(selectedCard._id, token).then(() => {
         setClothingItems((items) =>
           items.filter((item) => item._id !== selectedCard._id)
         );
-        // Close modal
-        setActiveModal("");
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+      });
+
+    handleSubmit(makeRequest, closeActiveModal);
   };
 
   // Update user
+  // const handleUpdateUser = ({ name, avatar }) => {
+  //   const token = localStorage.getItem("jwt");
+  //   setIsLoading(true);
+  //   return updateUserProfile({ name, avatar }, token)
+  //     .then((updatedUser) => {
+  //       setCurrentUser(updatedUser);
+  //       return updatedUser; // Return this so the child component can access it
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error updating user:", err);
+  //       throw err; // Re-throw so the child component can catch it
+  //     })
+  //     .finally(() => setIsLoading(false));
+  // };
+
   const handleUpdateUser = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
-    setIsLoading(true);
-    return updateUserProfile({ name, avatar }, token)
-      .then((updatedUser) => {
+    const makeRequest = () =>
+      updateUserProfile({ name, avatar }, token).then((updatedUser) => {
         setCurrentUser(updatedUser);
-        return updatedUser; // Return this so the child component can access it
-      })
-      .catch((err) => {
-        console.log("Error updating user:", err);
-        throw err; // Re-throw so the child component can catch it
-      })
-      .finally(() => setIsLoading(false));
+        return updatedUser;
+      });
+
+    return handleSubmit(makeRequest); // handleSubmit returns undefined, so child component can rely on promise if needed
   };
 
   // Register → auto-login
+  // const handleRegister = ({ name, avatar, email, password }) => {
+  //   setIsLoading(true);
+  //   signup(name, avatar, email, password)
+  //     .then(() => {
+  //       // close registration modal
+  //       setRegisterOpen(false);
+  //       // Immediately sign in the user
+  //       return signin(email, password);
+  //     })
+  //     .then((res) => {
+  //       if (res.token) {
+  //         localStorage.setItem("jwt", res.token);
+  //         setIsLoggedIn(true);
+  //         setLoginOpen(false);
+  //         // fetch user info & items
+  //         fetchUserAndData(res.token);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error("Registration or login error:", err);
+  //     })
+  //     .finally(() => setIsLoading(false));
+  // };
+
   const handleRegister = ({ name, avatar, email, password }) => {
-    setIsLoading(true);
-    signup(name, avatar, email, password)
-      .then(() => {
-        // close registration modal
-        setRegisterOpen(false);
-        // Immediately sign in the user
-        return signin(email, password);
-      })
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
-          setIsLoggedIn(true);
-          setLoginOpen(false);
-          // fetch user info & items
-          fetchUserAndData(res.token);
-        }
-      })
-      .catch((err) => {
-        console.error("Registration or login error:", err);
-      })
-      .finally(() => setIsLoading(false));
+    const makeRequest = () =>
+      signup(name, avatar, email, password).then(() =>
+        signin(email, password).then((res) => {
+          if (res.token) {
+            localStorage.setItem("jwt", res.token);
+            setIsLoggedIn(true);
+            setLoginOpen(false);
+            fetchUserAndData(res.token);
+          }
+        })
+      );
+
+    handleSubmit(makeRequest, () => setRegisterOpen(false));
   };
 
   // Fetch user & clothing items
@@ -234,12 +294,12 @@ function App() {
   };
 
   // Effects
+
   // Escape Listener for Active Modals
   useEffect(() => {
-    if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
+    if (!activeModal) return; // Only add listener if a modal is active
 
     const handleEscClose = (e) => {
-      // define the function inside useEffect not to lose the reference on rerendering
       if (e.key === "Escape") {
         closeActiveModal();
       }
@@ -247,11 +307,11 @@ function App() {
 
     document.addEventListener("keydown", handleEscClose);
 
+    // Clean up listener on unmount or when activeModal changes
     return () => {
-      // don't forget to add a clean up function for removing the listener
       document.removeEventListener("keydown", handleEscClose);
     };
-  }, [activeModal]); // watch activeModal here
+  }, [activeModal]); // Re-run effect when activeModal changes
 
   // On mount: check weather
   useEffect(() => {
