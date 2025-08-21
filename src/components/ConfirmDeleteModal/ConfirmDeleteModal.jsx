@@ -25,7 +25,7 @@ function ConfirmDeleteModal({ activeModal, onClose, onConfirmDelete, card }) {
 
         <button
           onClick={() => {
-            onConfirmDelete(card._id);
+            onConfirmDelete();
             onClose();
           }}
           className="confirm-delete-modal modal__delete-item"

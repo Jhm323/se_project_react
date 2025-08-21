@@ -134,11 +134,14 @@ function App() {
   // // Universal submit handler
   const handleSubmit = (request, closeModal = null) => {
     setIsLoading(true);
-    request()
+    return request()
       .then(() => {
         if (closeModal) closeModal();
       })
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err);
+        throw err; // rethrow so child components can handle it
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -158,7 +161,7 @@ function App() {
   const handleDeleteCard = (id) => {
     const token = localStorage.getItem("jwt");
 
-    deleteItem(id, token)
+    return deleteItem(id, token)
       .then(() => {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item._id !== id)
