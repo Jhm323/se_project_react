@@ -148,12 +148,11 @@ function App() {
   // Add item
   const handleAddClick = () => openModal("add-garment");
 
-  // Add item (return the promise instead of handling modal closing here)
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     const token = localStorage.getItem("jwt");
     return addItem({ name, imageUrl, weather }, token).then((newItem) => {
       setClothingItems((prevItems) => [newItem, ...prevItems]);
-      return newItem; // return so AddItemModal's makeRequest gets a promise
+      return newItem;
     });
   };
 
@@ -170,18 +169,6 @@ function App() {
       .catch(console.error);
   };
 
-  // const handleConfirmDelete = () => {
-  //   const token = localStorage.getItem("jwt");
-  //   const makeRequest = () =>
-  //     deleteItem(selectedCard._id, token).then(() => {
-  //       setClothingItems((items) =>
-  //         items.filter((item) => item._id !== selectedCard._id)
-  //       );
-  //     });
-
-  //   handleSubmit(makeRequest, closeActiveModal);
-  // };
-
   const handleUpdateUser = ({ name, avatar }) => {
     const token = localStorage.getItem("jwt");
     const makeRequest = () =>
@@ -190,23 +177,21 @@ function App() {
         return updatedUser;
       });
 
-    return handleSubmit(makeRequest); // handleSubmit returns undefined, so child component can rely on promise if needed
+    return handleSubmit(makeRequest);
   };
 
   const handleRegister = ({ name, avatar, email, password }) => {
-    const makeRequest = () =>
-      signup(name, avatar, email, password).then(() =>
-        signin(email, password).then((res) => {
-          if (res.token) {
-            localStorage.setItem("jwt", res.token);
-            setIsLoggedIn(true);
-            setLoginOpen(false);
-            fetchUserAndData(res.token);
-          }
-        })
-      );
-
-    handleSubmit(makeRequest, () => setRegisterOpen(false));
+    return signup(name, avatar, email, password)
+      .then(() => signin(email, password))
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          setLoginOpen(false);
+          fetchUserAndData(res.token);
+        }
+        return res;
+      });
   };
 
   // Fetch user & clothing items
@@ -247,6 +232,7 @@ function App() {
   }, [activeModal]); // Re-run effect when activeModal changes
 
   // On mount: check weather
+
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -306,7 +292,7 @@ function App() {
                     clothingItems={clothingItems}
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
-                    currentUser={currentUser}
+                    // currentUser={currentUser}
                     isLoggedIn={isLoggedIn}
                   />
                 }
@@ -339,6 +325,7 @@ function App() {
             onClose={closeActiveModal}
             onAddItemModalSubmit={handleAddItemModalSubmit}
             handleSubmit={handleSubmit}
+            isLoading={isLoading}
           />
 
           <ItemModal
@@ -348,6 +335,7 @@ function App() {
             onClose={closeActiveModal}
             onDeleteCard={handleDeleteCard}
             handleSubmit={handleSubmit}
+            isLoading={isLoading}
           />
 
           <RegisterModal
@@ -356,6 +344,7 @@ function App() {
             onRegister={handleRegister}
             onSwitch={handleSwitchToLogin}
             handleSubmit={handleSubmit}
+            isLoading={isLoading}
           />
 
           <LoginModal
@@ -364,6 +353,7 @@ function App() {
             onLoginSubmit={onLogin}
             onSwitch={handleSwitchToRegister}
             handleSubmit={handleSubmit}
+            isLoading={isLoading}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>

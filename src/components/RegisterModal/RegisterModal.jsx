@@ -9,6 +9,7 @@ function RegisterModal({
   onRegister,
   onSwitch,
   handleSubmit,
+  isLoading,
 }) {
   const { values, handleChange, setValues } = useForm({
     name: "",
@@ -23,35 +24,20 @@ function RegisterModal({
     if (isOpen) setValues({ name: "", avatar: "", email: "", password: "" });
   }, [isOpen, setValues]);
 
-  const onSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    const makeRequest = () => onRegister(values);
-    handleSubmit(makeRequest, onClose);
+    handleSubmit(() => onRegister(values), onClose);
   };
 
   if (!isOpen) return null;
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-
-  //   // update register info
-  //   onRegister(values).finally(() => {
-  //     setIsLoading(false);
-  //     setValues({ name: "", avatar: "", email: "", password: "" });
-  //   });
-  // };
-
-  // if (!isOpen) return null;
-
   return (
     <ModalWithForm
       title="Sign Up"
-      buttonText="Register"
+      buttonText={isLoading ? "Registering..." : "Register"}
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={onSubmit}
+      onSubmit={handleFormSubmit}
     >
       {" "}
       <label htmlFor="name" className="modal__label">
@@ -67,6 +53,7 @@ function RegisterModal({
           required
           value={values.name}
           onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="register-name-error" />{" "}
       </label>{" "}
@@ -81,6 +68,7 @@ function RegisterModal({
           required
           value={values.avatar}
           onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="avatar-error" />{" "}
       </label>{" "}
@@ -95,6 +83,7 @@ function RegisterModal({
           required
           value={values.email}
           onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="email-error" />{" "}
       </label>{" "}
@@ -109,10 +98,16 @@ function RegisterModal({
           required
           value={values.password}
           onChange={handleChange}
+          disabled={isLoading}
         />
         <span className="modal__error" id="password-error" />{" "}
       </label>{" "}
-      <button type="button" className="modal__login-button" onClick={onSwitch}>
+      <button
+        type="button"
+        className="modal__login-button"
+        onClick={onSwitch}
+        disabled={isLoading}
+      >
         or Login
       </button>
     </ModalWithForm>

@@ -16,4 +16,6 @@
   flex-direction: row;
   flex-wrap: nowrap;
   white-space: nowrap;
+  font-family: "Cabinet Grotesk";
+  font-size: 20px;
 }
