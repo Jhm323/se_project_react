@@ -292,7 +292,6 @@ function App() {
                     clothingItems={clothingItems}
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
-                    // currentUser={currentUser}
                     isLoggedIn={isLoggedIn}
                   />
                 }
@@ -309,7 +308,6 @@ function App() {
                       handleAddClick={handleAddClick}
                       isLoggedIn={isLoggedIn}
                       onLogOut={onLogOut}
-                      currentUser={currentUser}
                       onUpdateUser={handleUpdateUser}
                     />
                   </ProtectedRoute>
