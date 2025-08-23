@@ -2,6 +2,7 @@ import "./ItemModal.css";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import useModalClose from "../../hooks/useModalClose";
 
 function ItemModal({
   activeModal,
@@ -12,6 +13,12 @@ function ItemModal({
   handleSubmit,
 }) {
   const currentUser = useContext(CurrentUserContext);
+
+  // hook to close modal on Esc or overlay click
+  useModalClose(
+    activeModal === "preview" || activeModal === "confirm-delete",
+    onClose
+  );
 
   // Guard clause here to prevent rendering if card is null or undefined
   if (!card) return null;

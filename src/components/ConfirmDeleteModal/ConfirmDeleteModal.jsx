@@ -1,9 +1,15 @@
 import "./ConfirmDeleteModal.css";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import useModalClose from "../../hooks/useModalClose";
 
 function ConfirmDeleteModal({ activeModal, onClose, onConfirmDelete, card }) {
   const currentUser = useContext(CurrentUserContext);
+
+  const isOpen = activeModal === "confirm-delete";
+
+  // Close modal on ESC or outside click
+  useModalClose(isOpen, onClose);
 
   return (
     <div

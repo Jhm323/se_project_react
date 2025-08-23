@@ -3,6 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState, useEffect } from "react";
 import { signin } from "../../utils/auth";
 import { useForm } from "../../hooks/useForm";
+import useModalClose from "../../hooks/useModalClose";
 
 export default function LoginModal({
   onClose,
@@ -17,6 +18,9 @@ export default function LoginModal({
   });
   const [errorMessage, setErrorMessage] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
+
+  // Close modal on ESC or outside click
+  useModalClose(isOpen, onClose);
 
   // Reset form when modal opens
   useEffect(() => {

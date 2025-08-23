@@ -3,6 +3,7 @@ import "./EditProfileModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useForm } from "../../hooks/useForm";
+import useModalClose from "../../hooks/useModalClose";
 
 function EditProfileModal({
   isOpen,
@@ -14,6 +15,9 @@ function EditProfileModal({
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, setValues } = useForm({ name: "", avatar: "" });
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Close modal on ESC or outside click
+  useModalClose(isOpen, onClose);
 
   // Reset form when modal opens
   useEffect(() => {

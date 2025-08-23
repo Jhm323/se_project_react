@@ -2,6 +2,7 @@ import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
+import useModalClose from "../../hooks/useModalClose";
 
 function RegisterModal({
   isOpen,
@@ -18,6 +19,9 @@ function RegisterModal({
     password: "",
   });
   // const [isLoading, setIsLoading] = useState(false);
+
+  // Close modal on ESC or outside click
+  useModalClose(isOpen, onClose);
 
   // Reset form when modal opens
   useEffect(() => {

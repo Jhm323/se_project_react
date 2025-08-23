@@ -2,6 +2,7 @@ import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
+import useModalClose from "../../hooks/useModalClose";
 
 export default function AddItemModal({
   onClose,
@@ -14,6 +15,9 @@ export default function AddItemModal({
     imageUrl: "",
     weather: "",
   });
+
+  // Close modal on ESC or outside click
+  useModalClose(isOpen, onClose);
 
   // Reset form fields only when the modal opens
   useEffect(() => {
