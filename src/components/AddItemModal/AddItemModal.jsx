@@ -3,6 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 import useModalClose from "../../hooks/useModalClose";
+import { Modal } from "../Modal/Modal";
 
 export default function AddItemModal({
   onClose,
