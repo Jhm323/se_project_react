@@ -81,7 +81,6 @@ function EditProfileModal({
           disabled={isLoading}
         />
       </label>
-
       {errorMessage && <p className="modal__error">{errorMessage}</p>}
     </ModalWithForm>
   );

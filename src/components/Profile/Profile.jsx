@@ -65,7 +65,6 @@ function Profile({
           handleAddClick={handleAddClick}
           isLoggedIn={isLoggedIn}
           clothingItems={userItems} // Already filtered
-          currentUser={currentUser}
         />
       </section>
 
