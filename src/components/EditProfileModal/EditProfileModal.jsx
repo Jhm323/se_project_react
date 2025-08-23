@@ -33,14 +33,58 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser, isLoading }) {
   }
 
   return (
+    //  <ModalWithForm
+    //       title="Log in"
+    //       buttonText="Log in"
+    //       isOpen={isOpen}
+    //       onClose={onClose}
+    //       onSubmit={onSubmit}
+    //     >
+    //       <label htmlFor="email" className="modal__label">
+    //         Email{" "}
+    //         <input
+    //           type="email"
+    //           className="modal__input"
+    //           id="email"
+    //           name="email"
+    //           placeholder="Enter Your Email"
+    //           required
+    //           value={values.email}
+    //           onChange={handleChange}
+    //         />
+    //         <span className="modal__error" id="email-name-error" />
+    //       </label>
+    //       <label htmlFor="password" className="modal__label">
+    //         Password{" "}
+    //         <input
+    //           type="password"
+    //           className="modal__input"
+    //           id="password"
+    //           name="password"
+    //           placeholder="Enter Your Password"
+    //           required
+    //           value={values.password}
+    //           onChange={handleChange}
+    //         />
+    //       </label>
+
+    //       {errorMessage && <p className="modal__error">{errorMessage}</p>}
+
+    //       <button type="button" className="modal__signup-button" onClick={onSwitch}>
+    //         or Sign Up
+    //       </button>
+    //     </ModalWithForm>
+    //   );
+    // }
+
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content">
         <button className="modal__close" onClick={onClose} />
-        <h2 className="modal__title">Edit Profile</h2>
+        <h2 className="modal__title">Change profile data</h2>
         {error && <p className="modal__error">{error}</p>}
         <form onSubmit={handleSubmit} className="modal__form">
           <label className="modal__label">
-            Name:
+            Name*
             <input
               type="text"
               value={name}
@@ -50,7 +94,7 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser, isLoading }) {
             />
           </label>
           <label className="modal__label">
-            Avatar URL:
+            Avatar*
             <input
               type="url"
               value={avatar}

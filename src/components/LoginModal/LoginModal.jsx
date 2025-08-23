@@ -49,40 +49,6 @@ export default function LoginModal({
     });
   };
 
-  //   Handle Form Submission
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Clear any prior errors
-  //   setErrorMessage("");
-  //   setIsLoading(true);
-
-  //   signin(values.email, values.password)
-  //     .then((data) => {
-  //       // Save token
-  //       localStorage.setItem("jwt", data.token);
-  //       // Inform App of successful login
-  //       onLoginSubmit(data.token);
-  //       setValues({ email: "", password: "" });
-  //       onClose();
-  //     })
-  //     .catch((err) => {
-  //       console.error("Login failed:", err);
-
-  //       if (err.message?.includes("NetworkError")) {
-  //         setErrorMessage("Network issue. Please check your connection.");
-  //       } else if (err.status === 401) {
-  //         setErrorMessage("Invalid email or password.");
-  //       } else {
-  //         setErrorMessage(
-  //           err.message || "Something went wrong. Please try again later."
-  //         );
-  //       }
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // };
-
   return (
     <ModalWithForm
       title="Log in"
