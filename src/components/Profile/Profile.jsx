@@ -14,6 +14,7 @@ function Profile({
   onLogOut,
   onUpdateUser,
   isLoggedIn,
+  handleSubmit,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -72,6 +73,8 @@ function Profile({
         isOpen={isEditProfileOpen}
         onClose={closeAllModals}
         onUpdateUser={onUpdateUser}
+        handleSubmit={handleSubmit}
+        isLoading={false}
       />
     </div>
   );

@@ -309,6 +309,7 @@ function App() {
                       isLoggedIn={isLoggedIn}
                       onLogOut={onLogOut}
                       onUpdateUser={handleUpdateUser}
+                      handleSubmit={handleSubmit}
                     />
                   </ProtectedRoute>
                 }
