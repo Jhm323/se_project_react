@@ -17,7 +17,7 @@ function ItemModal({
   if (!card) return null;
 
   // Check ownership
-  const isOwn = currentUser && card.owner === currentUser._id;
+  const isOwn = currentUser && card.owner === currentUser?._id;
 
   const handleDeleteClick = () => {
     setActiveModal("confirm-delete");

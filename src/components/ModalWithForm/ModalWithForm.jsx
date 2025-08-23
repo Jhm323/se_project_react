@@ -1,4 +1,5 @@
 import "./ModalWithForm.css";
+import useModalClose from "../../hooks/useModalClose";
 import { useEffect } from "react";
 
 function ModalWithForm({
@@ -11,18 +12,8 @@ function ModalWithForm({
   isLoading = false,
   loadingText = "Saving...",
 }) {
-  useEffect(() => {
-    const handleEscapeKey = (event) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscapeKey);
-      return () => document.removeEventListener("keydown", handleEscapeKey);
-    }
-  }, [isOpen, onClose]);
+  // centralized Escape + overlay close handling, using `isOpen` and the function for closing modals
+  useModalClose(isOpen, onClose);
 
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>

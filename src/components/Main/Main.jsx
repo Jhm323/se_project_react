@@ -2,6 +2,7 @@ import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import { defaultClothingItems } from "../../utils/constants"; // Import default items
 
@@ -10,9 +11,9 @@ function Main({
   onCardClick,
   clothingItems,
   onCardLike,
-  currentUser,
   isLoggedIn,
 }) {
+  const currentUser = useContext(CurrentUserContext);
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const itemsToShow =
