@@ -11,11 +11,15 @@ export default function LoginModal({
   onLoginSubmit,
   onSwitch,
   handleSubmit,
+  isLoading = false,
+  buttonText = "Log in",
+  loadingText = "Logging in...",
 }) {
-  const { values, handleChange, setValues } = useForm({
-    email: "",
-    password: "",
-  });
+  const { values, handleChange, setValues, errors, isValid, resetForm } =
+    useForm({
+      email: "",
+      password: "",
+    });
   const [errorMessage, setErrorMessage] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
 
@@ -56,7 +60,6 @@ export default function LoginModal({
   return (
     <ModalWithForm
       title="Log in"
-      buttonText="Log in"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={onSubmit}
@@ -73,8 +76,9 @@ export default function LoginModal({
           value={values.email}
           onChange={handleChange}
         />
-        <span className="modal__error" id="email-name-error" />
+        <span className="modal__error">{errors.email}</span>
       </label>
+
       <label htmlFor="password" className="modal__label">
         Password{" "}
         <input
@@ -87,9 +91,18 @@ export default function LoginModal({
           value={values.password}
           onChange={handleChange}
         />
+        <span className="modal__error">{errors.password}</span>
       </label>
 
       {errorMessage && <p className="modal__error">{errorMessage}</p>}
+
+      <button
+        type="submit"
+        className={`modal__submit ${isValid ? "modal__submit_active" : ""}`}
+        disabled={isLoading || !isValid}
+      >
+        {isLoading ? loadingText : buttonText}
+      </button>
 
       <button type="button" className="modal__signup-button" onClick={onSwitch}>
         or Sign Up
