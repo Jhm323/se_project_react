@@ -11,9 +11,12 @@ function EditProfileModal({
   onUpdateUser,
   handleSubmit,
   isLoading,
+  buttonText = "Save changes",
+  loadingText = "Saving...",
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, setValues } = useForm({ name: "", avatar: "" });
+  const { values, handleChange, setValues, errors, isValid, resetForm } =
+    useForm({ name: "", avatar: "" });
   const [errorMessage, setErrorMessage] = useState("");
 
   // Close modal on ESC or outside click
@@ -22,11 +25,14 @@ function EditProfileModal({
   // Reset form when modal opens
   useEffect(() => {
     if (isOpen && currentUser) {
-      setValues({
-        name: currentUser.name || "",
-        avatar: currentUser.avatar || "",
-      });
-      setErrorMessage("");
+      resetForm(
+        {
+          name: currentUser.name || "",
+          avatar: currentUser.avatar || "",
+        },
+        {},
+        true
+      );
     }
   }, [isOpen, currentUser, setValues]);
 
@@ -66,8 +72,11 @@ function EditProfileModal({
           onChange={handleChange}
           className="modal__input"
           required
+          minLength="2"
+          maxLength="30"
           disabled={isLoading}
         />
+        <span className="modal__error">{errors.name}</span>
       </label>
       <label className="modal__label">
         Avatar*
@@ -80,8 +89,17 @@ function EditProfileModal({
           required
           disabled={isLoading}
         />
+        <span className="modal__error">{errors.avatar}</span>
       </label>
-      {errorMessage && <p className="modal__error">{errorMessage}</p>}
+      {/* {errorMessage && <p className="modal__error">{errorMessage}</p>} */}
+
+      <button
+        type="submit"
+        className={`modal__submit ${isValid ? "modal__submit_active" : ""}`}
+        disabled={isLoading || !isValid}
+      >
+        {isLoading ? loadingText : buttonText}
+      </button>
     </ModalWithForm>
   );
 }

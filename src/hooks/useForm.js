@@ -12,8 +12,10 @@ export function useForm(inputValues = {}) {
     setValues((prev) => ({ ...prev, [name]: value }));
 
     // Track error for this field
-    setErrors((prev) => ({ ...prev, [name]: validationMessage }));
-
+    setErrors((prev) => ({
+      ...prev,
+      [name]: event.target.validationMessage, // built-in browser validation messages
+    }));
     // Check the overall form validity
     setIsValid(event.target.closest("form").checkValidity());
   };
