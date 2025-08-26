@@ -3,6 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 import useModalClose from "../../hooks/useModalClose";
+import SubmitButton from "../SubmitButton/SubmitButton";
 
 function RegisterModal({
   isOpen,
@@ -10,23 +11,25 @@ function RegisterModal({
   onRegister,
   onSwitch,
   handleSubmit,
-  isLoading,
+  isLoading = false,
 }) {
-  const { values, handleChange, setValues } = useForm({
-    name: "",
-    avatar: "",
-    email: "",
-    password: "",
-  });
-  // const [isLoading, setIsLoading] = useState(false);
+  const { values, handleChange, setValues, errors, isValid, resetForm } =
+    useForm({
+      name: "",
+      avatar: "",
+      email: "",
+      password: "",
+    });
 
   // Close modal on ESC or outside click
   useModalClose(isOpen, onClose);
 
   // Reset form when modal opens
   useEffect(() => {
-    if (isOpen) setValues({ name: "", avatar: "", email: "", password: "" });
-  }, [isOpen, setValues]);
+    if (isOpen) {
+      resetForm({ name: "", avatar: "", email: "", password: "" }, {}, false);
+    }
+  }, [isOpen]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +41,6 @@ function RegisterModal({
   return (
     <ModalWithForm
       title="Sign Up"
-      buttonText={isLoading ? "Registering..." : "Register"}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleFormSubmit}
@@ -59,7 +61,7 @@ function RegisterModal({
           onChange={handleChange}
           disabled={isLoading}
         />
-        <span className="modal__error" id="register-name-error" />{" "}
+        {errors.name && <span className="modal__error">{errors.name}</span>}
       </label>{" "}
       <label htmlFor="avatar" className="modal__label">
         Avatar URL
@@ -74,7 +76,7 @@ function RegisterModal({
           onChange={handleChange}
           disabled={isLoading}
         />
-        <span className="modal__error" id="avatar-error" />{" "}
+        {errors.avatar && <span className="modal__error">{errors.avatar}</span>}
       </label>{" "}
       <label htmlFor="email" className="modal__label">
         Email{" "}
@@ -89,7 +91,7 @@ function RegisterModal({
           onChange={handleChange}
           disabled={isLoading}
         />
-        <span className="modal__error" id="email-error" />{" "}
+        {errors.email && <span className="modal__error">{errors.email}</span>}
       </label>{" "}
       <label htmlFor="password" className="modal__label">
         Password{" "}
@@ -104,8 +106,16 @@ function RegisterModal({
           onChange={handleChange}
           disabled={isLoading}
         />
-        <span className="modal__error" id="password-error" />{" "}
+        {errors.password && (
+          <span className="modal__error">{errors.password}</span>
+        )}
       </label>{" "}
+      <SubmitButton
+        isValid={isValid}
+        isLoading={isLoading}
+        buttonText="Register"
+        loadingText="Registering..."
+      />
       <button
         type="button"
         className="modal__login-button"

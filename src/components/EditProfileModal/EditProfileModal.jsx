@@ -4,6 +4,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useForm } from "../../hooks/useForm";
 import useModalClose from "../../hooks/useModalClose";
+import SubmitButton from "../SubmitButton/SubmitButton";
 
 function EditProfileModal({
   isOpen,
@@ -11,13 +12,11 @@ function EditProfileModal({
   onUpdateUser,
   handleSubmit,
   isLoading,
-  buttonText = "Save changes",
-  loadingText = "Saving...",
 }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, setValues, errors, isValid, resetForm } =
     useForm({ name: "", avatar: "" });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // ✅ fix
 
   // Close modal on ESC or outside click
   useModalClose(isOpen, onClose);
@@ -33,8 +32,9 @@ function EditProfileModal({
         {},
         true
       );
+      setErrorMessage(""); // also reset error messages
     }
-  }, [isOpen, currentUser, setValues]);
+  }, [isOpen, currentUser]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -78,6 +78,7 @@ function EditProfileModal({
         />
         <span className="modal__error">{errors.name}</span>
       </label>
+
       <label className="modal__label">
         Avatar*
         <input
@@ -91,15 +92,15 @@ function EditProfileModal({
         />
         <span className="modal__error">{errors.avatar}</span>
       </label>
-      {/* {errorMessage && <p className="modal__error">{errorMessage}</p>} */}
 
-      <button
-        type="submit"
-        className={`modal__submit ${isValid ? "modal__submit_active" : ""}`}
-        disabled={isLoading || !isValid}
-      >
-        {isLoading ? loadingText : buttonText}
-      </button>
+      {errorMessage && <p className="modal__error">{errorMessage}</p>}
+
+      <SubmitButton
+        isValid={isValid}
+        isLoading={isLoading}
+        buttonText="Save Changes"
+        loadingText="Saving..."
+      />
     </ModalWithForm>
   );
 }

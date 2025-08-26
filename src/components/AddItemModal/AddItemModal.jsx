@@ -3,6 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 import useModalClose from "../../hooks/useModalClose";
+import SubmitButton from "../SubmitButton/SubmitButton";
 
 export default function AddItemModal({
   onClose,
@@ -10,8 +11,6 @@ export default function AddItemModal({
   onAddItemModalSubmit,
   handleSubmit,
   isLoading = false,
-  buttonText = "Add garment",
-  loadingText = "Saving...",
 }) {
   const { values, handleChange, setValues, isValid } = useForm({
     name: "",
@@ -98,13 +97,12 @@ export default function AddItemModal({
         ))}
       </fieldset>
 
-      <button
-        type="submit"
-        className={`modal__submit ${isValid ? "modal__submit_active" : ""}`}
-        disabled={isLoading || !isValid}
-      >
-        {isLoading ? loadingText : buttonText}
-      </button>
+      <SubmitButton
+        isValid={isValid}
+        isLoading={isLoading}
+        buttonText="Add Garment"
+        loadingText="Saving..."
+      />
     </ModalWithForm>
   );
 }
