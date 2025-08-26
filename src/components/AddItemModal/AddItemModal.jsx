@@ -3,15 +3,17 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 import useModalClose from "../../hooks/useModalClose";
-import { Modal } from "../Modal/Modal";
 
 export default function AddItemModal({
   onClose,
   isOpen,
   onAddItemModalSubmit,
   handleSubmit,
+  isLoading = false,
+  buttonText = "Add garment",
+  loadingText = "Saving...",
 }) {
-  const { values, handleChange, setValues } = useForm({
+  const { values, handleChange, setValues, isValid } = useForm({
     name: "",
     imageUrl: "",
     weather: "",
@@ -95,6 +97,14 @@ export default function AddItemModal({
           </label>
         ))}
       </fieldset>
+
+      <button
+        type="submit"
+        className={`modal__submit ${isValid ? "modal__submit_active" : ""}`}
+        disabled={isLoading || !isValid}
+      >
+        {isLoading ? loadingText : buttonText}
+      </button>
     </ModalWithForm>
   );
 }
