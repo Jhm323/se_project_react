@@ -68,6 +68,7 @@ function EditProfileModal({
         <input
           type="text"
           name="name"
+          id="edit-profile-name"
           value={values.name || ""}
           onChange={handleChange}
           className="modal__input"
@@ -96,6 +97,7 @@ function EditProfileModal({
       {errorMessage && <p className="modal__error">{errorMessage}</p>}
 
       <SubmitButton
+        className="modal__submit modal__submit--edit-profile"
         isValid={isValid}
         isLoading={isLoading}
         buttonText="Save Changes"

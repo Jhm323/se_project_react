@@ -1,7 +1,6 @@
 .modal__submit {
-  width: 124px;
+  width: auto;
   height: 36px;
-  margin: 24px 0 0 0;
   font-family: "Cabinet Grotesk";
   font-weight: 700;
   font-size: 16px;

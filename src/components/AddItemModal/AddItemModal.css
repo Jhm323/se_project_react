@@ -8,7 +8,7 @@
   opacity: 1;
 }
 
-.modal__submit {
+.modal__submit--add-item {
   width: 124px;
   height: 36px;
   margin: 24px 0 0px 0px;
@@ -24,15 +24,15 @@
   cursor: pointer;
 }
 
-.modal__form .modal__submit.modal__submit_active {
-  opacity: 100% !important;
+.modal__submit--add-item_active {
+  opacity: 100%;
 }
 
-.modal__submit:hover {
+.modal__submit--add-item:hover {
   opacity: 60%;
 }
 
-.modal__submit:disabled {
+.modal__submit--add-item:disabled {
   cursor: not-allowed;
   opacity: 30%;
 }

@@ -98,6 +98,7 @@ export default function AddItemModal({
       </fieldset>
 
       <SubmitButton
+        className="modal__submit modal__submit--add-item"
         isValid={isValid}
         isLoading={isLoading}
         buttonText="Add Garment"

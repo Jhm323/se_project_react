@@ -1,14 +1,7 @@
 import "./ModalWithForm.css";
 import { Modal } from "../Modal/Modal";
 
-function ModalWithForm({
-  children,
-
-  title,
-  onClose,
-  isOpen,
-  onSubmit,
-}) {
+function ModalWithForm({ children, title, onClose, isOpen, onSubmit }) {
   return (
     <Modal name={name} onClose={onClose} isOpen={isOpen}>
       <h2 className="modal__title">{title}</h2>

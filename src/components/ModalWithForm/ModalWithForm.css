@@ -95,37 +95,3 @@
 .modal__radio-buttons:inactive {
   opacity: 50%;
 }
-
-.modal__submit {
-  width: 124px;
-  height: 36px;
-  margin: 24px 0 0px 0px;
-  font-family: "Cabinet Grotesk";
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  color: #fff;
-  background-color: #000;
-  /* opacity: 30%; */
-  border-radius: 10%;
-  border: 0;
-  transition: opacity 0.2s ease;
-  cursor: pointer;
-}
-
-/* .modal__submit_active {
-  opacity: 100%;
-} */
-
-.modal__form .modal__submit.modal__submit_active {
-  opacity: 100% !important;
-}
-
-.modal__submit:hover {
-  opacity: 60%;
-}
-
-.modal__submit:disabled {
-  cursor: not-allowed;
-  opacity: 30%;
-}

@@ -51,7 +51,7 @@ function RegisterModal({
         <input
           type="text"
           className="modal__input"
-          id="name"
+          id="register-name"
           name="name"
           placeholder="Enter Your Name"
           minLength="1"
@@ -110,20 +110,23 @@ function RegisterModal({
           <span className="modal__error">{errors.password}</span>
         )}
       </label>{" "}
-      <SubmitButton
-        isValid={isValid}
-        isLoading={isLoading}
-        buttonText="Register"
-        loadingText="Registering..."
-      />
-      <button
-        type="button"
-        className="modal__login-button"
-        onClick={onSwitch}
-        disabled={isLoading}
-      >
-        or Login
-      </button>
+      <div className="modal__button-container">
+        <SubmitButton
+          className="modal__submit modal__submit--register"
+          isValid={isValid}
+          isLoading={isLoading}
+          buttonText="Sign Up"
+          loadingText="Registering..."
+        />
+        <button
+          type="button"
+          className="modal__login-button"
+          onClick={onSwitch}
+          disabled={isLoading}
+        >
+          or Log In
+        </button>
+      </div>
     </ModalWithForm>
   );
 }

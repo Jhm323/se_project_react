@@ -44,7 +44,7 @@ export default function LoginModal({
       if (err.message?.includes("NetworkError")) {
         setErrorMessage("Network issue. Please check your connection.");
       } else if (err.status === 401) {
-        setErrorMessage("Invalid email or password.");
+        setErrorMessage("Email or password incorrect");
       } else {
         setErrorMessage(
           err.message || "Something went wrong. Please try again later."
@@ -99,23 +99,26 @@ export default function LoginModal({
       {/* Form-level error messages */}
       {errorMessage && <p className="modal__error">{errorMessage}</p>}
 
-      {/* Submit button */}
-      <SubmitButton
-        isValid={isValid}
-        isLoading={isLoading}
-        buttonText="Log In"
-        loadingText="Logging in..."
-      />
+      <div className="modal__button-container">
+        {/* Submit button */}
+        <SubmitButton
+          className="modal__submit modal__submit--login"
+          isValid={isValid}
+          isLoading={isLoading}
+          buttonText="Log In"
+          loadingText="Logging in..."
+        />
 
-      {/* Switch to Register */}
-      <button
-        type="button"
-        className="modal__signup-button"
-        onClick={onSwitch}
-        disabled={isLoading}
-      >
-        or Sign Up
-      </button>
+        {/* Switch to Register */}
+        <button
+          type="button"
+          className="modal__signup-button"
+          onClick={onSwitch}
+          disabled={isLoading}
+        >
+          or Sign Up
+        </button>
+      </div>
     </ModalWithForm>
   );
 }
