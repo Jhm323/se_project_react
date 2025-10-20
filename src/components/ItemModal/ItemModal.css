@@ -21,9 +21,6 @@
   object-fit: contain;
   border-radius: 10px 10px 0px 0px;
   padding: 0px;
-  /* width: 100%;
-  height: auto;
-  max-height: 100%; */
 }
 
 .modal__footer {
