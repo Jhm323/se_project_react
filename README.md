@@ -1,19 +1,96 @@
-# Sprint 14: Front-End Authentication (WTWR)
+# WTWR Frontend — Sprint 14: Front-End Authentication
 
-This project represents a key milestone in the software engineering journey: connecting the front-end and back-end to create a full-stack application. Built with React (Vite) and React Router v6, this sprint implements user authentication, profile editing, and interaction features such as item likes. It uses the backend developed in [Sprint 13](https://github.com/Jhm323/se_project_express) to manage API requests and user data.
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-Frontend-purple?logo=vite)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
+![JWT Auth](https://img.shields.io/badge/Auth-JWT-green)
+![ESLint](https://img.shields.io/badge/code_style-eslint-blueviolet?logo=eslint)
+![GitHub repo size](https://img.shields.io/github/repo-size/Jhm323/se_project_react)
+![Last Commit](https://img.shields.io/github/last-commit/Jhm323/se_project_react)
+![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub issues](https://img.shields.io/github/issues/Jhm323/se_project_react)
+![GitHub stars](https://img.shields.io/github/stars/Jhm323/se_project_react?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Jhm323/se_project_react?style=social)
 
-## Features
+This project represents a key milestone in building a **full-stack React application** by connecting a secure frontend to a custom backend API. Built with **React (Vite)** and **React Router v6**, this sprint focuses on implementing **authentication, authorization, and user-aware UI behavior**.
 
-- User Registration and Login
-- Persistent JWT Authentication
-- Authorization-aware UI rendering
-- Profile Editing (name and avatar)
-- Add and remove Likes on clothing items
-- Conditional rendering based on current user context
-- Protected /profile route
-- Responsive React modals for user actions
+The frontend integrates with the backend developed in  
+👉 **Sprint 13 (Express + MongoDB)**: https://github.com/Jhm323/se_project_express
 
-## Getting Started
+---
+
+## 🌐 Project Links
+
+- **Frontend Repository:** https://github.com/Jhm323/se_project_react
+- **Backend Repository:** https://github.com/Jhm323/se_project_express
+- **Live Demo:** [Coming Soon]
+
+---
+
+## 🎯 Project Objective
+
+The goal of this project was to implement **secure front-end authentication and authorization** patterns commonly used in production React applications.
+
+### Key Objectives:
+
+- Connecting a React frontend to a JWT-secured backend
+- Persisting authentication state across sessions
+- Protecting routes and UI elements based on user authorization
+- Allowing authenticated users to interact with and manage their data
+- Ensuring a responsive, accessible UI across devices and browsers
+
+---
+
+## 🧠 What Was Built & How It Works
+
+### Authentication & Authorization
+
+- **User registration and login** using backend API
+- **JWT tokens stored in `localStorage`**
+- Token validation on app load to restore user sessions
+- Authorization-aware routing with React Router v6
+- Protected routes redirect unauthorized users appropriately
+
+### User Interaction & State Management
+
+- **Profile editing** (name and avatar)
+- **Like / unlike clothing items**
+- Ownership-based UI logic (only owners can delete items)
+- Global user state managed via **React Context**
+- Conditional rendering based on authentication state
+
+### UI & UX
+
+- Responsive modals for login, signup, and profile editing
+- Dynamic UI updates without page reloads
+- Clean separation of concerns between components, context, and API utilities
+
+---
+
+## 🛠 Tech Stack
+
+- **React** (functional components)
+- **Vite**
+- **React Router v6**
+- **JavaScript (ES6+)**
+- **HTML & CSS**
+- **JWT-based authentication**
+- **Context API**
+
+---
+
+## 📂 Project Structure
+
+- `/components` – Reusable UI components (e.g., `Header`, `ItemCard`, `Modals`)
+- `/contexts` – `CurrentUserContext` to manage and provide current user state
+- `/utils/api.js` – API interface for clothing items
+- `/utils/auth.js` – Authentication API endpoints (`/signup`, `/signin`, `/users/me`)
+- `/App.jsx` – Main application logic, route protection, and global state
+- `/routes` – Frontend routing using React Router v6
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -49,46 +126,22 @@ This project represents a key milestone in the software engineering journey: con
    # On port 3001 or similar
    ```
 
-## Project Structure
+---
 
-- `/components` – Reusable UI components (e.g., `Header`, `ItemCard`, `Modals`)
-- `/contexts` – `CurrentUserContext` to manage and provide current user state
-- `/utils/api.js` – API interface for clothing items
-- `/utils/auth.js` – Authentication API endpoints (`/signup`, `/signin`, `/users/me`)
-- `/App.jsx` – Main application logic, route protection, and global state
-- `/routes` – Frontend routing using React Router v6
+## ✅ Features
 
-## Authentication Logic
+- User Registration and Login
+- Persistent JWT Authentication
+- Authorization-aware UI rendering
+- Profile Editing (name and avatar)
+- Add and remove Likes on clothing items
+- Conditional rendering based on current user context
+- Protected /profile route
+- Responsive React modals for user actions
 
-- Uses JWT stored in `localStorage`
-- Protected routes (`/profile`) redirect unauthorized users to the main page
-- Auth headers are passed to API requests via:
+---
 
-  ```js
-  headers: {
-    "Content-Type": "application/json",
-    authorization: `Bearer ${token}`,
-  }
-  ```
-
-## Profile and Interaction Logic
-
-- Users can edit their name and avatar
-- Only the owner of a clothing item can delete it
-- Only authorized users can like/unlike items
-- UI adjusts dynamically with React state and context
-
-## Checklist Highlights
-
-- [x] Signup/Login modals implemented
-- [x] JWT-based authentication
-- [x] Token validation on page load
-- [x] Authorization-aware UI
-- [x] Likes and deletions limited to logged-in users
-- [x] Edit profile modal pre-fills user data
-- [x] Logout functionality clears token and resets state
-
-## Testing
+## 🧪 Testing
 
 While running locally:
 
@@ -97,15 +150,15 @@ While running locally:
 - Log in with valid credentials to access the profile and like/delete features
 - Clear localStorage and refresh to simulate sign-out
 
-## Related Repositories
+---
 
-- Backend Repo (Sprint 13): [se_project_express](https://github.com/jhm323/se_project_express)
-
-## License
+## 📜 License
 
 MIT License
 
-## Author
+---
+
+## 👤 Author
 
 James Holden Moore
 [LinkedIn](https://www.linkedin.com/in/james-holden-moore)
