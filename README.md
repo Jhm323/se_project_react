@@ -8,6 +8,9 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/Jhm323/se_project_react)
 ![Last Commit](https://img.shields.io/github/last-commit/Jhm323/se_project_react)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub issues](https://img.shields.io/github/issues/Jhm323/se_project_react)
+![GitHub stars](https://img.shields.io/github/stars/Jhm323/se_project_react?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Jhm323/se_project_react?style=social)
 
 This project represents a key milestone in building a **full-stack React application** by connecting a secure frontend to a custom backend API. Built with **React (Vite)** and **React Router v6**, this sprint focuses on implementing **authentication, authorization, and user-aware UI behavior**.
 
