@@ -32,7 +32,7 @@
   background-image: url(../../assets/heart_icon.png);
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #fff;
+  background-color: transparent;
   border: none;
   cursor: pointer;
   width: 16px;

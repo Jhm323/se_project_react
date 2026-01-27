@@ -1,6 +1,6 @@
 import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import logo from "../../assets/logo.svg";
+import wtwr from "../../assets/WTWR.svg";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -42,7 +42,9 @@ function Header({
   return (
     <header className="header">
       <Link to="/">
-        <img className="header__logo" alt="header logo" src={logo} />
+        <div className="header__logo-container">
+          <img className="header__logo" alt="header logo" src={wtwr} />
+        </div>
       </Link>
       <p className="header__date-and-location">
         {currentDate}, {weatherData.city}
