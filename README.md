@@ -23,7 +23,7 @@ The frontend integrates with the backend developed in
 
 - **Frontend Repository:** https://github.com/Jhm323/se_project_react
 - **Backend Repository:** https://github.com/Jhm323/se_project_express
-- **Live Demo:** [Coming Soon]
+- **Live Demo:** https://wtwr-frontend-5mwu.onrender.com
 
 ---
 
