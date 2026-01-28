@@ -8,6 +8,7 @@
   cursor: pointer;
   position: relative;
   overflow: visible;
+  transition: transform 0.3s ease;
 }
 
 .card__name {
@@ -41,13 +42,18 @@
   position: absolute;
   right: 75px;
   top: 17px;
+  transition: transform 0.3s ease;
+}
+
+.item-card__like-button:hover {
+  transform: scale(1.1);
 }
 
 .item-card__like-button_active {
   background-image: url(../../assets/heart_liked.png);
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #fff;
+  background-color: transparent;
   border: none;
   cursor: pointer;
   width: 16px;
@@ -56,4 +62,8 @@
   position: absolute;
   right: 75px;
   top: 17px;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }

@@ -34,14 +34,14 @@
 }
 
 .confirm-delete-modal .modal__delete-item {
-  margin: 0 auto;
   width: 138px;
   height: 24px;
-  font-size: 20px;
   top: 170px;
   left: 0px;
+  font-size: 20px;
   padding: 0px;
   margin: 0 auto;
+  cursor: pointer;
 }
 
 .confirm-delete-modal .modal__cancel {
@@ -50,4 +50,5 @@
   margin: 0 auto;
   padding: 0px;
   bottom: 60px;
+  cursor: pointer;
 }

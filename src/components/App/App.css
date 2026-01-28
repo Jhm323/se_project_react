@@ -1,6 +1,6 @@
 .page {
   background-image: url(../../assets/image_bg.svg);
-  background-size: cover;
+  background-size: 200vw 200vh;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
@@ -10,11 +10,4 @@
   max-width: 1360px;
   margin: 0 auto;
   padding: 0 40px;
-}
-
-/* For screens 1440px and wider */
-@media (min-width: 1440px) {
-  .page {
-    background-size: contains;
-  }
 }

@@ -8,11 +8,17 @@
 
 .modal__close-preview {
   background-image: url(../../assets/preview_close.svg);
+  background-color: transparent;
   height: 16px;
   width: 16px;
   top: 26px;
   right: 26px;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.modal__close-preview:hover {
+  transform: scale(1.1);
 }
 
 .modal__image {
@@ -47,18 +53,19 @@
 }
 
 .modal__delete-item {
-  color: #ff4d00;
+  width: 101px;
+  height: 24px;
+  right: 32px;
+  bottom: 68px;
+  position: absolute;
   font-family: "Cabinet Grotesk";
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0;
-  background-color: white;
-  width: 101px;
-  height: 24px;
-  position: absolute;
-  right: 32px;
-  bottom: 68px;
+  background-color: transparent;
+  color: #ff4d00;
   border: none;
   white-space: nowrap;
+  cursor: pointer;
 }
