@@ -19,3 +19,10 @@
   font-family: "Cabinet Grotesk";
   font-size: 20px;
 }
+
+.profile__sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}

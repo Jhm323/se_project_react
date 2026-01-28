@@ -29,9 +29,22 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import hotBg from "../../assets/hot_bg.svg";
-import warmBg from "../../assets/warm_bg.svg";
-import coldBg from "../../assets/cold_bg.svg";
+import clearDay from "../../assets/backgrounds/clear-day.svg";
+import clearNight from "../../assets/backgrounds/clear-night.svg";
+import cloudsDay from "../../assets/backgrounds/clouds-day.svg";
+import cloudsNight from "../../assets/backgrounds/clouds-night.svg";
+import coldNight from "../../assets/backgrounds/cold-night.svg";
+import coldDay from "../../assets/backgrounds/cold-day.svg";
+import defaultDay from "../../assets/backgrounds/default-day.svg";
+import defaultNight from "../../assets/backgrounds/default-night.svg";
+import mistDay from "../../assets/backgrounds/mist-day.svg";
+import mistNight from "../../assets/backgrounds/mist-night.svg";
+import rainDay from "../../assets/backgrounds/rain-day.svg";
+import rainNight from "../../assets/backgrounds/rain-night.svg";
+import snowDay from "../../assets/backgrounds/snow-day.svg";
+import snowNight from "../../assets/backgrounds/snow-night.svg";
+import stormDay from "../../assets/backgrounds/storm-day.svg";
+import stormNight from "../../assets/backgrounds/storm-night.svg";
 
 function App() {
   const navigate = useNavigate();
@@ -49,12 +62,39 @@ function App() {
     condition: "",
     isDay: false,
   });
+
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
+
+  // Weather Backgrounds
+  const bgImages = {
+    "clear-day": clearDay,
+    "clear-night": clearNight,
+    "clouds-day": cloudsDay,
+    "clouds-night": cloudsNight,
+    "cold-day": coldDay,
+    "cold-night": coldNight,
+    "default-day": defaultDay,
+    "default-night": defaultNight,
+    "mist-day": mistDay,
+    "mist-night": mistNight,
+    "rain-day": rainDay,
+    "rain-night": rainNight,
+    "snow-day": snowDay,
+    "snow-night": snowNight,
+    "storm-day": stormDay,
+    "storm-night": stormNight,
+  };
+
+  // Render Weather Backgrounds
+  const getBgImage = () => {
+    const key = `${weatherData.condition}-${weatherData.isDay ? "day" : "night"}`;
+    return bgImages[key] || (weatherData.isDay ? defaultDay : defaultNight);
+  };
 
   // Login handlers
 
@@ -275,7 +315,11 @@ function App() {
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
-        <div className={`page ${weatherData.type}`}>
+        <div
+          className="page"
+          style={{ backgroundImage: `url(${getBgImage()})` }}
+        >
+          {" "}
           <div className="page__content">
             <Header
               userName={currentUser?.name}
@@ -321,7 +365,6 @@ function App() {
             </Routes>
             <Footer />
           </div>
-
           {/* Modals */}
           <AddItemModal
             isOpen={activeModal === "add-garment"}
@@ -330,7 +373,6 @@ function App() {
             handleSubmit={handleSubmit}
             isLoading={isLoading}
           />
-
           <ItemModal
             activeModal={activeModal}
             setActiveModal={setActiveModal}
@@ -340,7 +382,6 @@ function App() {
             handleSubmit={handleSubmit}
             isLoading={isLoading}
           />
-
           <RegisterModal
             isOpen={isRegisterOpen}
             onClose={() => setRegisterOpen(false)}
@@ -349,7 +390,6 @@ function App() {
             handleSubmit={handleSubmit}
             isLoading={isLoading}
           />
-
           <LoginModal
             isOpen={isLoginOpen}
             onClose={() => setLoginOpen(false)}
