@@ -35,3 +35,21 @@
   background-position: center;
   background-attachment: fixed;
 }
+
+@media (max-width: 780px) {
+  .page {
+    background-size: cover;
+  }
+
+  .page.hot {
+    background-size: cover;
+  }
+
+  .page.warm {
+    background-size: cover;
+  }
+
+  .page.cold {
+    background-size: cover;
+  }
+}

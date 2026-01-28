@@ -67,3 +67,10 @@
 .card:hover {
   transform: scale(1.05);
 }
+
+/* ===== Responsive design ===== */
+@media (max-width: 780px) {
+  .card__image {
+    width: 300px;
+  }
+}

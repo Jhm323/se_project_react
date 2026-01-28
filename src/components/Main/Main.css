@@ -17,3 +17,11 @@
   padding: 40px 0px 34px 0px;
   margin: 0px;
 }
+
+/* ===== Responsive Design ===== */
+@media (max-width: 780px) {
+  .cards__list {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 4px;
+  }
+}
