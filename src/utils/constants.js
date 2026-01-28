@@ -1,3 +1,20 @@
+import clearDay from "../assets/backgrounds/clear-day.svg";
+import clearNight from "../assets/backgrounds/clear-night.svg";
+import cloudsDay from "../assets/backgrounds/clouds-day.svg";
+import cloudsNight from "../assets/backgrounds/clouds-night.svg";
+import coldDay from "../assets/backgrounds/cold-day.svg";
+import coldNight from "../assets/backgrounds/cold-night.svg";
+import defaultDay from "../assets/backgrounds/default-day.svg";
+import defaultNight from "../assets/backgrounds/default-night.svg";
+import mistDay from "../assets/backgrounds/mist-day.svg";
+import mistNight from "../assets/backgrounds/mist-night.svg";
+import rainDay from "../assets/backgrounds/rain-day.svg";
+import rainNight from "../assets/backgrounds/rain-night.svg";
+import snowDay from "../assets/backgrounds/snow-day.svg";
+import snowNight from "../assets/backgrounds/snow-night.svg";
+import stormDay from "../assets/backgrounds/storm-day.svg";
+import stormNight from "../assets/backgrounds/storm-night.svg";
+
 export const weatherOptions = [
   {
     day: true,
@@ -74,7 +91,7 @@ export const weatherOptions = [
 
 export const defaultWeatherOptions = {
   day: {
-    url: new URL("../assets/default.png", import.meta.url).href,
+    url: new URL("../assets/day/default.png", import.meta.url).href,
   },
   night: {
     url: new URL("../assets/night/default.png", import.meta.url).href,
@@ -143,3 +160,22 @@ export const BASE_URL =
   process.env.NODE_ENV === "production"
     ? "https://wtwr-backend-uqo4.onrender.com"
     : "http://localhost:3001";
+
+export const bgImages = {
+  "clear-day": clearDay,
+  "clear-night": clearNight,
+  "clouds-day": cloudsDay,
+  "clouds-night": cloudsNight,
+  "cold-day": coldDay,
+  "cold-night": coldNight,
+  "default-day": defaultDay,
+  "default-night": defaultNight,
+  "mist-day": mistDay,
+  "mist-night": mistNight,
+  "rain-day": rainDay,
+  "rain-night": rainNight,
+  "snow-day": snowDay,
+  "snow-night": snowNight,
+  "storm-day": stormDay,
+  "storm-night": stormNight,
+};

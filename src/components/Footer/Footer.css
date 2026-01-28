@@ -7,4 +7,13 @@
   font-size: 16px;
   line-height: 20px;
   padding: 0px 2px 24px 0px;
+  background-color: var(--text-bg);
+  color: var(--text-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 5px;
+}
+
+.footer__name-surname,
+.footer__date {
+  padding: 0 10px 0 10px;
 }

@@ -1,14 +1,9 @@
 export const getWeather = async ({ latitude, longitude }, APIkey) => {
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`,
   );
   return checkResponse(res);
 };
-
-// export const getWeather: ({ latitude, longitude }: {
-//   latitude: any;
-//   longitude: any;
-// }, APIkey: any) => Promise<any>
 
 function checkResponse(res) {
   if (res.ok) {

@@ -11,20 +11,107 @@
   padding: 0 40px;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1100px) {
   .page {
     background-size: cover;
   }
+}
 
-  .page.hot {
-    background-size: cover;
-  }
+/* ===== Global Styles ===== */
 
-  .page.warm {
-    background-size: cover;
-  }
+.page.cold.day {
+  --text-bg: #b0c2d1; /* Pastel Gray Azure  */
+  --text-color: #3e5a7a; /* Gray Blue */
+  --accent-color: #a86d5f; /* Gray Orange */
+}
 
-  .page.cold {
-    background-size: cover;
-  }
+.page.cold.night {
+  --text-bg: #0a1e3d; /* Dark Blue */
+  --text-color: white;
+  --accent-color: #513534; /* Dark Gray Red */
+}
+
+/* Clear weather */
+.page.clear.day {
+  --text-bg: #94bfc6; /* Gray Azure */
+  --text-color: #364c1f; /* Dark Green */
+  --accent-color: #767d21; /* Gray Olive */
+}
+
+.page.clear.night {
+  --text-bg: rgba(0, 0, 139, 0.4); /* Dark blue */
+  --text-color: white;
+  --accent-color: rgba(255, 255, 0, 0.6); /* Yellow */
+}
+
+/* Cloudy weather */
+.page.clouds.day {
+  --text-bg: #d0c6a9; /* Dark Gray Orange */
+  --text-color: #413814; /* Dark Gray Brown */
+  --accent-color: #75775e; /* Gray Olive */
+}
+
+.page.clouds.night {
+  --text-bg: rgba(64, 64, 64, 0.4); /* Dark gray */
+  --text-color: #b3ad98; /* Gray Yellow */
+  --accent-color: #461405; /* Dark Brown */
+}
+
+/* Misty weather */
+.page.mist.day {
+  --text-bg: #dfdfd3; /* Light Yellow */
+  --text-color: #4c482c; /* Dark Gray Brown */
+  --accent-color: #a85633; /* Orange */
+}
+
+.page.mist.night {
+  --text-bg: #1d4d6a; /* Dark Azure */
+  --text-color: #97b6b7; /* Gray Cyan */
+  --accent-color: #631e10; /* Dark Brown */
+}
+
+/* Rainy weather */
+.page.rain.day {
+  --text-bg: #696e5c; /* Steel blue */
+  --text-color: white;
+  --accent-color: #952d04 /* Vivid Brown */;
+}
+
+.page.rain.night {
+  --text-bg: rgba(25, 25, 112, 0.4); /* Midnight blue */
+  --text-color: white;
+  --accent-color: rgba(138, 43, 226, 0.6); /* Blue violet */
+}
+
+/* Snowy weather */
+.page.snow.day {
+  --text-bg: #c0ccd4; /* Pastel Gray Azure */
+  --text-color: #556e84; /* Gray Azure */
+  --accent-color: white;
+}
+
+.page.snow.night {
+  --text-bg: #123e61; /* Dark Azure */
+  --text-color: #d2ddd9; /* Light Turquoise */
+  --accent-color: white;
+}
+
+/* Stormy weather */
+.page.storm.day {
+  --text-bg: rgba(47, 79, 79, 0.4); /* Dark slate gray */
+  --text-color: white;
+  --accent-color: #6e2204; /* Dark Brown */
+}
+
+.page.storm.night {
+  --text-bg: rgba(0, 0, 0, 0.4); /* Black */
+  --text-color: white;
+  --accent-color: #812102;
+}
+
+/* Default fallback */
+.page {
+  --text-bg: rgba(255, 255, 255, 0.4); /* Light white */
+  --text-color: black;
+  --accent-color: rgba(0, 0, 0, 0.6); /* Black */
 }
