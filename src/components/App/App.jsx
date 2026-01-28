@@ -29,6 +29,10 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
+import hotBg from "../../assets/hot_bg.svg";
+import warmBg from "../../assets/warm_bg.svg";
+import coldBg from "../../assets/cold_bg.svg";
+
 function App() {
   const navigate = useNavigate();
 
@@ -113,7 +117,7 @@ function App() {
           .addCardLike(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
+              cards.map((item) => (item._id === id ? updatedCard : item)),
             );
           })
           .catch((err) => {
@@ -123,7 +127,7 @@ function App() {
           .removeCardLike(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
+              cards.map((item) => (item._id === id ? updatedCard : item)),
             );
           })
           .catch((err) => {
@@ -163,7 +167,7 @@ function App() {
     return deleteItem(id, token)
       .then(() => {
         setClothingItems((prevItems) =>
-          prevItems.filter((item) => item._id !== id)
+          prevItems.filter((item) => item._id !== id),
         );
       })
       .catch(console.error);
@@ -271,7 +275,7 @@ function App() {
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
-        <div className="page">
+        <div className={`page ${weatherData.type}`}>
           <div className="page__content">
             <Header
               userName={currentUser?.name}
