@@ -20,20 +20,20 @@
 /* ===== Global Styles ===== */
 
 .page.cold.day {
-  --text-bg: #b0c2d1; /* Pastel Gray Azure  */
+  --text-bg: rgba(176, 194, 209, 0.8); /* Pastel Gray Azure */
   --text-color: #3e5a7a; /* Gray Blue */
   --accent-color: #a86d5f; /* Gray Orange */
 }
 
 .page.cold.night {
-  --text-bg: #0a1e3d; /* Dark Blue */
+  --text-bg: rgba(10, 30, 61, 0.8); /* Dark Blue */
   --text-color: white;
   --accent-color: #513534; /* Dark Gray Red */
 }
 
 /* Clear weather */
 .page.clear.day {
-  --text-bg: #94bfc6; /* Gray Azure */
+  --text-bg: rgba(148, 191, 198, 0.8); /* Gray Azure */
   --text-color: #364c1f; /* Dark Green */
   --accent-color: #767d21; /* Gray Olive */
 }
@@ -46,33 +46,33 @@
 
 /* Cloudy weather */
 .page.clouds.day {
-  --text-bg: #d0c6a9; /* Dark Gray Orange */
+  --text-bg: rgba(208, 198, 169, 0.8); /* Dark Gray Orange */
   --text-color: #413814; /* Dark Gray Brown */
   --accent-color: #75775e; /* Gray Olive */
 }
 
 .page.clouds.night {
-  --text-bg: rgba(64, 64, 64, 0.4); /* Dark gray */
-  --text-color: #b3ad98; /* Gray Yellow */
+  --text-bg: rgba(36, 35, 35, 0.745); /* Dark gray */
+  --text-color: #bdab69; /* Gray Yellow */
   --accent-color: #461405; /* Dark Brown */
 }
 
 /* Misty weather */
 .page.mist.day {
-  --text-bg: #dfdfd3; /* Light Yellow */
+  --text-bg: rgba(223, 223, 211, 0.8); /* Light Yellow */
   --text-color: #4c482c; /* Dark Gray Brown */
   --accent-color: #a85633; /* Orange */
 }
 
 .page.mist.night {
-  --text-bg: #1d4d6a; /* Dark Azure */
-  --text-color: #97b6b7; /* Gray Cyan */
+  --text-bg: rgba(29, 77, 106, 0.8); /* Dark Azure */
+  --text-color: #b0dee0; /* Gray Cyan */
   --accent-color: #631e10; /* Dark Brown */
 }
 
 /* Rainy weather */
 .page.rain.day {
-  --text-bg: #696e5c; /* Steel blue */
+  --text-bg: rgba(105, 110, 92, 0.8); /* Steel blue */
   --text-color: white;
   --accent-color: #952d04 /* Vivid Brown */;
 }
@@ -85,13 +85,13 @@
 
 /* Snowy weather */
 .page.snow.day {
-  --text-bg: #c0ccd4; /* Pastel Gray Azure */
+  --text-bg: rgba(192, 204, 212, 0.8); /* Pastel Gray Azure */
   --text-color: #556e84; /* Gray Azure */
   --accent-color: white;
 }
 
 .page.snow.night {
-  --text-bg: #123e61; /* Dark Azure */
+  --text-bg: rgba(18, 62, 97, 0.8); /* Dark Azure */
   --text-color: #d2ddd9; /* Light Turquoise */
   --accent-color: white;
 }
