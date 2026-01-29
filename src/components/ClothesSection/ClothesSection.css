@@ -50,3 +50,9 @@
   gap: 20px;
   padding: 0;
 }
+
+@media (max-width: 1111px) {
+  .clothes-section__items {
+    gap: 5px;
+  }
+}

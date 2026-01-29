@@ -19,6 +19,19 @@
   }
 }
 
+@media (max-width: 780px) {
+  .page {
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .page__content {
+    padding: 0 10px;
+  }
+}
+
 /* ===== Global Styles ===== */
 
 .page.cold.day {
