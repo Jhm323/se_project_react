@@ -447,6 +447,24 @@ function App() {
     return bgImages[key] || (currentIsDay ? defaultDay : defaultNight);
   };
 
+  // Map condition to clothing type for dev mode
+  const getTypeFromCondition = (condition) => {
+    if (condition === "clear" || condition === "mist" || condition === "clouds")
+      return "warm";
+    if (
+      condition === "rain" ||
+      condition === "snow" ||
+      condition === "storm" ||
+      condition === "cold"
+    )
+      return "cold";
+    return "warm"; // default
+  };
+
+  const currentType = devMode
+    ? getTypeFromCondition(currentCondition)
+    : weatherData.type;
+
   // Fetch user & clothing items
   const fetchUserAndData = (token) => {
     setLoading(true);
@@ -465,7 +483,6 @@ function App() {
   };
 
   // Login handlers
-
   const handleSwitchToRegister = () => {
     setLoginOpen(false);
     setRegisterOpen(true);
@@ -749,6 +766,7 @@ function App() {
                       ...weatherData,
                       condition: currentCondition,
                       isDay: currentIsDay,
+                      type: currentType,
                     }}
                     currentTemperatureUnit={currentTemperatureUnit}
                     clothingItems={clothingItems}

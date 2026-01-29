@@ -15,6 +15,13 @@
   height: 50px;
   overflow: hidden;
   margin-right: 24px;
+  background-color: var(--text-bg);
+  border: 2px solid var(--accent-color);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
 }
 
 .header__logo {
