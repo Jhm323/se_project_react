@@ -37,7 +37,6 @@ function Profile({
 
   function filterUserClothing(clothingItems, userId) {
     if (!Array.isArray(clothingItems) || !userId) {
-      console.log("Invalid clothingItems:", clothingItems);
       return [];
     }
 

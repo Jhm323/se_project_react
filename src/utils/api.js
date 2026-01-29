@@ -36,23 +36,6 @@ export function getItems() {
   }).then(handleResponse);
 }
 
-// export function getItems() {
-//   return fetch(`${BASE_URL}/items`, {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   })
-//     .then((res) => {
-//       console.log("Raw response status:", res.status);
-//       return res.json();
-//     })
-//     .then((rawData) => {
-//       console.log("Raw server data for getItems:", rawData);
-//       return rawData;
-//     });
-// }
-
 export function addCardLike(id, token) {
   return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "PUT",
