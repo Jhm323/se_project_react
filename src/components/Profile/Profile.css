@@ -29,3 +29,23 @@
     gap: 40px;
   }
 }
+
+@media (max-width: 680px) {
+  .profile {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .profile__clothes-section {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allows items to wrap and center */
+    width: 100%; /* Ensures it takes full width for centering */
+  }
+
+  .clothes-section__items,
+  .clothes-section__content {
+    justify-content: center; /* Centers the clothing item cards horizontally */
+  }
+}
