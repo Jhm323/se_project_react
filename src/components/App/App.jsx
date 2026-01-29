@@ -579,7 +579,7 @@ function App() {
     const token = localStorage.getItem("jwt");
     const makeRequest = () => deleteItem(card._id, token);
     const closeModal = () => closeActiveModal();
-    handleSubmit(makeRequest, closeModal).then(() => {
+    return handleSubmit(makeRequest, closeModal).then(() => {
       setClothingItems((cards) => cards.filter((c) => c._id !== card._id));
     });
   };

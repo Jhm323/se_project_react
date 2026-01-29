@@ -17,7 +17,7 @@ function ItemModal({
   // hook to close modal on Esc or overlay click
   useModalClose(
     activeModal === "preview" || activeModal === "confirm-delete",
-    onClose
+    onClose,
   );
 
   // Guard clause here to prevent rendering if card is null or undefined
@@ -30,8 +30,13 @@ function ItemModal({
     setActiveModal("confirm-delete");
   };
 
+  // const onConfirmDelete = () => {
+  //   const makeRequest = () => onDeleteCard(card._id);
+  //   handleSubmit(makeRequest, onClose);
+  // };
+
   const onConfirmDelete = () => {
-    const makeRequest = () => onDeleteCard(card._id);
+    const makeRequest = () => onDeleteCard(card);
     handleSubmit(makeRequest, onClose);
   };
 
