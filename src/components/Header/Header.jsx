@@ -41,7 +41,7 @@ function Header({
 
   return (
     <header
-      className={`header ${location.pathname === "/profile" ? "header--profile" : ""}`}
+      className={`header ${location.pathname === "/" ? "header--home" : ""} ${location.pathname === "/profile" ? "header--profile" : ""}`}
     >
       <Link to="/">
         <div className="header__logo-container">
