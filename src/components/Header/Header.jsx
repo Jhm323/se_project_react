@@ -1,7 +1,7 @@
 import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import wtwr from "../../assets/WTWR.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
@@ -13,13 +13,13 @@ function Header({
   setRegisterOpen,
 }) {
   const currentUser = useContext(CurrentUserContext);
+  const location = useLocation();
 
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  // Avatar placeholder with first letter of user name
   const renderAvatar = () => {
     if (currentUser?.avatar) {
       return (
@@ -40,7 +40,9 @@ function Header({
   };
 
   return (
-    <header className="header">
+    <header
+      className={`header ${location.pathname === "/profile" ? "header--profile" : ""}`}
+    >
       <Link to="/">
         <div className="header__logo-container">
           <img className="header__logo" alt="header logo" src={wtwr} />
@@ -51,25 +53,7 @@ function Header({
       </p>
       <div className="header__group-right">
         <ToggleSwitch />
-        {isLoggedIn && currentUser ? (
-          <>
-            <button
-              onClick={handleAddClick}
-              type="button"
-              className="header__add-clothes-btn"
-            >
-              +Add clothes
-            </button>
-
-            <Link to="/profile" className="header__link">
-              <div className="header__user-container">
-                <p className="header__username">{currentUser.name}</p>
-                {renderAvatar()}
-                {/* <img src={avatar} alt="User Avatar" className="header__avatar" /> */}
-              </div>
-            </Link>
-          </>
-        ) : (
+        {!isLoggedIn ? (
           <nav className="header__auth-buttons">
             <button
               onClick={() => setLoginOpen(true)}
@@ -84,7 +68,24 @@ function Header({
               Register
             </button>
           </nav>
-        )}
+        ) : location.pathname !== "/profile" ? (
+          <>
+            <button
+              onClick={handleAddClick}
+              type="button"
+              className="header__add-clothes-btn"
+            >
+              +Add clothes
+            </button>
+
+            <Link to="/profile" className="header__link">
+              <div className="header__user-container">
+                <p className="header__username">{currentUser.name}</p>
+                {renderAvatar()}
+              </div>
+            </Link>
+          </>
+        ) : null}
       </div>
     </header>
   );
