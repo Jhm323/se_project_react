@@ -40,12 +40,12 @@
   .profile__clothes-section {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Allows items to wrap and center */
-    width: 100%; /* Ensures it takes full width for centering */
+    flex-wrap: wrap;
+    width: 100%;
   }
 
   .clothes-section__items,
   .clothes-section__content {
-    justify-content: center; /* Centers the clothing item cards horizontally */
+    justify-content: center;
   }
 }

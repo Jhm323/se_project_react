@@ -31,3 +31,11 @@
   align-items: flex-start;
   gap: 10px;
 }
+
+@media (max-width: 680px) {
+  .sidebar {
+    width: 229px;
+    justify-content: center;
+    align-items: center;
+  }
+}
