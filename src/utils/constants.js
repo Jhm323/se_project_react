@@ -159,7 +159,7 @@ export const APIkey = "eba65e38a6d242d2541ed1f536f4917a";
 export const BASE_URL =
   process.env.NODE_ENV === "production"
     ? "https://wtwr-backend-uqo4.onrender.com"
-    : "http://localhost:3001";
+    : "http://localhost:3002";
 
 export const bgImages = {
   "clear-day": clearDay,

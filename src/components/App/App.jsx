@@ -234,7 +234,7 @@ function App() {
 
   const handleRegister = (userData) => {
     const makeRequest = () => signup(userData);
-    handleSubmit(makeRequest).then(() => {
+    return handleSubmit(makeRequest).then(() => {
       handleSwitchToLogin();
     });
   };

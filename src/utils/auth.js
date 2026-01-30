@@ -24,8 +24,8 @@ export function signout() {
   localStorage.removeItem("jwt");
 }
 
-// Sign up a new user
-export function signup(name, avatar, email, password) {
+// Sign up new user
+export function signup({ name, avatar, email, password }) {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
