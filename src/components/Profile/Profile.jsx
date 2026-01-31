@@ -44,6 +44,11 @@ function Profile({
   }
 
   const userItems = filterUserClothing(clothingItems, currentUser._id);
+  const likedItems = Array.isArray(clothingItems)
+    ? clothingItems.filter((item) =>
+        Array.isArray(item.likes) ? item.likes.includes(userId) : false,
+      )
+    : [];
 
   return (
     <div className="profile">
@@ -57,13 +62,24 @@ function Profile({
         </button>
       </section>
 
-      <section className="profile__clothes-section">
+      {/* <section className="profile__clothes-section">
         <ClothesSection
           onCardClick={onCardClick}
           onCardLike={onCardLike}
           handleAddClick={handleAddClick}
           isLoggedIn={isLoggedIn}
           clothingItems={userItems} // Already filtered
+        />
+      </section> */}
+
+      <section className="profile__clothes-section">
+        <h2>My Items</h2>
+        <ClothesSection
+          onCardClick={onCardClick}
+          onCardLike={onCardLike}
+          handleAddClick={handleAddClick}
+          isLoggedIn={isLoggedIn}
+          clothingItems={userItems}
         />
       </section>
 

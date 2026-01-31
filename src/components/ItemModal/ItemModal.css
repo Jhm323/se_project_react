@@ -69,3 +69,27 @@
   white-space: nowrap;
   cursor: pointer;
 }
+
+/* ===== Responsive Design ===== */
+@media (max-width: 320px) {
+  .modal__content.modal__content_type_image {
+    width: calc(100% - 24px);
+    height: auto;
+    margin: 12px;
+    padding: 0;
+    max-width: 320px;
+  }
+
+  .modal__image {
+    width: 100%;
+    height: auto;
+    max-height: 60vh; /* keep it visible without overflowing */
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .modal__footer {
+    width: calc(100% - 24px);
+    height: auto;
+  }
+}
