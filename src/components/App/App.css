@@ -18,17 +18,6 @@
   }
 }
 
-/* ===== mobile test ===== */
-
-@media (max-width: 600px) {
-  .page {
-    background-size: contain;
-    background-position: top center;
-  }
-}
-
-/* ========= */
-
 @media (max-width: 400px) {
   .page__content {
     padding: 0 10px;
