@@ -14,10 +14,20 @@
 /* ===== Responsive Design ===== */
 @media (max-width: 1070px) {
   .page {
-    background-size: cover;
     background-position: center;
   }
 }
+
+/* ===== mobile test ===== */
+
+@media (max-width: 600px) {
+  .page {
+    background-size: contain;
+    background-position: top center;
+  }
+}
+
+/* ========= */
 
 @media (max-width: 400px) {
   .page__content {
