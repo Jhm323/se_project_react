@@ -29,8 +29,8 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import defaultDay from "../../assets/backgrounds/default-day.svg";
-import defaultNight from "../../assets/backgrounds/default-night.svg";
+import defaultDay from "../../assets/backgrounds/clear-day.svg";
+import defaultNight from "../../assets/backgrounds/clear-night.svg";
 
 function App() {
   const navigate = useNavigate();

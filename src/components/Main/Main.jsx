@@ -4,7 +4,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
-import { defaultClothingItems } from "../../utils/constants"; // Import default items
+import { defaultClothingItems } from "../../utils/constants";
 
 function Main({
   weatherData,
@@ -16,11 +16,22 @@ function Main({
   const currentUser = useContext(CurrentUserContext);
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
-  const itemsToShow =
-    clothingItems.length > 0 ? clothingItems : defaultClothingItems;
+  // Ensure clothingItems is an array
+  const clothing = Array.isArray(clothingItems) ? clothingItems : [];
 
+  // Merge defaults + backend items, backend items overwrite defaults when _id matches
+  const mergedItems = [...defaultClothingItems, ...clothing];
+  const itemsMap = new Map();
+  mergedItems.forEach((item) => {
+    const key = String(item._id);
+    itemsMap.set(key, item);
+  });
+  const itemsToShow = Array.from(itemsMap.values());
+
+  // Robust filter (case-insensitive)
+  const targetType = (weatherData.type || "").toString().toLowerCase();
   const filteredItems = itemsToShow.filter(
-    (item) => item.weather === weatherData.type
+    (item) => (item.weather || "").toString().toLowerCase() === targetType,
   );
 
   return (
