@@ -19,8 +19,25 @@ export const filterWeatherData = (data) => {
     F: Math.round(data.main.temp),
     C: Math.round(((data.main.temp - 32) * 5) / 9),
   };
+
+  // Normalize OpenWeather "main" into our categories
+  const main = (data.weather?.[0]?.main || "").toString().toLowerCase();
+  let condition = "clear";
+  if (main.includes("cloud")) condition = "clouds";
+  else if (main.includes("rain") || main.includes("drizzle"))
+    condition = "rain";
+  else if (main.includes("thunder")) condition = "thunderstorm";
+  else if (main.includes("snow")) condition = "snow";
+  else if (
+    main.includes("mist") ||
+    main.includes("fog") ||
+    main.includes("haze")
+  )
+    condition = "mist";
+  else if (main.includes("clear")) condition = "clear";
+
   result.type = getWeatherType(result.temp.F);
-  result.condition = data.weather[0].main.toLowerCase();
+  result.condition = condition;
   result.isDay = isDay(data.sys, Date.now());
   return result;
 };

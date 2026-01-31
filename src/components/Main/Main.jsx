@@ -16,23 +16,31 @@ function Main({
   const currentUser = useContext(CurrentUserContext);
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
-  // Ensure clothingItems is an array
-  const clothing = Array.isArray(clothingItems) ? clothingItems : [];
+  // Normalize and map weather types for comparison
+  const normalize = (s) => (s || "").toString().toLowerCase().trim();
+  const normalizeForCompare = (s) =>
+    normalize(s) === "hot" ? "warm" : normalize(s);
 
-  // Merge defaults + backend items, backend items overwrite defaults when _id matches
-  const mergedItems = [...defaultClothingItems, ...clothing];
-  const itemsMap = new Map();
-  mergedItems.forEach((item) => {
-    const key = String(item._id);
-    itemsMap.set(key, item);
-  });
-  const itemsToShow = Array.from(itemsMap.values());
+  const normalizedWeatherType = normalizeForCompare(weatherData.type);
 
-  // Robust filter (case-insensitive)
-  const targetType = (weatherData.type || "").toString().toLowerCase();
-  const filteredItems = itemsToShow.filter(
-    (item) => (item.weather || "").toString().toLowerCase() === targetType,
+  // Ensure apiItems is an array
+  const apiItems = Array.isArray(clothingItems) ? clothingItems : [];
+
+  // API items matching today's weather
+  const matchingApiItems = apiItems.filter(
+    (item) => normalizeForCompare(item.weather) === normalizedWeatherType,
   );
+
+  // Display API matches when available, otherwise show defaults for this weather
+  const displayItems =
+    matchingApiItems.length > 0
+      ? matchingApiItems
+      : defaultClothingItems.filter(
+          (d) => normalizeForCompare(d.weather) === normalizedWeatherType,
+        );
+
+  // Items ready to render
+  const visibleItems = displayItems;
 
   return (
     <main>
@@ -43,7 +51,7 @@ function Main({
           {currentTemperatureUnit}/ You may want to wear:
         </p>
         <ul className="cards__list">
-          {filteredItems.map((item) => (
+          {visibleItems.map((item) => (
             <ItemCard
               key={item._id}
               item={item}

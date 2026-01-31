@@ -120,7 +120,7 @@ export const defaultClothingItems = [
   {
     _id: 2,
     name: "Warm pants",
-    weather: "Cold",
+    weather: "cold",
     imageUrl:
       "https://res.cloudinary.com/dybcjsgfy/image/upload/v1769871439/warm-pants.svg",
     likes: [],
