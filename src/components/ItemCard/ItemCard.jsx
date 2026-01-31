@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./ItemCard.css";
 
 const ItemCard = ({
@@ -7,20 +8,33 @@ const ItemCard = ({
   currentUser,
   isLoggedIn,
 }) => {
-  // Check if item was liked by current user
-  const isLiked = item.likes.some((id) => id === currentUser?._id);
+  // treat a 24-char hex string as a backend ObjectId
+  const isBackendId = (val) =>
+    typeof val === "string" && /^[a-fA-F0-9]{24}$/.test(val);
 
-  // Only show like button for logged-in users
+  const initiallyLiked =
+    Array.isArray(item.likes) &&
+    item.likes.some((id) => id === currentUser?._id);
+
+  // local state for default/local items only
+  const [localLiked, setLocalLiked] = useState(initiallyLiked);
+
+  // which value to show: backend items use server state, defaults use local state
+  const displayedLiked = isBackendId(item._id) ? initiallyLiked : localLiked;
+
+  const itemLikeButtonClassName = `item-card__like-button ${displayedLiked ? "item-card__like-button_active" : ""}`;
+
   const shouldShowLikeButton = isLoggedIn;
-
-  // Like button classes, dynamic
-  const itemLikeButtonClassName = `item-card__like-button ${
-    isLiked ? "item-card__like-button_active" : ""
-  }`;
 
   const handleLike = (e) => {
     e.stopPropagation();
-    onCardLike({ id: item._id, isLiked });
+    if (isBackendId(item._id)) {
+      // real backend item — call up to App via onCardLike (unchanged)
+      onCardLike({ id: item._id, isLiked: initiallyLiked });
+    } else {
+      // default/local item — toggle locally (no API call)
+      setLocalLiked((v) => !v);
+    }
   };
 
   return (
