@@ -15,7 +15,7 @@
 This project represents a key milestone in building a **full-stack React application** by connecting a secure frontend to a custom backend API. Built with **React (Vite)** and **React Router v6**, this sprint focuses on implementing **authentication, authorization, and user-aware UI behavior**.
 
 The frontend integrates with the backend developed in  
-👉 **Sprint 13 (Express + MongoDB)**: https://github.com/Jhm323/se_project_express
+👉 **(Express + MongoDB)**: https://github.com/Jhm323/se_project_express
 
 ---
 
@@ -69,7 +69,7 @@ The goal of this project was to implement **secure front-end authentication and 
 
 ## 🛠 Tech Stack
 
-- **React** (functional components)
+- **React**
 - **Vite**
 - **React Router v6**
 - **JavaScript (ES6+)**
