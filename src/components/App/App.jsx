@@ -61,7 +61,7 @@ function App() {
   const [devCondition, setDevCondition] = useState("clear");
   const [devIsDay, setDevIsDay] = useState(true);
 
-  // Use dev values if in dev mode, otherwise use API data
+  // Dev values if in dev mode, otherwise API
   const currentCondition = devMode ? devCondition : weatherData.condition;
   const currentIsDay = devMode ? devIsDay : weatherData.isDay;
 
@@ -82,7 +82,7 @@ function App() {
       condition === "cold"
     )
       return "cold";
-    return "warm"; // default
+    return "warm";
   };
 
   const currentType = devMode
@@ -255,7 +255,6 @@ function App() {
   }, [activeModal]); // Re-run effect when activeModal changes
 
   // On mount: check weather
-
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -266,7 +265,6 @@ function App() {
   }, []);
 
   // On mount: check JWT
-
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
